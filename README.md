@@ -1,2 +1,3 @@
 # MovieArchiveApp
-Personal Movie Archive xamarin forms app
+MovieArchive Xamarin forms App
+try Android beta release https://play.google.com/apps/testing/com.lk.MovieArchive 

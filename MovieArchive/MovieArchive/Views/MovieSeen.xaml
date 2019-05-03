@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
+             x:Class="MovieArchive.MovieSeen">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Icon="savecsv" Activated="ToolbarItem_Activated"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+
+        <flv:FlowListView SeparatorVisibility="None" HasUnevenRows="true" x:Name="MovieListSeen" FlowItemTapped="MovieListSeen_FlowItemTapped"
+			FlowItemTappedCommand="{Binding ItemTappedCommand}" FlowLastTappedItem="{Binding LastTappedItem}" FlowTappedBackgroundColor="{StaticResource AccentColor}"
+			FlowColumnMinWidth="110" FlowItemsSource="{Binding Movies}">
+
+            <flv:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <templates:MovieListItemTemplate />
+                </DataTemplate>
+            </flv:FlowListView.FlowColumnTemplate>
+
+        </flv:FlowListView>
+
+        </ContentPage.Content>
+</ContentPage>
+    
+    

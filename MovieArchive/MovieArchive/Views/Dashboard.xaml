@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieArchive.Dashboard"
+             xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
+             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             Title="{i18n:Translate TitlePageDashBoard}">
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout>
+            <Label x:Name="WelcomeMessage1" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage1}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="WelcomeMessage2" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage2}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <Label  x:Name="TitleLastAdd" Text="{i18n:Translate TitleDashBoardLast3MovieAdd}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+             <cv:CarouselViewControl BindingContext="{Binding Movies}" x:Name="carouselLast" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ShowArrows="false"
+                ShowIndicators="true" HeightRequest="350">
+                <cv:CarouselViewControl.ItemTemplate>
+                        <DataTemplate>
+                            <ffimageloading:CachedImage  Aspect="AspectFit" VerticalOptions="StartAndExpand"
+			                            DownsampleToViewSize="false"
+			                            Source = "{Binding PosterW342}" >
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                                <ffimageloading:CachedImage.Transformations>
+                                    <fftransformations:RoundedTransformation Radius="20" CropWidthRatio="0" CropHeightRatio="0"/>
+                                </ffimageloading:CachedImage.Transformations>
+                            </ffimageloading:CachedImage>
+                        </DataTemplate>
+                </cv:CarouselViewControl.ItemTemplate>
+            </cv:CarouselViewControl>
+
+            <Label x:Name="TitleLastSaw" Text="{i18n:Translate TitleDashBoardLast3MovieSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <cv:CarouselViewControl BindingContext="{Binding Movies}" x:Name="carouselSeen" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ShowArrows="false"
+                ShowIndicators="true" HeightRequest="350">
+                <cv:CarouselViewControl.ItemTemplate>
+                    <DataTemplate>
+                       <ffimageloading:CachedImage  Aspect="AspectFit" VerticalOptions="StartAndExpand"
+			                    DownsampleToViewSize="false"
+			                    Source = "{Binding PosterW342}">
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                                <ffimageloading:CachedImage.Transformations>
+                                <fftransformations:RoundedTransformation Radius="20" CropWidthRatio="0" CropHeightRatio="0"/>
+                            </ffimageloading:CachedImage.Transformations>
+                        </ffimageloading:CachedImage>
+                    </DataTemplate>
+                </cv:CarouselViewControl.ItemTemplate>
+            </cv:CarouselViewControl>
+
+            <Label x:Name="TitleBestRating" Text="{i18n:Translate TitleDashBoardBest3RatedMovie}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <cv:CarouselViewControl BindingContext="{Binding Movies}" x:Name="carouselBest" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ShowArrows="false"
+                ShowIndicators="true" HeightRequest="350">
+                <cv:CarouselViewControl.ItemTemplate>
+                    <DataTemplate>
+                        <ffimageloading:CachedImage  Aspect="AspectFit" VerticalOptions="StartAndExpand"
+			                    DownsampleToViewSize="false"
+			                    Source = "{Binding PosterW342}" Style="{StaticResource MovieImageStyle}">
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                                <ffimageloading:CachedImage.Transformations>
+                                <fftransformations:RoundedTransformation Radius="20" CropWidthRatio="0" CropHeightRatio="0"/>
+                            </ffimageloading:CachedImage.Transformations>
+                        </ffimageloading:CachedImage>
+                    </DataTemplate>
+                </cv:CarouselViewControl.ItemTemplate>
+            </cv:CarouselViewControl>
+
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

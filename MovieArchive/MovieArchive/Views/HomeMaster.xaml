@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
+             x:Class="MovieArchive.HomeMaster"
+             Title="Master">
+    <StackLayout>
+        <ListView x:Name="MenuItemsListView"
+              SeparatorVisibility="None"
+              HasUnevenRows="true" 
+              ItemsSource="{Binding MenuItems}">
+      <!--<ListView.Header>
+          <Grid BackgroundColor="{StaticResource MenuTitleBackgroundColor}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+          </Grid.RowDefinitions>
+            <Label  Grid.Column="1"
+                    Grid.Row="1" TextColor="{StaticResource WhiteColor}"
+                    Text="{i18n:Translate AppTitle}"
+                    Style="{DynamicResource SubtitleStyle}"/>
+          </Grid>
+      </ListView.Header>-->
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <!--<FlexLayout Padding="15,10"  Direction="Column" JustifyContent="Start" AlignItems="Start">
+                     <Label VerticalOptions="FillAndExpand" TextColor="{StaticResource WhiteColor}"
+                     VerticalTextAlignment="Center" 
+                     Text="{Binding Title}" 
+                     FontSize="24"/>
+            </FlexLayout>-->
+                <templates:MenuItemTemplate />
+           </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
+</ContentPage>

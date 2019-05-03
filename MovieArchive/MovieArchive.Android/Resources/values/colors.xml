@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="launcher_background">#343e42</color>
+    <color name="colorPrimary">#343e42</color>
+    <color name="colorPrimaryDark">#343e42</color>
+    <color name="colorAccent">#F5C210</color>
+    <color name="navigationBarColor">#44545C</color>
+</resources>

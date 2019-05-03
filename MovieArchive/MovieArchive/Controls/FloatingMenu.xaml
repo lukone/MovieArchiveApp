@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AbsoluteLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MovieArchive.Controls"
+             Rotation="180"
+             Margin="0,0,0,10" BackgroundColor="Transparent"
+             x:Class="MovieArchive.Controls.FloatingMenu" >
+    
+    <c:FloatingButton x:Name="MainButton" Rotation="180" AbsoluteLayout.LayoutBounds="0,0,60,60"/>
+
+</AbsoluteLayout>
