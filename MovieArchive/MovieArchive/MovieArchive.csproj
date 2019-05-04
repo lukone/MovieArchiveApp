@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.0.4</Version>
+    <Version>1.0.6</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +52,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AppResources.it.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MovieCardV2.xaml.cs">
+      <DependentUpon>MovieCardV2.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Templates\MovieListItemTemplate.xaml.cs">
       <DependentUpon>MovieListItemTemplate.xaml</DependentUpon>

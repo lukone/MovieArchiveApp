@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="MovieArchive.Views.Templates.MovieListItemTemplate">
     <ContentView.Content>
-        <Grid Padding="3">
+        <Grid Padding="3" BackgroundColor="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>

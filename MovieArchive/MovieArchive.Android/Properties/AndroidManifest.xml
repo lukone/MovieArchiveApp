@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="4" android:versionName="1.0.4" package="com.lk.MovieArchive" android:installLocation="internalOnly" android:hardwareAccelerated="true">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="6" android:versionName="1.0.6" package="com.lk.MovieArchive" android:installLocation="internalOnly" android:hardwareAccelerated="true">
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" />
 	<uses-sdk android:targetSdkVersion="27" />
 	<application android:allowBackup="true" android:label="MovieArchive.Android" android:icon="@mipmap/launcher_foreground" android:supportsRtl="true"></application>

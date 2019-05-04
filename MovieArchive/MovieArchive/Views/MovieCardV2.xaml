@@ -6,7 +6,7 @@
              xmlns:lv="clr-namespace:LaavorRatingSwap;assembly=RatingAndSwap"
              xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="MovieArchive.MovieCard"
+             x:Class="MovieArchive.MovieCardV2"
              Title="{i18n:Translate TitlePageMovieCard}" >
     <ContentPage.Content>
         <Grid x:Name="GridMovie" >
@@ -26,24 +26,23 @@
                     Aspect="AspectFill"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="Start"
-					Opacity="0.5">
+					Opacity="0.1">
                     <ffimageloading:CachedImage.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android" Value="300" />
-                            <On Platform="iOS" Value="375" />
+                            <On Platform="Android" Value="1000" />
+                            <On Platform="iOS" Value="1000" />
                         </OnPlatform>
                     </ffimageloading:CachedImage.HeightRequest>
                 </ffimageloading:CachedImage>
             </ContentView>
 
             <ScrollView 
-                x:Name="ParallaxScroll" 
                 VerticalOptions="FillAndExpand" 
-                HorizontalOptions="FillAndExpand" Scrolled="ParallaxScroll_Scrolled">
+                HorizontalOptions="FillAndExpand">
                 <!--RowSpacing="0"-->
                 <Grid VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="0"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="180"/>
@@ -56,12 +55,12 @@
                         <ColumnDefinition Width="320"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                    <!--<Grid Grid.Row="0" Grid.ColumnSpan="2">
                         <Label Text="{Binding Title}" Style="{StaticResource MovieTitleStyle}" HorizontalTextAlignment="Center"/>
-                    </Grid>
+                    </Grid>-->
 
                     <!-- Poster and info -->
-                    <Grid Grid.Row="1" Padding="5,-50"  Grid.ColumnSpan="2">
+                    <Grid Grid.Row="1" Padding="5"  Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
@@ -73,7 +72,7 @@
 			                    DownsampleToViewSize="false"
 			                    Source = "{Binding PosterW500}">
                         </ffimageloading:CachedImage>
-                        <FlexLayout Grid.Column="1" Margin="0,50" Direction="Column" JustifyContent="Start">
+                        <FlexLayout Grid.Column="1" Direction="Column" JustifyContent="Start">
                             <Label Text="{i18n:Translate LabelTitleOriginalTitle}" Style="{StaticResource StorylineTitleStyle}"/>
                             <Label Text="{Binding OriginalTitle}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
 
@@ -92,7 +91,7 @@
                     </Grid>
 
                     <!-- Synopsis -->
-                    <Grid Grid.Row="2" Margin="0,50"  Grid.ColumnSpan="2">
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2">
                         <Label x:Name="Synopsis"  Text="{Binding SynopsisShort}" Style="{StaticResource StorylineStyle}" >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Synopsis_Tapped" NumberOfTapsRequired="1" />

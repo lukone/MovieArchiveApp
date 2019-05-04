@@ -145,11 +145,7 @@ namespace MovieArchive
 
         #region omdbapi.com
         //Multiple information from imdb, rotten tomatoes ecc
-
         //    http://www.omdbapi.com/?apikey=[yourkey]&
-
-        //http://www.omdbapi.com/?apikey=4cfc85be&i=tt4154796
-        //https://www.omdbapi.com/?i=tt3896198&apikey=4cfc85be
 
         private readonly string GetMovieData = "http://www.omdbapi.com/?apikey={0}&i={1}";
 

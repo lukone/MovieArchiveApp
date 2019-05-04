@@ -100,7 +100,7 @@ namespace MovieArchive
 
             //await DB.InsertMovieAsync(mi);
             //DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageTitleMovieImported, mi.Title));
-            await Navigation.PushAsync(new MovieCard(mi));
+            await Navigation.PushAsync(new MovieCardV2(mi));
 
         }
 

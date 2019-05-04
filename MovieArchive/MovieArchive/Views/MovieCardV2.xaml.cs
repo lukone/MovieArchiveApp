@@ -1,16 +1,14 @@
 ﻿using LaavorRatingSwap;
+using MovieArchive;
 using MovieArchive.Resources;
 using System;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace MovieArchive
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MovieCard : ContentPage
+	public partial class MovieCardV2 : ContentPage
 	{
         private MovieCardModel MC;
         private Property PY;
@@ -19,7 +17,7 @@ namespace MovieArchive
 
         private double _lastScroll;
 
-        public MovieCard(Movie movie)
+        public MovieCardV2(Movie movie)
         { 
 		    InitializeComponent();
 
@@ -100,27 +98,6 @@ namespace MovieArchive
         private void Synopsis_Tapped(object sender, EventArgs e)
         {
             Synopsis.Text = MC.MovieDet.Synopsis;
-        }
-
-        private void ParallaxScroll_Scrolled(object sender, ScrolledEventArgs e)
-        {
-            double translation = 0;
-
-            if (_lastScroll < e.ScrollY)
-            {
-                translation = 0 - ((e.ScrollY / 2));
-
-                if (translation > 0) translation = 0;
-            }
-            else
-            {
-                translation = 0 + ((e.ScrollY / 2));
-
-                if (translation > 0) translation = 0;
-            }
-
-            HeaderPanel.TranslateTo(HeaderPanel.TranslationX, translation);
-            _lastScroll = e.ScrollY;
         }
 
         private async void WebRating_Tapped(object sender, EventArgs e)

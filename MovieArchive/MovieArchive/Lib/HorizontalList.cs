@@ -62,7 +62,7 @@ namespace MovieArchive
 
         public HorizontalList()
         {
-            BackgroundColor = Color.FromHex("#1E2634");
+            //BackgroundColor = Color.FromHex("#1E2634");
             Spacing = 6;
             _scrollView = new ScrollView();
             _itemsStackLayout = new StackLayout
