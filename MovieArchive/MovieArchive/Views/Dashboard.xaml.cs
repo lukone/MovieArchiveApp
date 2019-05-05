@@ -64,7 +64,7 @@ namespace MovieArchive
             await ca.ScaleTo(1.1, length: 150, easing: Easing.CubicInOut);
             await ca.ScaleTo(1, length: 100, easing: Easing.CubicInOut);
             var mi = (Movie)(ca.ItemsSource.GetItem(ca.Position));
-            await Navigation.PushAsync( new MovieCard(mi));
+            await Navigation.PushAsync( new MovieCardV2(mi));
         }
 
     }

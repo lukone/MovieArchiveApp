@@ -178,15 +178,6 @@ namespace MovieArchive.Resources {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Average rating.
-        /// </summary>
-        internal static string LabelTitleAVGRating {
-            get {
-                return ResourceManager.GetString("LabelTitleAVGRating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Cerca una stringa localizzata simile a Director.
         /// </summary>
         internal static string LabelTitleDirector {
@@ -223,7 +214,16 @@ namespace MovieArchive.Resources {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tap here to see best web rating.
+        ///   Cerca una stringa localizzata simile a Personal rating.
+        /// </summary>
+        internal static string LabelTitleRating {
+            get {
+                return ResourceManager.GetString("LabelTitleRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Web rating.
         /// </summary>
         internal static string LabelTitleRatingList {
             get {

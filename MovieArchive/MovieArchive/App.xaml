@@ -27,7 +27,7 @@
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="Margin" Value="12, 0" />
+                <Setter Property="Margin" Value="10, 0" />
                 <Setter Property="LineBreakMode" Value="WordWrap" />
             </Style>
 
@@ -45,7 +45,7 @@
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontSize" Value="20" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="Margin" Value="12, 0" />
+                <Setter Property="Margin" Value="10, 0" />
             </Style>
 
             <Style x:Key="CastingNameStyle" TargetType="Label">
@@ -58,7 +58,7 @@
             <Style x:Key="PhoneCastingImageStyle" TargetType="Image">
                 <Setter Property="Aspect" Value="AspectFit" />
                 <Setter Property="HorizontalOptions" Value="Start" />
-                <Setter Property="WidthRequest" Value="124" /> <!--185-->
+                <Setter Property="WidthRequest" Value="92.5" /> <!--185-->
             </Style>
 
             <Style x:Key="CastingImageStyle" TargetType="Image">

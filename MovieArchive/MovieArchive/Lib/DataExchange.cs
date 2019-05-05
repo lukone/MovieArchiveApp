@@ -218,14 +218,14 @@ namespace MovieArchive
             { throw e; }
         }
 
-        public List<Person> GetCastAndCrew(int TMDbID)
+        public async Task<List<Person>> GetCastAndCrew(int TMDbID)
         {
             var Crews = new List<Person>();
             var Crew = new Person();
             //TMDbLib.Objects.People.ProfileImages CastImage;
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, MovieMethods.Credits).Result;
+            var result = await client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, MovieMethods.Credits);
 
             foreach (Cast actor in result.Credits.Cast)
             {
@@ -279,11 +279,11 @@ namespace MovieArchive
             return Trailer;
         }
 
-        public MovieDetails GetMovieDetail(MovieDetails Movie)
+        public async Task<MovieDetails> GetMovieDetail(MovieDetails Movie)
         {
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, MovieMethods.Videos | MovieMethods.Credits).Result;
+            var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, MovieMethods.Videos); //| MovieMethods.Credits
 
             if (result.Id != 0)
             {
@@ -303,8 +303,8 @@ namespace MovieArchive
                     Movie.Trailer = result.Videos.Results.Where(m => m.Type == "Trailer").Select(t => t.Site == "YouTube" ? "https://www.youtube.com/embed/" + t.Key : t.Key).FirstOrDefault();
                 else
                     Movie.Trailer = "";
-                Movie.Actors = (from d in result.Credits.Cast select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
-                Movie.Directors = (from d in result.Credits.Crew where d.Job == "Director" select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
+                //Movie.Actors = (from d in result.Credits.Cast select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
+                //Movie.Directors = (from d in result.Credits.Crew where d.Job == "Director" select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
 
                 Movie.Genres = String.Join(" - ", result.Genres.Select(e => e.Name).ToList());
                 Movie.Ratings = new List<Rating>();

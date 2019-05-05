@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>pdbonly</DebugType>
@@ -11,9 +11,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\AppResources - Copy.Designer.cs" />
+    <Compile Remove="Views\MovieCard.xaml.cs" />
     <Compile Remove="Views\SearchResult.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Remove="Views\MovieCard.xaml" />
     <EmbeddedResource Remove="Views\SearchResult.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +58,9 @@
     <Compile Update="Views\MovieCardV2.xaml.cs">
       <DependentUpon>MovieCardV2.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Templates\RatingItemTemplate.xaml.cs">
+      <DependentUpon>RatingItemTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Templates\MovieListItemTemplate.xaml.cs">
       <DependentUpon>MovieListItemTemplate.xaml</DependentUpon>
     </Compile>
@@ -81,9 +86,6 @@
     <EmbeddedResource Update="Views\InsertMovie.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MovieCard.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\MovieSeen.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
@@ -91,6 +93,9 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Properties.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Templates\RatingItemTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Templates\CastingItemTemplate.xaml">
@@ -101,8 +106,5 @@
     <None Update="credentials.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>

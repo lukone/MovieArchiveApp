@@ -150,8 +150,8 @@
   <data name="LabelTitleActors" xml:space="preserve">
     <value>Actors</value>
   </data>
-  <data name="LabelTitleAVGRating" xml:space="preserve">
-    <value>Average rating</value>
+  <data name="LabelTitleRating" xml:space="preserve">
+    <value>Personal rating</value>
   </data>
   <data name="LabelTitleDirector" xml:space="preserve">
     <value>Director</value>
@@ -259,6 +259,6 @@
     <value>No movie found</value>
   </data>
   <data name="LabelTitleRatingList" xml:space="preserve">
-    <value>Tap here to see best web rating</value>
+    <value>Web rating</value>
   </data>
 </root>

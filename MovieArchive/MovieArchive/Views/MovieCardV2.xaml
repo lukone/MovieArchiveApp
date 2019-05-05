@@ -22,7 +22,7 @@
                     </OnPlatform>
                 </ContentView.Margin>
                 <ffimageloading:CachedImage 	
-                    Source="{Binding BackdropW300}" 
+                    Source="{Binding BackdropW1280}" 
                     Aspect="AspectFill"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="Start"
@@ -60,7 +60,7 @@
                     </Grid>-->
 
                     <!-- Poster and info -->
-                    <Grid Grid.Row="1" Padding="5"  Grid.ColumnSpan="2">
+                    <Grid Grid.Row="1" Padding="10"  Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
@@ -99,7 +99,7 @@
                         </Label>
                     </Grid>
                     <!-- Trailer -->
-                    <WebView x:Name="Trailer" Grid.Row="3" Grid.Column="0"/>
+                    <WebView x:Name="Trailer" Grid.Row="3" Grid.Column="0"  Margin="10, 0, 5, 0"/>
 
                     <!-- Directors -->
                     <Grid x:Name="DirectorList" Grid.Row="4"  Grid.ColumnSpan="2">
@@ -137,8 +137,7 @@
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListActor"
                             ItemsSource="{Binding MovieDet.Actors}" 
                             SelectedCommand="{Binding PeopleDetailCommand}"
-                            VerticalOptions="Start" BackgroundColor="Transparent"
-                            Margin="5, 0, 5, 0">
+                            VerticalOptions="Start" BackgroundColor="Transparent">
                             <controls:HorizontalList.ItemTemplate>
                                 <DataTemplate>
                                     <templates:CastingItemTemplate />
@@ -149,31 +148,29 @@
 
                     <!-- Rating -->
                     <Grid Grid.Row="6"  Grid.ColumnSpan="2">
-                        <!--<Label Text="{i18n:Translate LabelTitleAVGRating}" Style="{StaticResource StorylineTitleStyle}"/>
-                        <Label Text="{Binding AVGRating}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Center"/>-->
+                        <Label Text="{i18n:Translate LabelTitleRating}" Style="{StaticResource StorylineTitleStyle}"/>
                         <lv:RatingImage  x:Name="Rating" ItemsNumber="10" InitialValue="{Binding Rating}" ImageSelect="starYellow.png" SpaceBetween="3" ImageDeselect="starWhite.gif" ImageHeight="25" ImageWidth="25" OnSelect="Rating_OnSelect" />
                     </Grid>
-                    <Grid Grid.Row="7" Margin="0,10"  Grid.ColumnSpan="2">
-                        <Label x:Name="WebRating"  Text="{i18n:Translate LabelTitleRatingList}" Style="{StaticResource StorylineStyle}" >
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="WebRating_Tapped" NumberOfTapsRequired="1" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <ListView x:Name="RatingList" RowHeight="60" ItemsSource="{Binding MovieDet.Ratings}" SelectionMode="None"
-                              VerticalOptions="EndAndExpand" IsVisible="False">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" >
-                                            <Image Source="{Binding ImageSrc}" HorizontalOptions="End"/>
-                                            <Label Text = "{Binding Value}" FontSize="16" HorizontalTextAlignment="Center"/>
-                                        </StackLayout>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
 
+                    <Grid x:Name="RatingList" Grid.Row="7"  Grid.ColumnSpan="2" BackgroundColor="Transparent">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label 
+                            Grid.Row="0"
+                            Text="{i18n:Translate LabelTitleRatingList}"
+                            Style="{StaticResource StorylineTitleStyle}"/>
+                        <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListRating"
+                            ItemsSource="{Binding MovieDet.Ratings}" 
+                            VerticalOptions="Start" BackgroundColor="Transparent">
+                            <controls:HorizontalList.ItemTemplate>
+                                <DataTemplate>
+                                    <templates:RatingItemTemplate />
+                                </DataTemplate>
+                            </controls:HorizontalList.ItemTemplate>
+                        </controls:HorizontalList>
+                    </Grid>
                 </Grid>
             </ScrollView>
         </Grid>

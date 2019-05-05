@@ -150,8 +150,8 @@
   <data name="LabelTitleActors" xml:space="preserve">
     <value>Attori</value>
   </data>
-  <data name="LabelTitleAVGRating" xml:space="preserve">
-    <value>Voto medio</value>
+  <data name="LabelTitleRating" xml:space="preserve">
+    <value>Valutazione personale</value>
   </data>
   <data name="LabelTitleDirector" xml:space="preserve">
     <value>Regista</value>
@@ -259,6 +259,6 @@
     <value>Nessun film trovato</value>
   </data>
   <data name="LabelTitleRatingList" xml:space="preserve">
-    <value>Premi qui per vedere le valutazioni dei migliori siti</value>
+    <value>Valutazioni esterne</value>
   </data>
 </root>

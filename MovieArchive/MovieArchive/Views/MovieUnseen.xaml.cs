@@ -34,7 +34,7 @@ namespace MovieArchive
             var mi = (Movie)((DLToolkit.Forms.Controls.FlowListView)sender).FlowLastTappedItem;
 
             //App.Current.MainPage = new Home { Detail = new NavigationPage(new MovieCard(mi)) };
-            await Navigation.PushAsync(new MovieCard(mi));
+            await Navigation.PushAsync(new MovieCardV2(mi));
         }
 
         public void FlowScrollTo(object item)

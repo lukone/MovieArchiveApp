@@ -19,7 +19,7 @@ namespace MovieArchive
         private DataBase DB;
 
         private const string qryLastMovieUploaded = "Select * From Movie Order by dateins Desc LIMIT {0}";
-        private const string qryLastMovieSeen = "Select * From Movie Order by DateView Desc LIMIT {0}";
+        private const string qryLastMovieSeen = "Select * From Movie Where rating>0 Order by DateView Desc LIMIT {0}";
         private const string qryBestRatingMovie = "Select * From Movie Where rating>0 Order by rating Desc LIMIT {0}";
 
         //List<Entry> entries;
