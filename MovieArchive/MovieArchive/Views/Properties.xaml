@@ -13,7 +13,7 @@
                 Clicked="ConnectToGoogle_Clicked" />
             <Label x:Name="GConnected"  Text="Not Connected" HorizontalTextAlignment="Center"/>-->
 
-            <!--VALUTARE
+            <!--VALUTARE se usare al posto della grid
             <TableView Intent="Settings">
                 <TableRoot>
                     <TableSection Title="Ring">

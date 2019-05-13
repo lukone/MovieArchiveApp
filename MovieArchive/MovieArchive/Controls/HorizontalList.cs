@@ -30,6 +30,9 @@ namespace MovieArchive
         public static readonly BindableProperty ItemTemplateProperty =
             BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(HorizontalList), default(DataTemplate));
 
+        public static readonly BindableProperty ViewSelectProperty =
+            BindableProperty.Create("ViewSelect", typeof(View), typeof(View), default(DataTemplate));
+        
         public ICommand SelectedCommand
         {
             get { return (ICommand)GetValue(SelectedCommandProperty); }
@@ -52,6 +55,12 @@ namespace MovieArchive
         {
             get { return (DataTemplate)GetValue(ItemTemplateProperty); }
             set { SetValue(ItemTemplateProperty, value); }
+        }
+
+        public View ViewSelect
+        {
+            get { return (View)GetValue(ViewSelectProperty); }
+            set { SetValue(ViewSelectProperty, value); }
         }
 
         private static void ItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
@@ -86,7 +95,8 @@ namespace MovieArchive
             _innerSelectedCommand = new Command<View>(view => 
             {
                 SelectedItem = view.BindingContext;
-                SelectedItem = null; // Allowing item second time selection
+                ViewSelect = view;
+                //SelectedItem = null; // Allowing item second time selection
             });
 
             _itemsStackLayout.Orientation = ListOrientation;
@@ -106,6 +116,7 @@ namespace MovieArchive
 
             _itemsStackLayout.BackgroundColor = BackgroundColor;
             SelectedItem = null;
+            ViewSelect = null;
         }
 
         protected virtual View GetItemView(object item)
@@ -157,7 +168,7 @@ namespace MovieArchive
                 return;
             }
 
-            itemsView.SelectedItemChanged?.Invoke(itemsView, EventArgs.Empty);
+            itemsView.SelectedItemChanged?.Invoke(itemsView, EventArgs.Empty);            
 
             if (itemsView.SelectedCommand?.CanExecute(newValue) ?? false)
             {

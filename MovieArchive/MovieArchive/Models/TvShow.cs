@@ -1,49 +1,11 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
+using System.Text;
 
 namespace MovieArchive
 {
-    #region sizesExample
-    //backdrop sizes
-    //  "w300",
-    //  "w780",
-    //  "w1280",
-    //  "original"
-
-    //logo_sizes
-    //  "w45",
-    //  "w92",
-    //  "w154",
-    //  "w185",
-    //  "w300",
-    //  "w500",
-    //  "original"
-
-    //poster_sizes
-    //  "w92",
-    //  "w154",
-    //  "w185",
-    //  "w342",
-    //  "w500",
-    //  "w780",
-    //  "original"
-
-    //profile_sizes
-    //  "w45",
-    //  "w185",
-    //  "h632",
-    //  "original"
-
-    //still_sizes
-    //  "w92",
-    //  "w185",
-    //  "w300",
-    //  "original"  
-    #endregion
-
-    public class Movie
+    public class TvShow
     {
         [PrimaryKey]
         public int ID { get; set; }
@@ -57,7 +19,7 @@ namespace MovieArchive
         [Ignore]
         public string PosterW92 { get { return string.Format(PathImage, "92", Poster); } }
         [Ignore]
-        public string PosterW342 { get { return string.Format(PathImage, "342",Poster); } }
+        public string PosterW342 { get { return string.Format(PathImage, "342", Poster); } }
         [Ignore]
         public string PosterW500 { get { return string.Format(PathImage, "500", Poster); } }
         [Ignore]
@@ -65,11 +27,11 @@ namespace MovieArchive
 
         public const string PathImage = "https://image.tmdb.org/t/p/w{0}/{1}";
 
-        public Movie()
+        public TvShow()
         {
         }
 
-        public Movie(Movie toCopy)
+        public TvShow(TvShow toCopy)
         {
             this.ID = toCopy.ID;
             this.TmdbID = toCopy.TmdbID;
@@ -80,29 +42,35 @@ namespace MovieArchive
             this.Rating = toCopy.Rating;
         }
 
-        public static explicit operator Movie(Element v)
-        {
-            throw new NotImplementedException();
-        }
     }
 
-    public class MovieDetails : Movie
+    public class Episode
     {
-        public string ImdbID { get; set; }
+        public int N { get; set; }
+        public int Season { get; set; }
         public List<Person> Actors { get; set; }
         public List<Person> Directors { get; set; }
+        public string Title { get; set; }
         public string Synopsis { get; set; }
-        public string SynopsisShort { get { return Synopsis.Length<200 ? Synopsis : Synopsis.Substring(0,200)+" ..."; } }
+        public string SynopsisShort { get { return Synopsis.Length < 200 ? Synopsis : Synopsis.Substring(0, 200) + " ..."; } }
+        public int Rating { get; set; }
+        public DateTime? DateView { get; set; }
+    }
+
+    public class TvShowDetails : TvShow
+    {
+        public string ImdbID { get; set; }
+        public string Synopsis { get; set; }
+        public string SynopsisShort { get { return Synopsis.Length < 200 ? Synopsis : Synopsis.Substring(0, 200) + " ..."; } }
         public string OriginalTitle { get; set; }
         public DateTime? ReleaseDate { get; set; }
-        //public double AVGRating { get; set; }
         public string HomePage { get; set; }
         public string Trailer { get; set; }
         public string Backdrop { get; set; }
-        public int? Runtime { get; set; }
         public string ProductionCountry { get; set; }
         public string Genres { get; set; }
         public List<Rating> Ratings { get; set; }
+        public List<Episode> Episodes { get; set; }
 
         [Ignore]
         public string BackdropW1280 { get { return string.Format(PathImage, "1280", Backdrop); } }
@@ -111,25 +79,33 @@ namespace MovieArchive
         [Ignore]
         public string BackdropW300 { get { return string.Format(PathImage, "300", Backdrop); } }
 
-        public MovieDetails()
+        public TvShowDetails()
         { }
 
-        public MovieDetails(Movie toCopy)
+        public TvShowDetails(TvShow toCopy)
         : base(toCopy)
         { }
     }
 
-    //public class MovieCarousel : Movie
-    //{
-    //    public double position { get; set; }
-
-    //    public MovieCarousel()
-    //    { }
-
-    //    public MovieCarousel(Movie toCopy)
-    //    : base(toCopy)
-    //    { }
-    //}
-
-
 }
+//"poster_path": "/jIhL6mlT7AblhbHJgEoiBIOUVl1.jpg",
+//      "popularity": 29.780826,
+//      "id": 1399,
+//      "backdrop_path": "/mUkuc2wyV9dHLG0D0Loaw5pO2s8.jpg",
+//      "vote_average": 7.91,
+//      "overview": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
+//      "first_air_date": "2011-04-17",
+//      "origin_country": [
+//        "US"
+//      ],
+//      "genre_ids": [
+//        10765,
+//        10759,
+//        18
+//      ],
+//      "original_language": "en",
+//      "vote_count": 1172,
+//      "name": "Game of Thrones",
+//      "original_name": "Game of Thrones"
+
+

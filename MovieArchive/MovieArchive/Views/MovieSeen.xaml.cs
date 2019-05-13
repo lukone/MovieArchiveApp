@@ -63,7 +63,7 @@ namespace MovieArchive
                 DataExchange.WriteCSV(MoviesSeen.Movies, File);
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageCvsFileExported);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.ErrorMessageCvsFileExported);
             }

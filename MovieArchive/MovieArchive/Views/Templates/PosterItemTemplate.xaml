@@ -2,7 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="MovieArchive.Views.Templates.RatingItemTemplate"
+             x:Class="MovieArchive.Views.Templates.PosterItemTemplate"
              BackgroundColor="Transparent">
     <ContentView.Content>
         <Grid
@@ -25,21 +25,12 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!--<Image 	
-                Grid.Column="0"
-                Grid.Row="0"
-                Source="{Binding ImageSrc}" Style="{StaticResource CastingImageStyle}" />-->
-            <ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Rating" Style="{StaticResource CastingImageStyle}"
+            <ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Poster" Aspect="AspectFit" VerticalOptions="StartAndExpand" HorizontalOptions="Start"
 			                    DownsampleToViewSize="false"
-			                    Source = "{Binding ImageSrc}">
+			                    Source = "{Binding PosterW342}">
             </ffimageloading:CachedImage>
-            <Label 
-                Grid.Column="0"
-                Grid.Row="1"
-                Text="{Binding Value}" LineBreakMode="WordWrap"
-                Style="{StaticResource CastingNameStyle}"/>
+
         </Grid>
     </ContentView.Content>
 </ContentView>

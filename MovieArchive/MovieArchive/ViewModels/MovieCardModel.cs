@@ -49,7 +49,7 @@ namespace MovieArchive
                     OMDMovie OM = await WA.GetMovieOMDAPI(MovieDet.ImdbID);
                     MovieDet.Ratings.AddRange(OM.Ratings);
                     return 1;
-                }catch(Exception e)
+                }catch(Exception)
                 { return 0; }
       
             }

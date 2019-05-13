@@ -1,12 +1,7 @@
-﻿using Microsoft.Toolkit.Parsers.Rss;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Xml.Linq;
-using Xamarin.Forms;
 //using SkiaSharp;
 //using Microcharts;
 //using Entry = Microcharts.Entry;
@@ -29,19 +24,19 @@ namespace MovieArchive
             DB = new DataBase();
         }
         
-        public void LastMovieUploaded(int N)
+        public async Task LastMovieUploaded(int N)
         {
-            Movies = DB.GetMovieByQueryAsync(string.Format(qryLastMovieUploaded, N.ToString())).Result;
+            Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieUploaded, N.ToString()));
         }
 
-        public void LastMovieSeen(int N)
+        public async Task LastMovieSeen(int N)
         {
-            Movies = DB.GetMovieByQueryAsync(string.Format(qryLastMovieSeen, N.ToString())).Result;
+            Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieSeen, N.ToString()));
         }
 
-        public void BestRatedMovie(int N)
+        public async Task BestRatedMovie(int N)
         {
-            Movies = DB.GetMovieByQueryAsync(string.Format(qryBestRatingMovie, N.ToString())).Result;
+            Movies = await DB.GetMovieByQueryAsync(string.Format(qryBestRatingMovie, N.ToString()));
         }
 
         public List<string> GetRssNews(string url)

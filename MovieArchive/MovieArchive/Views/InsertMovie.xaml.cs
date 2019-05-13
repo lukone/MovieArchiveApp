@@ -3,13 +3,11 @@ using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using System;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MovieArchive
-{    
+{
     [XamlCompilation(XamlCompilationOptions.Compile)]   
     public partial class InsertMovie : ContentPage
 	{
@@ -48,7 +46,7 @@ namespace MovieArchive
             {
                 try
                 {
-                    MoviesToIns.ImportMovieFromWebService();
+                    await MoviesToIns.ImportMovieFromWebService();
                     DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageNMovieImported, MoviesToIns.Movies.Count.ToString()));
                 }
                 catch (Exception ex) { Console.Write(ex); }

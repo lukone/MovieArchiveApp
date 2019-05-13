@@ -23,11 +23,11 @@ namespace MovieArchive
             Movies = DE.MoviesFoundMulti;
         }
 
-        public void ImportMovieFromWebService()
+        public async Task ImportMovieFromWebService()
         {
             var DE = new DataExchange();
 
-            DE.ImportDataFromWebApi();
+            await DE.ImportDataFromWebApi();
             Movies = DE.MoviesFound;
         }
 

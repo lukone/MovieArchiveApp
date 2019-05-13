@@ -19,7 +19,7 @@ namespace MovieArchive
         {
             try
             {
-                Movies = new List<Movie>(from m in DB.GetMovies() where m.Rating == 0 orderby m.DateIns descending select m);
+                Movies = new List<Movie>(from m in DB.GetMovieAsync().Result where m.Rating == 0 orderby m.DateIns descending select m);
             }
             catch (Exception e)
             {

@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Web.Http.Filters;
 
 namespace MovieArchive
 {
@@ -50,13 +47,13 @@ namespace MovieArchive
 
                 return response.IsSuccessStatusCode;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
         }
 
-        public List<Movie> GetDataMovieArchiveWS(DateTime LastUpdate)
+        public async Task<List<Movie>> GetDataMovieArchiveWS(DateTime LastUpdate)
         {
             Uri uri;
             try
@@ -64,7 +61,7 @@ namespace MovieArchive
 
                 uri = new Uri(String.Format(WebCall+GetData, "LastUpdateDate", LastUpdate.ToString("yyyy.MM.dd HH:mm:ss")));
 
-                var response = client.GetAsync(uri, HttpCompletionOption.ResponseContentRead).Result;
+                var response = await client.GetAsync(uri, HttpCompletionOption.ResponseContentRead);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -77,14 +74,14 @@ namespace MovieArchive
                 else
                     return null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
 
         }
 
-        public List<Movie> GetLastMovieRatingWS(DateTime LastUpdate)
+        public async Task<List<Movie>> GetLastMovieRatingWS(DateTime LastUpdate)
         {
             Uri uri;
             try
@@ -92,7 +89,7 @@ namespace MovieArchive
 
                 uri = new Uri(String.Format(WebCall+GetRating, "LastUpdateDate", LastUpdate.ToString("yyyy.MM.dd HH:mm:ss")));
 
-                var response = client.GetAsync(uri, HttpCompletionOption.ResponseContentRead).Result;
+                var response = await client.GetAsync(uri, HttpCompletionOption.ResponseContentRead);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -105,7 +102,7 @@ namespace MovieArchive
                 else
                     return null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -122,7 +119,7 @@ namespace MovieArchive
                 if (!response.IsSuccessStatusCode)
                     throw new NotSupportedException(string.Format("ERROR: WebApi Post ", uri.ToString()));
             }
-            catch (Exception e) { }
+            catch (Exception) { }
         }
 
         public async Task UpdateBackdropWS(int ID, string Backdrop)
@@ -156,7 +153,7 @@ namespace MovieArchive
             {
                 uri = new Uri(String.Format(GetMovieData, ApiKey.OMDApikey, IMDBID));
 
-                var response = client.GetAsync(uri, HttpCompletionOption.ResponseContentRead).Result;
+                var response = await client.GetAsync(uri, HttpCompletionOption.ResponseContentRead);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -169,7 +166,7 @@ namespace MovieArchive
                 else
                     return null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -220,7 +217,7 @@ namespace MovieArchive
                 }
                 return DateTime.ParseExact(v, InputFormats, CultureInfo.InvariantCulture, DateTimeStyles.None);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new NotSupportedException(String.Format("ERROR: Input value '{0}' is not parseable using the following supported formats: {1}", v, string.Join(",", InputFormats)));
             }

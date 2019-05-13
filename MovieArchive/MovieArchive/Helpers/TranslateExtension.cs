@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel;
+﻿using Plugin.Multilingual;
+using System;
 using System.Reflection;
 using System.Resources;
-using Plugin.Multilingual;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

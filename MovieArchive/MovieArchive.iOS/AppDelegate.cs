@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CarouselView.FormsPlugin.iOS;
-using FFImageLoading.Forms.Platform;
+﻿using FFImageLoading.Forms.Platform;
 using Foundation;
 using UIKit;
 
@@ -27,7 +20,6 @@ namespace MovieArchive.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            CarouselViewRenderer.Init();
             CachedImageRenderer.Init();
             LoadApplication(new App());
 

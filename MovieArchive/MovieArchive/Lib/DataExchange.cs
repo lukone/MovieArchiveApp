@@ -1,12 +1,10 @@
 ﻿using MovieArchive.Resources;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
@@ -80,7 +78,7 @@ namespace MovieArchive
         }
 
         // import data from web api 
-        public void ImportDataFromWebApi()
+        public async Task ImportDataFromWebApi()
         {            
             Property PR = DB.GetPropertyAsync().Result;
             if (PR != null && PR.WebApiAddress != "" && PR.WebApiAddress != null)
@@ -88,7 +86,7 @@ namespace MovieArchive
                 try
                 {
                     var MS = new WebApi(PR.WebApiAddress);
-                    MoviesFound = MS.GetDataMovieArchiveWS(PR.GetMovieLastUpdate);
+                    MoviesFound = await MS.GetDataMovieArchiveWS(PR.GetMovieLastUpdate);
                                
                     if(MoviesFound.Count>0)
                         DB.InsertMoviesAsync(MoviesFound).Wait();
@@ -115,7 +113,7 @@ namespace MovieArchive
                     var MS = new WebApi(PR.WebApiAddress);
 
                     //New movie not seen
-                    MoviesFound = MS.GetDataMovieArchiveWS(PR.GetMovieLastUpdate);
+                    MoviesFound = await MS.GetDataMovieArchiveWS(PR.GetMovieLastUpdate);
 
                     if (MoviesFound != null && MoviesFound.Count > 0)
                     {
@@ -131,7 +129,7 @@ namespace MovieArchive
                         DependencyService.Get<IMessage>().ShortAlert(AppResources.Message0MovieImported);
 
                     //Get rating of last movie seen
-                    MoviesFound = MS.GetLastMovieRatingWS(PR.GetRatingLastUpdate);
+                    MoviesFound = await MS.GetLastMovieRatingWS(PR.GetRatingLastUpdate);
 
                     if (MoviesFound != null && MoviesFound.Count > 0)
                     {

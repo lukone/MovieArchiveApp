@@ -2,6 +2,7 @@
 <ContentView 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     x:Class="MovieArchive.Views.Templates.MovieListItemTemplate">
     <ContentView.Content>
         <Grid Padding="3" BackgroundColor="Transparent">
@@ -11,14 +12,18 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding PosterW342}">
+            <!--<Image Source="{Binding PosterW342}">
                 <Image.Style>
                     <OnPlatform x:TypeArguments="Style">
                         <On Platform="Android, iOS" Value="{StaticResource MovieImageStyle}"/>
                         <On Platform="UWP" Value="{StaticResource MovieImageStyle}"/>
                     </OnPlatform>
                 </Image.Style>
-            </Image>
+            </Image>-->
+            <ffimageloading:CachedImage x:Name="Poster" Aspect="AspectFit" VerticalOptions="StartAndExpand" HorizontalOptions="Start"
+			                    DownsampleToViewSize="false"
+			                    Source = "{Binding PosterW342}">
+            </ffimageloading:CachedImage>
             <Label x:Name="Label" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="End"
 							BackgroundColor="Black" Opacity="0.5" Text="{Binding Title}" TextColor="White"/>
         </Grid>

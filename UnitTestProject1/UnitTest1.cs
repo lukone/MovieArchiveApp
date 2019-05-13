@@ -31,11 +31,11 @@ namespace UnitTestProject1
 
 
         [TestMethod]
-        public void TestGetDataFromWebApi()
+        public async Task TestGetDataFromWebApi()
         {
             var MS = new WebApi(WebApiUrl);
 
-            List<Movie> result = MS.GetDataMovieArchiveWS(DateTime.Now.AddDays(-5));//.Result;
+            List<Movie> result = await MS.GetDataMovieArchiveWS(DateTime.Now.AddDays(-5));//.Result;
 
             Assert.AreNotEqual(result.Count, 0);
         }
@@ -56,10 +56,10 @@ namespace UnitTestProject1
             var PY = DB.GetPropertyAsync().Result ?? new Property();
             PY.WebApiAddress = WebApiUrl;
             PY.GetMovieLastUpdate = DateTime.Now.AddDays(-5);
-            int r = DB.UpdatePropertyAsync(PY).Result;
+            int r = await DB.UpdatePropertyAsync(PY);
 
             var DE = new DataExchange();
-            DE.UpdateDataFromWebApi();
+            await DE.UpdateDataFromWebApi();
 
             Assert.AreNotEqual(1, 0);
         }

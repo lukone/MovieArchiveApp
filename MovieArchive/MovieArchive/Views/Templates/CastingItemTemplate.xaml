@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="MovieArchive.Views.Templates.CastingItemTemplate"
              BackgroundColor="Transparent">
     <ContentView.Content>
@@ -26,7 +27,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Image 	
+            <!--<Image 	
                 Grid.Column="0"
                 Grid.Row="0"
                 Source="{Binding PhotoW185}">
@@ -36,12 +37,17 @@
                         <On Platform="UWP" Value="{StaticResource CastingImageStyle}"/>
                     </OnPlatform>
                 </Image.Style>
-            </Image>
+            </Image>-->
+            <ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Person" Style="{StaticResource CastingImageStyle}"
+			                    DownsampleToViewSize="False"
+			                    Source = "{Binding PhotoW185}">
+            </ffimageloading:CachedImage>
             <Label 
                 Grid.Column="0"
                 Grid.Row="1"
                 Text="{Binding Name}" LineBreakMode="WordWrap"
                 Style="{StaticResource CastingNameStyle}"/>
+
         </Grid>
     </ContentView.Content>
 </ContentView>

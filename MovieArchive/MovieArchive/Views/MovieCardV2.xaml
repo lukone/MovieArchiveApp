@@ -45,19 +45,16 @@
                         <RowDefinition Height="0"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="180"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="70"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="320"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <!--<Grid Grid.Row="0" Grid.ColumnSpan="2">
-                        <Label Text="{Binding Title}" Style="{StaticResource MovieTitleStyle}" HorizontalTextAlignment="Center"/>
-                    </Grid>-->
 
                     <!-- Poster and info -->
                     <Grid Grid.Row="1" Padding="10"  Grid.ColumnSpan="2">
@@ -90,69 +87,8 @@
                         </FlexLayout>
                     </Grid>
 
-                    <!-- Synopsis -->
-                    <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                        <Label x:Name="Synopsis"  Text="{Binding SynopsisShort}" Style="{StaticResource StorylineStyle}" >
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="Synopsis_Tapped" NumberOfTapsRequired="1" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
-                    <!-- Trailer -->
-                    <WebView x:Name="Trailer" Grid.Row="3" Grid.Column="0"  Margin="10, 0, 5, 0"/>
-
-                    <!-- Directors -->
-                    <Grid x:Name="DirectorList" Grid.Row="4"  Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Label 
-                            Grid.Row="0"
-                            Text="{i18n:Translate LabelTitleDirector}"
-                            Style="{StaticResource StorylineTitleStyle}"/>
-                        <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListDirector"
-                            ItemsSource="{Binding Directors}" 
-                            SelectedCommand="{Binding PeopleDetailCommand}"
-                            VerticalOptions="Start" BackgroundColor="Transparent"
-                            Margin="5, 0, 5, 0">
-                            <controls:HorizontalList.ItemTemplate>
-                                <DataTemplate>
-                                    <templates:CastingItemTemplate />
-                                </DataTemplate>
-                            </controls:HorizontalList.ItemTemplate>
-                        </controls:HorizontalList>
-                    </Grid>
-
-                    <!-- Actors -->
-                    <Grid x:Name="ActorList" Grid.Row="5"  Grid.ColumnSpan="2" BackgroundColor="Transparent">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Label 
-                            Grid.Row="0"
-                            Text="{i18n:Translate LabelTitleActors}"
-                            Style="{StaticResource StorylineTitleStyle}"/>
-                        <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListActor"
-                            ItemsSource="{Binding MovieDet.Actors}" 
-                            SelectedCommand="{Binding PeopleDetailCommand}"
-                            VerticalOptions="Start" BackgroundColor="Transparent">
-                            <controls:HorizontalList.ItemTemplate>
-                                <DataTemplate>
-                                    <templates:CastingItemTemplate />
-                                </DataTemplate>
-                            </controls:HorizontalList.ItemTemplate>
-                        </controls:HorizontalList>
-                    </Grid>
-
-                    <!-- Rating -->
-                    <Grid Grid.Row="6"  Grid.ColumnSpan="2">
-                        <Label Text="{i18n:Translate LabelTitleRating}" Style="{StaticResource StorylineTitleStyle}"/>
-                        <lv:RatingImage  x:Name="Rating" ItemsNumber="10" InitialValue="{Binding Rating}" ImageSelect="starYellow.png" SpaceBetween="3" ImageDeselect="starWhite.gif" ImageHeight="25" ImageWidth="25" OnSelect="Rating_OnSelect" />
-                    </Grid>
-
-                    <Grid x:Name="RatingList" Grid.Row="7"  Grid.ColumnSpan="2" BackgroundColor="Transparent">
+                    <!--General rating-->
+                    <Grid x:Name="RatingList" Grid.Row="2"  Grid.ColumnSpan="2" BackgroundColor="Transparent">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
@@ -163,7 +99,8 @@
                             Style="{StaticResource StorylineTitleStyle}"/>
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListRating"
                             ItemsSource="{Binding MovieDet.Ratings}" 
-                            VerticalOptions="Start" BackgroundColor="Transparent">
+                            VerticalOptions="Start" BackgroundColor="Transparent"
+                            Padding="10">
                             <controls:HorizontalList.ItemTemplate>
                                 <DataTemplate>
                                     <templates:RatingItemTemplate />
@@ -171,6 +108,70 @@
                             </controls:HorizontalList.ItemTemplate>
                         </controls:HorizontalList>
                     </Grid>
+
+                    <!-- Synopsis -->
+                    <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                        <Label x:Name="Synopsis"  Text="{Binding SynopsisShort}" Style="{StaticResource StorylineStyle}" >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Synopsis_Tapped" NumberOfTapsRequired="1" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                    <!-- Trailer -->
+                    <WebView x:Name="Trailer" Grid.Row="4" Grid.Column="0"  Margin="10, 0, 5, 0"/>
+
+                    <!-- Directors -->
+                    <Grid x:Name="DirectorList" Grid.Row="5"  Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label 
+                            Grid.Row="0"
+                            Text="{i18n:Translate LabelTitleDirector}"
+                            Style="{StaticResource StorylineTitleStyle}"/>
+                        <!--SelectedCommand="{Binding PeopleDetailCommand}"-->
+                        <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListDirector"
+                            ItemsSource="{Binding Directors}" 
+                            VerticalOptions="Start" BackgroundColor="Transparent"
+                            Padding="10">
+                            <controls:HorizontalList.ItemTemplate>
+                                <DataTemplate>
+                                    <templates:CastingItemTemplate />
+                                </DataTemplate>
+                            </controls:HorizontalList.ItemTemplate>
+                        </controls:HorizontalList>
+                    </Grid>
+
+                    <!-- Actors -->
+                    <Grid x:Name="ActorList" Grid.Row="6"  Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label 
+                            Grid.Row="0"
+                            Text="{i18n:Translate LabelTitleActors}"
+                            Style="{StaticResource StorylineTitleStyle}"/>
+                        <!--SelectedCommand="{Binding PeopleDetailCommand}"-->
+                        <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListActor"
+                            ItemsSource="{Binding MovieDet.Actors}"                             
+                            VerticalOptions="Start" BackgroundColor="Transparent"
+                            Padding="10">
+                            <controls:HorizontalList.ItemTemplate>
+                                <DataTemplate>
+                                    <templates:CastingItemTemplate />
+                                </DataTemplate>
+                            </controls:HorizontalList.ItemTemplate>
+                        </controls:HorizontalList>
+                    </Grid>
+
+                    <!-- Rating -->
+                    <Grid Grid.Row="7"  Grid.ColumnSpan="2">
+                        <Label Text="{i18n:Translate LabelTitleRating}" Style="{StaticResource StorylineTitleStyle}"/>
+                        <lv:RatingImage  x:Name="Rating" ItemsNumber="10" InitialValue="{Binding Rating}" ImageSelect="starYellow.png" SpaceBetween="3" ImageDeselect="starWhite.gif" ImageHeight="25" ImageWidth="25" OnSelect="Rating_OnSelect" />
+                    </Grid>
+
                 </Grid>
             </ScrollView>
         </Grid>

@@ -1,15 +1,13 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
+using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.OS;
-using System.Threading.Tasks;
-using System.IO;
-using System.Diagnostics;
-using CarouselView.FormsPlugin.Android;
 using FFImageLoading.Forms.Platform;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace MovieArchive.Droid
 {
@@ -35,8 +33,6 @@ namespace MovieArchive.Droid
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
-            CarouselViewRenderer.Init();
 
             DisplayCrashReport();
             

@@ -2,12 +2,11 @@
 
 namespace MovieArchive.Views.Templates
 {
-    public partial class MovieListItemTemplate : ContentView
+    public partial class PosterItemTemplate : ContentView
     {
-        public MovieListItemTemplate()
+        public PosterItemTemplate()
         {
             InitializeComponent();
         }
-
     }
 }

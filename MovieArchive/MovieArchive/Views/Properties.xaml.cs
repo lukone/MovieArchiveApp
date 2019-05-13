@@ -29,17 +29,17 @@ namespace MovieArchive
             int r = await DB.UpdatePropertyAsync(PY);
         }
 
-        private void ConnectToGoogle_Clicked(object sender, EventArgs e)
-        {
-            //if (GoogleDriveAPIV3.GoogleDriveConnection("MovieArchive"))
-            //{
-            //    GConnected.Text = "Connected";
-            //}
-            //else
-            //{
-            //    GConnected.Text = "Error";
-            //}
-        }
+        //private void ConnectToGoogle_Clicked(object sender, EventArgs e)
+        //{
+        //    if (GoogleDriveAPIV3.GoogleDriveConnection("MovieArchive"))
+        //    {
+        //        GConnected.Text = "Connected";
+        //    }
+        //    else
+        //    {
+        //        GConnected.Text = "Error";
+        //    }
+        //}
 
         private void ResetTotalDB_Clicked(object sender, EventArgs e)
         {
@@ -64,10 +64,14 @@ namespace MovieArchive
                 PY.WebApiAddress = ((Xamarin.Forms.Editor)sender).Text;
                 int r = await DB.UpdatePropertyAsync(PY);
             }
-            else
+            else if(((Xamarin.Forms.Editor)sender).Text!="") 
             {
                 WebApiAddress.Text = "";
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageWebApiNotActive);
+            }
+            else
+            {
+                int r = await DB.UpdatePropertyAsync(PY);
             }
         }
     }

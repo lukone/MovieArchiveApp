@@ -3,72 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieArchive.Dashboard"
              xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
-             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:controls="clr-namespace:MovieArchive"
+             xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
              Title="{i18n:Translate TitlePageDashBoard}">
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
-            <Label x:Name="WelcomeMessage1" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage1}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <Label x:Name="WelcomeMessage2" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage2}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <Label  x:Name="TitleLastAdd" Text="{i18n:Translate TitleDashBoardLast3MovieAdd}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-             <cv:CarouselViewControl BindingContext="{Binding Movies}" x:Name="carouselLast" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ShowArrows="false"
-                ShowIndicators="true" HeightRequest="350">
-                <cv:CarouselViewControl.ItemTemplate>
+            <Label x:Name="WelcomeMessage1" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage1}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
+                <Label x:Name="WelcomeMessage2" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage2}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
+           
+            <Grid x:Name="LastAddedList" BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" x:Name="TitleLastAdd" Text="{i18n:Translate TitleDashBoardLast3MovieAdd}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListLastAdded" SelectedItemChanged="HorListLastAdded_SelectedItemChanged"
+                    ItemsSource="{Binding Movies}" 
+                    VerticalOptions="Start" BackgroundColor="Transparent">
+                    <controls:HorizontalList.ItemTemplate>
                         <DataTemplate>
-                            <ffimageloading:CachedImage  Aspect="AspectFit" VerticalOptions="StartAndExpand"
-			                            DownsampleToViewSize="false"
-			                            Source = "{Binding PosterW342}" >
-                                <ffimageloading:CachedImage.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                </ffimageloading:CachedImage.GestureRecognizers>
-                                <ffimageloading:CachedImage.Transformations>
-                                    <fftransformations:RoundedTransformation Radius="20" CropWidthRatio="0" CropHeightRatio="0"/>
-                                </ffimageloading:CachedImage.Transformations>
-                            </ffimageloading:CachedImage>
+                            <templates:PosterItemTemplate />
                         </DataTemplate>
-                </cv:CarouselViewControl.ItemTemplate>
-            </cv:CarouselViewControl>
-
-            <Label x:Name="TitleLastSaw" Text="{i18n:Translate TitleDashBoardLast3MovieSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <cv:CarouselViewControl BindingContext="{Binding Movies}" x:Name="carouselSeen" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ShowArrows="false"
-                ShowIndicators="true" HeightRequest="350">
-                <cv:CarouselViewControl.ItemTemplate>
-                    <DataTemplate>
-                       <ffimageloading:CachedImage  Aspect="AspectFit" VerticalOptions="StartAndExpand"
-			                    DownsampleToViewSize="false"
-			                    Source = "{Binding PosterW342}">
-                                <ffimageloading:CachedImage.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                </ffimageloading:CachedImage.GestureRecognizers>
-                                <ffimageloading:CachedImage.Transformations>
-                                <fftransformations:RoundedTransformation Radius="20" CropWidthRatio="0" CropHeightRatio="0"/>
-                            </ffimageloading:CachedImage.Transformations>
-                        </ffimageloading:CachedImage>
-                    </DataTemplate>
-                </cv:CarouselViewControl.ItemTemplate>
-            </cv:CarouselViewControl>
-
-            <Label x:Name="TitleBestRating" Text="{i18n:Translate TitleDashBoardBest3RatedMovie}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <cv:CarouselViewControl BindingContext="{Binding Movies}" x:Name="carouselBest" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ShowArrows="false"
-                ShowIndicators="true" HeightRequest="350">
-                <cv:CarouselViewControl.ItemTemplate>
-                    <DataTemplate>
-                        <ffimageloading:CachedImage  Aspect="AspectFit" VerticalOptions="StartAndExpand"
-			                    DownsampleToViewSize="false"
-			                    Source = "{Binding PosterW342}" Style="{StaticResource MovieImageStyle}">
-                                <ffimageloading:CachedImage.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                </ffimageloading:CachedImage.GestureRecognizers>
-                                <ffimageloading:CachedImage.Transformations>
-                                <fftransformations:RoundedTransformation Radius="20" CropWidthRatio="0" CropHeightRatio="0"/>
-                            </ffimageloading:CachedImage.Transformations>
-                        </ffimageloading:CachedImage>
-                    </DataTemplate>
-                </cv:CarouselViewControl.ItemTemplate>
-            </cv:CarouselViewControl>
-
+                    </controls:HorizontalList.ItemTemplate>
+                </controls:HorizontalList>
+            </Grid> 
+            <Grid x:Name="LastSeenList" BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" x:Name="TitleLastSaw" Text="{i18n:Translate TitleDashBoardLast3MovieSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListLastSeen" SelectedItemChanged="HorListLastSeen_SelectedItemChanged"
+                    ItemsSource="{Binding Movies}" 
+                    VerticalOptions="Start" BackgroundColor="Transparent">
+                    <controls:HorizontalList.ItemTemplate>
+                        <DataTemplate>
+                            <templates:PosterItemTemplate />
+                        </DataTemplate>
+                    </controls:HorizontalList.ItemTemplate>
+                </controls:HorizontalList>
+            </Grid> 
+            <Grid x:Name="BestRatingList" BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" x:Name="TitleBestRating" Text="{i18n:Translate TitleDashBoardBest3RatedMovie}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListBestRating" SelectedItemChanged="HorListBestRating_SelectedItemChanged"
+                    ItemsSource="{Binding Movies}" 
+                    VerticalOptions="Start" BackgroundColor="Transparent">
+                    <controls:HorizontalList.ItemTemplate>
+                        <DataTemplate>
+                            <templates:PosterItemTemplate />
+                        </DataTemplate>
+                    </controls:HorizontalList.ItemTemplate>
+                </controls:HorizontalList>
+            </Grid> 
+            
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>

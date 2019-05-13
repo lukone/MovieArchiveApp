@@ -29,14 +29,8 @@
       </ListView.Header>-->
       <ListView.ItemTemplate>
         <DataTemplate>
-          <ViewCell>
-            <!--<FlexLayout Padding="15,10"  Direction="Column" JustifyContent="Start" AlignItems="Start">
-                     <Label VerticalOptions="FillAndExpand" TextColor="{StaticResource WhiteColor}"
-                     VerticalTextAlignment="Center" 
-                     Text="{Binding Title}" 
-                     FontSize="24"/>
-            </FlexLayout>-->
-                <templates:MenuItemTemplate />
+           <ViewCell>
+                        <templates:MenuItemTemplate />
            </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>

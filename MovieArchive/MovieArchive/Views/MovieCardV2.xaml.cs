@@ -15,8 +15,6 @@ namespace MovieArchive
         private DataBase DB;
         private const int ParallaxSpeed = 5;
 
-        private double _lastScroll;
-
         public MovieCardV2(Movie movie)
         { 
 		    InitializeComponent();
@@ -30,7 +28,7 @@ namespace MovieArchive
                 {
                     Movie mi = new Movie((Movie)MC.MovieDet);
 
-                    mi.ID = DB.GetNextMovieID();
+                    mi.ID = DB.GetNextMovieIDAsync();
                     mi.DateIns = DateTime.Now;
 
                     if (DB.InsertMovieAsync(mi).Result > 0)
