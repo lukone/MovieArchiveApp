@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace MovieArchive
 {
@@ -12,10 +13,10 @@ namespace MovieArchive
         public int TmdbID { get; set; }
         public string Title { get; set; }
         public string Poster { get; set; }
-
         public DateTime? DateIns { get; set; }
-        public DateTime? DateView { get; set; }
-        public int Rating { get; set; }
+        public int SeasonCount { get; set; }
+        public int SeasonSeen { get; set; }
+
         [Ignore]
         public string PosterW92 { get { return string.Format(PathImage, "92", Poster); } }
         [Ignore]
@@ -38,23 +39,14 @@ namespace MovieArchive
             this.Title = toCopy.Title;
             this.Poster = toCopy.Poster;
             this.DateIns = toCopy.DateIns;
-            this.DateView = toCopy.DateView;
-            this.Rating = toCopy.Rating;
+            this.SeasonCount = toCopy.SeasonCount;
+            this.SeasonSeen = toCopy.SeasonSeen;
         }
 
-    }
-
-    public class Episode
-    {
-        public int N { get; set; }
-        public int Season { get; set; }
-        public List<Person> Actors { get; set; }
-        public List<Person> Directors { get; set; }
-        public string Title { get; set; }
-        public string Synopsis { get; set; }
-        public string SynopsisShort { get { return Synopsis.Length < 200 ? Synopsis : Synopsis.Substring(0, 200) + " ..."; } }
-        public int Rating { get; set; }
-        public DateTime? DateView { get; set; }
+        public static explicit operator TvShow(Element v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TvShowDetails : TvShow
@@ -63,14 +55,16 @@ namespace MovieArchive
         public string Synopsis { get; set; }
         public string SynopsisShort { get { return Synopsis.Length < 200 ? Synopsis : Synopsis.Substring(0, 200) + " ..."; } }
         public string OriginalTitle { get; set; }
-        public DateTime? ReleaseDate { get; set; }
         public string HomePage { get; set; }
         public string Trailer { get; set; }
         public string Backdrop { get; set; }
         public string ProductionCountry { get; set; }
         public string Genres { get; set; }
+
         public List<Rating> Ratings { get; set; }
-        public List<Episode> Episodes { get; set; }
+        public List<Season> Seasons { get; set; }
+        public List<Person> Actors { get; set; }
+        public List<Person> Directors { get; set; }
 
         [Ignore]
         public string BackdropW1280 { get { return string.Format(PathImage, "1280", Backdrop); } }

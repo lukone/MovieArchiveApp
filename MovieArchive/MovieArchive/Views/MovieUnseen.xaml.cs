@@ -42,7 +42,7 @@ namespace MovieArchive
             MovieListUnseen.FlowScrollTo(item, ScrollToPosition.MakeVisible, true);
         }
 
-        private void ToolbarItem_Activated(object sender, System.EventArgs e)
+        private void SaveCSV_Activated(object sender, EventArgs e)
         {
             string File;
             try
@@ -63,10 +63,11 @@ namespace MovieArchive
                 DataExchange.WriteCSV(MoviesToSee.Movies, File);
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageCvsFileExported);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.ErrorMessageCvsFileExported);
             }
         }
+
     }
 }

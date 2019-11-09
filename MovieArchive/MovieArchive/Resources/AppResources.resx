@@ -145,7 +145,7 @@
     <value>File search</value>
   </data>
   <data name="LabelMovieDBReset" xml:space="preserve">
-    <value>DB movie reset</value>
+    <value>Movie DB reset</value>
   </data>
   <data name="LabelTitleActors" xml:space="preserve">
     <value>Actors</value>
@@ -175,13 +175,13 @@
     <value>Home</value>
   </data>
   <data name="MenuTitlePage2" xml:space="preserve">
-    <value>Unseen</value>
+    <value>Movie</value>
   </data>
   <data name="MenuTitlePage3" xml:space="preserve">
-    <value>Seen</value>
+    <value>Tv Show</value>
   </data>
   <data name="MenuTitlePage4" xml:space="preserve">
-    <value>Add movie</value>
+    <value>Add</value>
   </data>
   <data name="MenuTitlePage5" xml:space="preserve">
     <value>Properties</value>
@@ -198,17 +198,17 @@
   <data name="TitlePageDashBoard" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="TitlePageInsertMovue" xml:space="preserve">
-    <value>Add movie</value>
+  <data name="TitlePageInsertMedia" xml:space="preserve">
+    <value>Add</value>
   </data>
   <data name="TitlePageMovieCard" xml:space="preserve">
     <value>Movie</value>
   </data>
-  <data name="TitlePageMovieSeen" xml:space="preserve">
-    <value>Movie seen</value>
+  <data name="TitlePageTvShowList" xml:space="preserve">
+    <value>Tv Show</value>
   </data>
-  <data name="TitlePageMovieUnseen" xml:space="preserve">
-    <value>Movie unseen</value>
+  <data name="TitlePageMovieList" xml:space="preserve">
+    <value>Movie</value>
   </data>
   <data name="TitlePageProperty" xml:space="preserve">
     <value>Settings</value>
@@ -229,7 +229,7 @@
     <value>Nothing to add</value>
   </data>
   <data name="MessageTitleMovieImported" xml:space="preserve">
-    <value>{0} Add</value>
+    <value>{0} Added</value>
   </data>
   <data name="MessageMovieDBReset" xml:space="preserve">
     <value>DB initialized</value>
@@ -241,7 +241,7 @@
     <value>Welcome to MovieArchive</value>
   </data>
   <data name="LabelWelcomeMessage2" xml:space="preserve">
-    <value>To start go to Add Movie</value>
+    <value>To start go to Add</value>
   </data>
   <data name="LabelTitleGenres" xml:space="preserve">
     <value>Genres</value>
@@ -260,5 +260,71 @@
   </data>
   <data name="LabelTitleRatingList" xml:space="preserve">
     <value>Web rating</value>
+  </data>
+  <data name="MessageTitleTvShowImported" xml:space="preserve">
+    <value>{0} Added</value>
+  </data>
+  <data name="LabelTvShowDBReset" xml:space="preserve">
+    <value>Tv show DB reset</value>
+  </data>
+  <data name="LabelTitlePersonBirthday" xml:space="preserve">
+    <value>Birthday</value>
+  </data>
+  <data name="LabelTitlePersonDeathday" xml:space="preserve">
+    <value>Deathday</value>
+  </data>
+  <data name="LabelTitlePersonGender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="LabelTitlePersonHomepage" xml:space="preserve">
+    <value>Home page</value>
+  </data>
+  <data name="LabelTitlePersonPlaceOfBirth" xml:space="preserve">
+    <value>Place of birthday</value>
+  </data>
+  <data name="TitleSeasonDetails" xml:space="preserve">
+    <value>Season </value>
+  </data>
+  <data name="ButtonConfirmResetDBCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ButtonConfirmResetDBReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="MessageConfirmResetDB" xml:space="preserve">
+    <value>Confirm Reset DB?</value>
+  </data>
+  <data name="TitleConfirmResetDB" xml:space="preserve">
+    <value>DB reset</value>
+  </data>
+  <data name="ButtonRestoreDB" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="LabelRestoreDB" xml:space="preserve">
+    <value>Restore DB from DropBox</value>
+  </data>
+  <data name="MessageDropBoxConnected" xml:space="preserve">
+    <value>DropBox connected</value>
+  </data>
+  <data name="MessageDropBoxNotConnected" xml:space="preserve">
+    <value>DropBox not connected</value>
+  </data>
+  <data name="MessageDataBaseRestored" xml:space="preserve">
+    <value>Database restored</value>
+  </data>
+  <data name="ButtonConfirmCancelRestore" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ButtonConfirmRestore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="MessageConfirmRestoreDB" xml:space="preserve">
+    <value>Restore database backup?</value>
+  </data>
+  <data name="TitleConfirmRestoreDB" xml:space="preserve">
+    <value>DB restore</value>
+  </data>
+  <data name="TitleDashBoardLast3TvShowEpisodeSeen" xml:space="preserve">
+    <value>Last 3 tv shows seen</value>
   </data>
 </root>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
+             xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
+             x:Class="MovieArchive.MovieList">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="TypeOfSeen" Icon="unseen" Activated="TypeOfSeen_Activated" />
+        <ToolbarItem x:Name="ShowSearch" Icon="search" Activated="ShowSearch_Activated" />
+        <ToolbarItem x:Name="SaveCSV" Icon="savecsv" Activated="SaveCSV_Activated" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar x:Name="SearchBar" IsVisible="False" Placeholder="{i18n:Translate SearchBarPlaceHoler}" SearchButtonPressed="SearchBar_SearchButtonPressed"/>
+            <Label x:Name="NoMovieFound" IsVisible="False" Text="{i18n:Translate LabelNoMovieFound}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <ActivityIndicator x:Name="LoadingIndicator" Color="{StaticResource AccentColor}" IsRunning="False" IsVisible="False" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <flv:FlowListView SeparatorVisibility="None" HasUnevenRows="true" x:Name="MovieListFl" FlowItemTapped="MovieListFl_FlowItemTapped"
+			    FlowItemTappedCommand="{Binding ItemTappedCommand}" FlowLastTappedItem="{Binding LastTappedItem}" FlowTappedBackgroundColor="{StaticResource AccentColor}"
+			    FlowColumnMinWidth="110" FlowItemsSource="{Binding Movies}">
+
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <templates:MovieListItemTemplate />
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+
+            </flv:FlowListView>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

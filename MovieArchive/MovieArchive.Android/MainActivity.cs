@@ -25,8 +25,8 @@ namespace MovieArchive.Droid
             base.SetTheme(Resource.Style.MainTheme);
 
             base.OnCreate(savedInstanceState);
-
-            Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            Xamarin.Forms.Forms.SetFlags(new string[]{"FastRenderers_Experimental","CollectionView_Experimental"});
             CachedImageRenderer.Init(true);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
@@ -41,7 +41,7 @@ namespace MovieArchive.Droid
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
-
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 

@@ -27,7 +27,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!--<Image 	
+            <Image 	
                 Grid.Column="0"
                 Grid.Row="0"
                 Source="{Binding PhotoW185}">
@@ -37,11 +37,12 @@
                         <On Platform="UWP" Value="{StaticResource CastingImageStyle}"/>
                     </OnPlatform>
                 </Image.Style>
-            </Image>-->
-            <ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Person" Style="{StaticResource CastingImageStyle}"
+            </Image>
+            <!--Crashava in continuazione provare dopo aggiornamento ffimage-->
+            <!--<ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Person" Style="{StaticResource CastingImageStyle}"
 			                    DownsampleToViewSize="False"
 			                    Source = "{Binding PhotoW185}">
-            </ffimageloading:CachedImage>
+            </ffimageloading:CachedImage>-->
             <Label 
                 Grid.Column="0"
                 Grid.Row="1"

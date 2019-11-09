@@ -132,7 +132,7 @@
                             Style="{StaticResource StorylineTitleStyle}"/>
                         <!--SelectedCommand="{Binding PeopleDetailCommand}"-->
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListDirector"
-                            ItemsSource="{Binding Directors}" 
+                            ItemsSource="{Binding Directors}"  SelectedItemChanged="HorListDirector_SelectedItemChanged"
                             VerticalOptions="Start" BackgroundColor="Transparent"
                             Padding="10">
                             <controls:HorizontalList.ItemTemplate>
@@ -155,7 +155,7 @@
                             Style="{StaticResource StorylineTitleStyle}"/>
                         <!--SelectedCommand="{Binding PeopleDetailCommand}"-->
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListActor"
-                            ItemsSource="{Binding MovieDet.Actors}"                             
+                            ItemsSource="{Binding MovieDet.Actors}" SelectedItemChanged="HorListActor_SelectedItemChanged"                             
                             VerticalOptions="Start" BackgroundColor="Transparent"
                             Padding="10">
                             <controls:HorizontalList.ItemTemplate>
@@ -168,8 +168,11 @@
 
                     <!-- Rating -->
                     <Grid Grid.Row="7"  Grid.ColumnSpan="2">
-                        <Label Text="{i18n:Translate LabelTitleRating}" Style="{StaticResource StorylineTitleStyle}"/>
-                        <lv:RatingImage  x:Name="Rating" ItemsNumber="10" InitialValue="{Binding Rating}" ImageSelect="starYellow.png" SpaceBetween="3" ImageDeselect="starWhite.gif" ImageHeight="25" ImageWidth="25" OnSelect="Rating_OnSelect" />
+                        <StackLayout>
+                            <Label Text="{i18n:Translate LabelTitleRating}" Style="{StaticResource StorylineTitleStyle}"/>
+                            <lv:RatingImage  x:Name="Rating" ItemsNumber="10" InitialValue="{Binding Rating}" ImageSelect="starYellow.png" SpaceBetween="3" ImageDeselect="starWhite.gif" ImageHeight="25" ImageWidth="25" OnSelect="Rating_OnSelect" />
+                            <Label Text="{Binding DateView, StringFormat='{0:d}'}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
+                        </StackLayout>
                     </Grid>
 
                 </Grid>

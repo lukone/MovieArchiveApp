@@ -13,12 +13,13 @@
                 Clicked="ConnectToGoogle_Clicked" />
             <Label x:Name="GConnected"  Text="Not Connected" HorizontalTextAlignment="Center"/>-->
 
-            <!--VALUTARE se usare al posto della grid
+            <!-- trovare come inserire un button
             <TableView Intent="Settings">
                 <TableRoot>
                     <TableSection Title="Ring">
-                        <SwitchCell Text="New Voice Mail" />
-                        <SwitchCell Text="New Mail" On="true" />
+                        <SwitchCell x:Name="AutoBkp" BindingContext="Prop" Text="{i18n:Translate LabelAutomaticBackup}" On="false" OnChanged="AutoBkp_OnChanged"/>
+                        <EntryCell x:Name="WebApiAddress" Label="{i18n:Translate LabelAutomaticBackup}" Text="{Binding WebApiAddress}" Completed="WebApiAddress_Completed" />
+                        <ViewCell
                     </TableSection>
                 </TableRoot>
             </TableView>-->
@@ -34,6 +35,8 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
 
                 <Label Text="{i18n:Translate LabelAutomaticBackup}" Grid.Column="0" Grid.Row="0"  HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
@@ -43,19 +46,39 @@
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="CenterAndExpand"/>
 
-                <Label Text="{i18n:Translate LabelWSAddress}" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
-                <Editor x:Name="WebApiAddress" Grid.Column="1" Grid.Row="1" Text="{Binding WebApiAddress}" Completed="WebApiAddress_Completed"/>
+                <Label Text="{i18n:Translate LabelRestoreDB}" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                <Button x:Name="RestoreDB" Grid.Column="1" Grid.Row="1" Text="{i18n:Translate ButtonRestoreDB}" VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Clicked="RestoreDB_Clicked" />
 
-                <Label Text="{i18n:Translate LabelCompleteDBReset}" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
-                <Button x:Name="ResetTotalDB" Grid.Column="1" Grid.Row="2"  Text="{i18n:Translate ButtonResetDB}"
+                <Label Text="{i18n:Translate LabelWSAddress}" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                <Editor x:Name="WebApiAddress" Grid.Column="1" Grid.Row="2" Text="{Binding WebApiAddress}" Completed="WebApiAddress_Completed"/>
+
+                <Label Text="{i18n:Translate LabelCompleteDBReset}" Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                <Button x:Name="ResetTotalDB" Grid.Column="1" Grid.Row="3"  Text="{i18n:Translate ButtonResetDB}"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="Center"
                 Clicked="ResetTotalDB_Clicked" />
 
-                <Label Text="{i18n:Translate LabelMovieDBReset}" Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
-                <Button x:Name="ResetMovieDB" Grid.Column="1" Grid.Row="3" Text="{i18n:Translate ButtonResetDB}" VerticalOptions="CenterAndExpand"
+                <Label Text="{i18n:Translate LabelMovieDBReset}" Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                <Button x:Name="ResetMovieDB" Grid.Column="1" Grid.Row="4" Text="{i18n:Translate ButtonResetDB}" VerticalOptions="CenterAndExpand"
                 HorizontalOptions="Center"
                 Clicked="ResetMovieDB_Clicked" />
+
+                <Label Text="{i18n:Translate LabelTvShowDBReset}" Grid.Column="0" Grid.Row="5" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                <Button x:Name="ResetTvShowDB" Grid.Column="1" Grid.Row="5" Text="{i18n:Translate ButtonResetDB}" VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Clicked="ResetTvShowDB_Clicked" />
+
+                <!--<Label Text="Salva il backup" Grid.Column="0" Grid.Row="5" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                <Button x:Name="DownloadBackup" Grid.Column="1" Grid.Row="5" Text="Download" VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Clicked="DownloadBackup_Clicked" />
+                
+                <Label Text="Invia db via mail" Grid.Column="0" Grid.Row="6" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                <Button x:Name="SendMailWithDB" Grid.Column="1" Grid.Row="6" Text="Mail" VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Clicked="SendMailWithDB_Clicked" />-->
 
             </Grid>
         </FlexLayout>

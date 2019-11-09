@@ -13,7 +13,6 @@ namespace MovieArchive
         private MovieCardModel MC;
         private Property PY;
         private DataBase DB;
-        private const int ParallaxSpeed = 5;
 
         public MovieCardV2(Movie movie)
         { 
@@ -24,14 +23,14 @@ namespace MovieArchive
             MC = new MovieCardModel(movie);
             if(movie.ID==0)
             {
-                this.ToolbarItems.Add(new ToolbarItem("AddMovie", "addmovie.png", () =>
+                this.ToolbarItems.Add(new ToolbarItem("AddMovie", "addmedia.png", async () =>
                 {
                     Movie mi = new Movie((Movie)MC.MovieDet);
 
-                    mi.ID = DB.GetNextMovieIDAsync();
+                    mi.ID = await DB.GetNextMovieIDAsync();
                     mi.DateIns = DateTime.Now;
 
-                    if (DB.InsertMovieAsync(mi).Result > 0)
+                    if (await DB.InsertMovieAsync(mi) > 0)
                     {
                         DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageTitleMovieImported, mi.Title));
                         //disabled for multiple tap
@@ -76,19 +75,19 @@ namespace MovieArchive
             }
         }
 
-        private void Rating_OnSelect(object sender, EventArgs e)
+        private async void Rating_OnSelect(object sender, EventArgs e)
         {
-            RatingImage ratingImage = (RatingImage)sender;
+            //RatingImage ratingImage = (RatingImage)sender;
 
             MC.MovieDet.Rating = (int)Rating.Value;
             MC.MovieDet.DateView = DateTime.Now;
             Movie MO = new Movie(MC.MovieDet);
-            int NUpdRec= DB.UpdateMovieAsync(MO).Result;
+            int NUpdRec= await DB.UpdateMovieAsync(MO);
 
             if (PY.WebApiAddress != "" && PY.WebApiAddress != null)
             {
                 var WS = new WebApi(PY.WebApiAddress);
-                WS.SetRatingWS(MC.MovieDet.ID, (int)MC.MovieDet.Rating).Wait();
+                await WS.SetRatingWS(MC.MovieDet.ID, (int)MC.MovieDet.Rating);
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageRatingSaved);
             }
             else if(NUpdRec > 0)
@@ -100,7 +99,37 @@ namespace MovieArchive
             Synopsis.Text = MC.MovieDet.Synopsis;
         }
 
+        private async void HorListDirector_SelectedItemChanged(object sender, EventArgs e)
+        {
+            var ca = (HorizontalList)sender;
 
+            if (ca.SelectedItem != null)
+            {
+                if (ca.ViewSelect != null)
+                {
+                    await ca.ViewSelect.ScaleTo(1.1, length: 150, easing: Easing.CubicInOut);
+                    await ca.ViewSelect.ScaleTo(1, length: 100, easing: Easing.CubicInOut);
+                }
+                var pe = (Person)(ca.SelectedItem);
+                await Navigation.PushAsync(new PersonCard(pe));
+            }
+        }
+
+        private async void HorListActor_SelectedItemChanged(object sender, EventArgs e)
+        {
+            var ca = (HorizontalList)sender;
+
+            if (ca.SelectedItem != null)
+            {
+                if (ca.ViewSelect != null)
+                {
+                    await ca.ViewSelect.ScaleTo(1.1, length: 150, easing: Easing.CubicInOut);
+                    await ca.ViewSelect.ScaleTo(1, length: 100, easing: Easing.CubicInOut);
+                }
+                var pe = (Person)(ca.SelectedItem);
+                await Navigation.PushAsync(new PersonCard(pe));
+            }
+        }
     }
 
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -11,11 +12,13 @@ namespace MovieArchive
     class DashBoardModel
     {
         public List<Movie> Movies = new List<Movie>();
+        public List<TvShow> TvShows = new List<TvShow>();
         private DataBase DB;
 
         private const string qryLastMovieUploaded = "Select * From Movie Order by dateins Desc LIMIT {0}";
         private const string qryLastMovieSeen = "Select * From Movie Where rating>0 Order by DateView Desc LIMIT {0}";
         private const string qryBestRatingMovie = "Select * From Movie Where rating>0 Order by rating Desc LIMIT {0}";
+        private const string qryLastTvShowSeen = "Select T.* From Episode E Join TvShow T On E.TmdbID=T.TmdbID Where rating>0 Order by DateView Desc LIMIT {0}";
 
         //List<Entry> entries;
 
@@ -23,21 +26,72 @@ namespace MovieArchive
         {
             DB = new DataBase();
         }
-        
-        public async Task LastMovieUploaded(int N)
+
+        #region Movie
+        public async Task<int> LastMovieUploaded(int N)
         {
-            Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieUploaded, N.ToString()));
+            try
+            {
+                Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieUploaded, N.ToString()));
+                return Movies.Count;
+            }
+#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            catch(Exception ex)
+#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            {
+                return 0;
+            }
         }
 
-        public async Task LastMovieSeen(int N)
+        public async Task<int> LastMovieSeen(int N)
         {
-            Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieSeen, N.ToString()));
+            try
+            {
+                Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieSeen, N.ToString()));
+                return Movies.Count;
+            }
+#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            catch(Exception ex)
+#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            {
+                return 0;
+            }
         }
 
-        public async Task BestRatedMovie(int N)
+        public async Task<int> BestRatedMovie(int N)
         {
-            Movies = await DB.GetMovieByQueryAsync(string.Format(qryBestRatingMovie, N.ToString()));
+            try
+            {
+                Movies = await DB.GetMovieByQueryAsync(string.Format(qryBestRatingMovie, N.ToString()));
+                return Movies.Count;
+            }
+#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            catch(Exception ex)
+#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            {
+                return 0;
+            }
         }
+        #endregion
+
+        #region Tv Show
+
+        public async Task<int> LastTvShowSeen(int N)
+        {
+            try
+            {
+                TvShows = await DB.GetTvShowByQueryAsync(string.Format(qryLastTvShowSeen, N.ToString()));
+                return Movies.Count;
+            }
+#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            catch (Exception ex)
+#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            {
+                return 0;
+            }
+        }
+
+        #endregion
 
         public List<string> GetRssNews(string url)
         {

@@ -27,10 +27,10 @@
                     Style="{DynamicResource SubtitleStyle}"/>
           </Grid>
       </ListView.Header>-->
-      <ListView.ItemTemplate>
+        <ListView.ItemTemplate>
         <DataTemplate>
            <ViewCell>
-                        <templates:MenuItemTemplate />
+               <templates:MenuItemTemplate />
            </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>

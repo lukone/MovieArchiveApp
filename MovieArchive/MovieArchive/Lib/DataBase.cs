@@ -2,44 +2,53 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-
+//--------------------------------------------
+// https://www.litedb.org/  no sql per xamarin
+//--------------------------------------------
 namespace MovieArchive
 {
     public class DataBase
     {
-        SQLiteAsyncConnection cnnDBAsync;
-        //SQLiteConnection cnnDB;
-        private readonly int DBVersion = 2;
+        private SQLiteAsyncConnection cnnDBAsync;
 
-        private string dbPath= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MovieArchive.db3");
-        
+        private readonly int DBVersion = 4;
+
+        public string dbPath= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MovieArchive.db3");
+        //public string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "MovieArchive.db3");
+
         public DataBase()
         {
             try
             {
                 cnnDBAsync = new SQLiteAsyncConnection(dbPath);
-                //cnnDB = new SQLiteConnection(dbPath);
-                //Create table if not exists 
+                
                 if (!TableExists("Property"))
                 {
+#pragma warning disable CS4014 // Non è possibile attendere la chiamata, pertanto l'esecuzione del metodo corrente continuerà prima del completamento della chiamata. Provare ad applicare l'operatore 'await' al risultato della chiamata.
                     InitializeDB();
+#pragma warning restore CS4014 // Non è possibile attendere la chiamata, pertanto l'esecuzione del metodo corrente continuerà prima del completamento della chiamata. Provare ad applicare l'operatore 'await' al risultato della chiamata.
                 }
                 else if(!DBUptodate()) //if relese of local db is different upgrade the db
                 {
+#pragma warning disable CS4014 // Non è possibile attendere la chiamata, pertanto l'esecuzione del metodo corrente continuerà prima del completamento della chiamata. Provare ad applicare l'operatore 'await' al risultato della chiamata.
                     UpgradeDB();
+#pragma warning restore CS4014 // Non è possibile attendere la chiamata, pertanto l'esecuzione del metodo corrente continuerà prima del completamento della chiamata. Provare ad applicare l'operatore 'await' al risultato della chiamata.
                 }
+
             }
-            catch(Exception)
-            {       
+            catch(Exception ex)
+            {
+                Console.Write(ex);
             }
         }
 
         #region MovieAsync
-        public Task<List<Movie>> GetMovieAsync()
+        public async Task<List<Movie>> GetMovieAsync()
         {
             try {
-                return cnnDBAsync.Table<Movie>().ToListAsync();
+                return await cnnDBAsync.Table<Movie>().ToListAsync();
             }
             catch(Exception)
             {
@@ -47,10 +56,10 @@ namespace MovieArchive
             }
         }
 
-        public Task<Movie> GetMovieAsync(int id)
+        public async Task<Movie> GetMovieAsync(int id)
         {
             try { 
-                return cnnDBAsync.Table<Movie>().Where(i => i.ID == id).FirstOrDefaultAsync();
+                return await cnnDBAsync.Table<Movie>().Where(i => i.ID == id).FirstOrDefaultAsync();
             }
             catch(Exception)
             {
@@ -58,66 +67,66 @@ namespace MovieArchive
             }
         }
 
-        public Task<int> InsertMovieAsync(Movie item)
+        public async Task<int> InsertMovieAsync(Movie item)
         {
             try { 
-                return cnnDBAsync.InsertAsync(item);
+                return await cnnDBAsync.InsertAsync(item);
             }
             catch (Exception)
             {
-                return null;
+                return 0;
             }
         }
 
-        public Task<int> InsertMoviesAsync(List<Movie> item)
+        public async Task<int> InsertMoviesAsync(List<Movie> item)
         {
             try { 
-                return cnnDBAsync.InsertAllAsync(item);
+                return await cnnDBAsync.InsertAllAsync(item);
             }
             catch (Exception)
             {
-                return null;
+                return 0;
             }
         }
 
-        public Task<int> UpdateMovieAsync(Movie item)
+        public async Task<int> UpdateMovieAsync(Movie item)
         {
             try
             {
-                return cnnDBAsync.UpdateAsync(item);
+                return await cnnDBAsync.UpdateAsync(item);
             }
             catch (Exception)
             {
-                return null;
+                return 0;
             }
         }
 
-        public Task<int> UpdateMoviesAsync(List<Movie> item)
+        public async Task<int> UpdateMoviesAsync(List<Movie> item)
         {
             try { 
-                return cnnDBAsync.UpdateAllAsync(item);
+                return await cnnDBAsync.UpdateAllAsync(item);
             }
             catch (Exception)
             {
-                return null;
+                return 0;
             }
         }
 
-        public Task<int> DeleteMovieAsync(Movie item)
+        public async Task<int> DeleteMovieAsync(Movie item)
         {
             try{
-                return cnnDBAsync.DeleteAsync(item);
+                return await cnnDBAsync.DeleteAsync(item);
             }
             catch (Exception)
             {
-                return null;
+                return 0;
             }
         }
 
-        public Task<List<Movie>> GetMovieByQueryAsync(string Query)
+        public async Task<List<Movie>> GetMovieByQueryAsync(string Query)
         {
             try { 
-                return cnnDBAsync.QueryAsync<Movie>(Query);
+                return await cnnDBAsync.QueryAsync<Movie>(Query);
             }
             catch (Exception)
             {
@@ -125,11 +134,11 @@ namespace MovieArchive
             }
         }
 
-        public int GetNextMovieIDAsync()
+        public async Task<int> GetNextMovieIDAsync()
         {
             try
             {
-                var ID = cnnDBAsync.ExecuteScalarAsync<int>("SELECT COALESCE(MAX(id)+1, 0) FROM Movie").Result;
+                var ID = await cnnDBAsync.ExecuteScalarAsync<int>("SELECT COALESCE(MAX(id)+1, 0) FROM Movie");
                 if (ID == 0) { ID++; };
                 return ID;
             }
@@ -141,31 +150,181 @@ namespace MovieArchive
 
         #endregion
 
-        #region MovieSync
+        #region TvShow
+        public async Task<List<TvShow>> GetTvShowAsync()
+        {
+            try
+            {
+                return await cnnDBAsync.Table<TvShow>().ToListAsync();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
-        //public List<Movie> GetMovies()
-        //{
-        //    try { 
-        //        return cnnDB.Table<Movie>().ToList();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-        //    }
-        //}
+        public async Task<TvShow> GetTvShowAsync(int id)
+        {
+            try
+            {
+                return await cnnDBAsync.Table<TvShow>().Where(i => i.ID == id).FirstOrDefaultAsync();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
-        //public int GetNextMovieID()
-        //{
-        //    try {
-        //        var ID=cnnDB.ExecuteScalar<int>("SELECT COALESCE(MAX(id)+1, 0) FROM Movie");
-        //        if (ID == 0) { ID++; };
-        //        return ID;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return 1;
-        //    }
-        //}
+        public async Task<int> InsertTvShowAsync(TvShow item)
+        {
+            try
+            {
+                return await cnnDBAsync.InsertAsync(item);
+            }
+#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            catch (Exception e)
+#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertTvShowsAsync(List<TvShow> item)
+        {
+            try
+            {
+                return await cnnDBAsync.InsertAllAsync(item);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> UpdateTvShowAsync(TvShow item)
+        {
+            try
+            {
+                return await cnnDBAsync.UpdateAsync(item);
+            }
+#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            catch (Exception e)
+#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> GetNextTvShowIDAsync()
+        {
+            try
+            {
+                var ID = await cnnDBAsync.ExecuteScalarAsync<int>("SELECT COALESCE(MAX(id)+1, 0) FROM TvShow");
+                if (ID == 0) { ID++; };
+                return ID;
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<List<TvShow>> GetTvShowByQueryAsync(string Query)
+        {
+            try
+            {
+                return await cnnDBAsync.QueryAsync<TvShow>(Query);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region Espisode
+        public async Task<List<Episode>> GetEpisodeAsync(int tmdbid,int SeasonN)
+        {
+            try
+            {
+                List<Episode> c = new List<Episode>();
+                c=await cnnDBAsync.Table<Episode>().ToListAsync();
+                return c.Where(i => i.TmdbID == tmdbid && i.SeasonN == SeasonN).ToList();
+            }
+#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            catch (Exception e)
+#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Episode>> GetAllEpisodesAsync(int tmdbid)
+        {
+            try
+            {
+                List<Episode> c = new List<Episode>();
+                c = await cnnDBAsync.Table<Episode>().ToListAsync();
+                return c.Where(i => i.TmdbID == tmdbid).ToList();
+            }
+#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            catch (Exception e)
+#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            {
+                return null;
+            }
+        }
+
+        public async Task<int> InsertEpisodeAsync(Episode item)
+        {
+            try
+            {
+                return await cnnDBAsync.InsertAsync(item);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> UpdateEpisodeAsync(Episode item)
+        {
+            try
+            {
+                return await cnnDBAsync.UpdateAsync(item);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<List<Episode>> GetEpisodeByQueryAsync(string Query)
+        {
+            try
+            {
+                return await cnnDBAsync.QueryAsync<Episode>(Query);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<int> GetNextEpisodeIDAsync()
+        {
+            try
+            {
+                var ID = await cnnDBAsync.ExecuteScalarAsync<int>("SELECT COALESCE(MAX(id)+1, 0) FROM Episode");
+                if (ID == 0) { ID++; };
+                return ID;
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
+        }
 
         #endregion
 
@@ -173,37 +332,39 @@ namespace MovieArchive
 
         public Task<Property> GetPropertyAsync()
         {
-            try { 
+            try {
                 return cnnDBAsync.Table<Property>().FirstOrDefaultAsync();
             }
-            catch (Exception)
+#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            catch (Exception ex)
+#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
                 return null;
             }
         }
 
-        public Task<int> InsertPropertyAsync(Property item)
+        public async Task<int> InsertPropertyAsync(Property item)
         {
             try { 
-                return cnnDBAsync.InsertAsync(item);
+                return await cnnDBAsync.InsertAsync(item);
             }
             catch (Exception)
             {
-                return null;
+                return 0;
             }
         }
 
-        public Task<int> UpdatePropertyAsync(Property item)
+        public async Task<int> UpdatePropertyAsync(Property item)
         {
             try { 
                 if (item.ID==0)
-                    return cnnDBAsync.InsertAsync(item);
+                    return await cnnDBAsync.InsertAsync(item);
                 else
-                    return cnnDBAsync.UpdateAsync(item);
+                    return await cnnDBAsync.UpdateAsync(item);
             }
             catch (Exception)
             {
-                return null;
+                return 0;
             }
         }
 
@@ -211,14 +372,25 @@ namespace MovieArchive
 
         #region DB Generic
 
-        private void InitializeDB()
+        private async Task InitializeDB()
         {
-            cnnDBAsync.CreateTableAsync<Property>().Wait();
-            var PR = new Property();
-            InsertPropertyAsync(PR);
-
-            if (!TableExists("Movie"))
-                cnnDBAsync.CreateTableAsync<Movie>().Wait();
+            try
+            {
+                var res = await cnnDBAsync.CreateTableAsync<Property>();
+                var PR = new Property();
+                PR.DBVersion = DBVersion;
+                PR.AutomaticBackup = false;
+                await InsertPropertyAsync(PR);
+                res = await cnnDBAsync.CreateTableAsync<Movie>();
+                res = await cnnDBAsync.CreateTableAsync<TvShow>();
+                res = await cnnDBAsync.CreateTableAsync<Episode>();
+            }
+#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            catch (Exception ex)
+#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            {
+                throw;
+            }
         }
         
         private bool DBUptodate()
@@ -232,11 +404,14 @@ namespace MovieArchive
                 else
                     return false;
             }
-            catch(Exception)
+#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
+            catch(Exception ex)
+#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
                 return false;
             }
         }
+
         private async Task UpgradeDB()
         {
             if (DBVersion == 2) //first upgrade with property without dbversion field
@@ -256,12 +431,28 @@ namespace MovieArchive
                     await cnnDBAsync.InsertAsync(PR);
                     await cnnDBAsync.ExecuteAsync("DROP TABLE PropertyOld");
                 }
-                catch(Exception)
-                {  }
+                catch (Exception)
+                { }
+            }
+            else if (DBVersion == 3) //New table TvShow and Season
+            {
+                await cnnDBAsync.CreateTableAsync<TvShow>();
+                var PR = GetPropertyAsync().Result;
+                PR.DBVersion = DBVersion;
+                await UpdatePropertyAsync(PR);
+            }
+            else if (DBVersion == 4) //New table TvShow and Season
+            {
+                if(!TableExists("TvShow"))
+                    await cnnDBAsync.CreateTableAsync<TvShow>();
+                await cnnDBAsync.CreateTableAsync<Episode>();
+                var PR = GetPropertyAsync().Result;
+                PR.DBVersion = DBVersion;
+                await UpdatePropertyAsync(PR);
             }
         }
 
-        public virtual bool TableExists(string tableName)
+        public bool TableExists(string tableName)
         {
             bool TableExist=false;
             try { 
@@ -278,50 +469,71 @@ namespace MovieArchive
             }
         }
 
-        public void ResetDB()
+        public async Task ResetDB()
         {
-            try { 
-                if (!TableExists("Movie"))
-                    cnnDBAsync.CreateTableAsync<Movie>().Wait();
-                else
-                {
-                    cnnDBAsync.DropTableAsync<Movie>().Wait();
-                    cnnDBAsync.CreateTableAsync<Movie>().Wait();
-                }
+            try {
+                await ResetMovieDB();
+
+                await ResetTvShowDB();
 
                 if (!TableExists("Property"))
-                    cnnDBAsync.CreateTableAsync<Property>().Wait();
+                    await cnnDBAsync.CreateTableAsync<Property>();
                 else
                 {
-                    cnnDBAsync.DropTableAsync<Property>().Wait();
-                    cnnDBAsync.CreateTableAsync<Property>().Wait();
+                    await cnnDBAsync.DropTableAsync<Property>();
+                    await cnnDBAsync.CreateTableAsync<Property>();
                 }
                 var PR = new Property();
-                InsertPropertyAsync(PR);
+                await InsertPropertyAsync(PR);
             }
             catch (Exception)
             {
-                
+                throw;
             }
         }
 
-        public void ResetMovieDB()
+        public async Task ResetMovieDB()
         {
             try { 
                 if (!TableExists("Movie"))
-                    cnnDBAsync.CreateTableAsync<Movie>().Wait();
+                    await cnnDBAsync.CreateTableAsync<Movie>();
                 else
                 {
-                    cnnDBAsync.DropTableAsync<Movie>().Wait();
-                    cnnDBAsync.CreateTableAsync<Movie>().Wait();
+                    await cnnDBAsync.DropTableAsync<Movie>();
+                    await cnnDBAsync.CreateTableAsync<Movie>();
                 }
             }
             catch (Exception)
             {
-
+                throw;
             }
         }
 
+        public async Task ResetTvShowDB()
+        {
+            try
+            {
+                if (!TableExists("TvShow"))
+                    await cnnDBAsync.CreateTableAsync<TvShow>();
+                else
+                {
+                    await cnnDBAsync.DropTableAsync<TvShow>();
+                    await cnnDBAsync.CreateTableAsync<TvShow>();
+                    await cnnDBAsync.DropTableAsync<Episode>();
+                    await cnnDBAsync.CreateTableAsync<Episode>();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task DisconnectDB()
+        {
+            await cnnDBAsync.CloseAsync();
+        }
         #endregion
+
     }
 }

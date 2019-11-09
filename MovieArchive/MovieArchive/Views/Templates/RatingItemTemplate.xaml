@@ -27,14 +27,15 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!--<Image 	
+            <Image 	
                 Grid.Column="0"
                 Grid.Row="0"
-                Source="{Binding ImageSrc}" Style="{StaticResource CastingImageStyle}" />-->
-            <ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Rating" Style="{StaticResource CastingImageStyle}"
+                Source="{Binding ImageSrc}" Style="{StaticResource CastingImageStyle}" />
+            <!--Crashava in continuazione provare dopo aggiornamento ffimage-->
+            <!--<ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Rating" Style="{StaticResource CastingImageStyle}"
 			                    DownsampleToViewSize="false"
 			                    Source = "{Binding ImageSrc}">
-            </ffimageloading:CachedImage>
+            </ffimageloading:CachedImage>-->
             <Label 
                 Grid.Column="0"
                 Grid.Row="1"

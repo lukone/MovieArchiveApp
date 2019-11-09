@@ -59,9 +59,24 @@
                         </DataTemplate>
                     </controls:HorizontalList.ItemTemplate>
                 </controls:HorizontalList>
-            </Grid> 
-            
-        </StackLayout>
+            </Grid>
+            <Grid x:Name="TvLastSeenList" BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" x:Name="TitleTvLastSeen" Text="{i18n:Translate TitleDashBoardLast3TvShowEpisodeSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListTvLastSeen" SelectedItemChanged="HorListTvLastSeen_SelectedItemChanged"
+                ItemsSource="{Binding TvShows}" 
+                VerticalOptions="Start" BackgroundColor="Transparent">
+                    <controls:HorizontalList.ItemTemplate>
+                        <DataTemplate>
+                            <templates:PosterItemTemplate />
+                        </DataTemplate>
+                    </controls:HorizontalList.ItemTemplate>
+                </controls:HorizontalList>
+            </Grid>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

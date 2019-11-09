@@ -5,8 +5,7 @@
              xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
              x:Class="MovieArchive.MovieUnseen">
     <ContentPage.ToolbarItems>
-        <ToolbarItem 
-            Icon="savecsv" Activated="ToolbarItem_Activated" />
+        <ToolbarItem x:Name="SaveCSV" Icon="savecsv" Activated="SaveCSV_Activated" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <flv:FlowListView SeparatorVisibility="None" HasUnevenRows="true" x:Name="MovieListUnseen" FlowItemTapped="MovieListUnseen_FlowItemTapped"
