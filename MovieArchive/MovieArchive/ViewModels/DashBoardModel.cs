@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Crashes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace MovieArchive
             catch(Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -54,6 +56,7 @@ namespace MovieArchive
             catch(Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -69,6 +72,7 @@ namespace MovieArchive
             catch(Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -87,6 +91,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }

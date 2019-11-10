@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Crashes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,10 @@ namespace MovieArchive
                 return 1;
             }
 #pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-            catch (Exception e)
+            catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
 
@@ -50,9 +52,10 @@ namespace MovieArchive
                 return TvShows.Count;
             }
 #pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-            catch (Exception e)
+            catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }

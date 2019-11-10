@@ -1,4 +1,5 @@
-﻿using MovieArchive.Resources;
+﻿using Microsoft.AppCenter.Crashes;
+using MovieArchive.Resources;
 using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using System;
@@ -78,7 +79,7 @@ namespace MovieArchive
                         DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageNMovieImported, MediaToIns.Movies.Count.ToString()));
                     }
                 }
-                catch (Exception ex) { Console.Write(ex); }
+                catch (Exception ex) { Crashes.TrackError(ex); }
             });
 
             if (PY.WebApiAddress!=null && PY.WebApiAddress != "" && TypeOfMedia == 1)

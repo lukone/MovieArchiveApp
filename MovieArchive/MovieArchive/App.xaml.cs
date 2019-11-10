@@ -40,7 +40,10 @@ namespace MovieArchive
                 var DE = new DataExchange();
                 await DE.UpdateDataFromWebApi();
             }
-            catch (Exception e) { throw e; };
+            catch (Exception ex) {
+                Crashes.TrackError(ex);
+                throw ex; 
+            };
         }
 
         protected async override void OnSleep()
@@ -66,8 +69,9 @@ namespace MovieArchive
                     }
                 }
             }
-            catch (Exception e) {
-                throw e; };
+            catch (Exception ex) {
+                Crashes.TrackError(ex);
+                throw ex; };
         }
 
         protected override void OnResume()

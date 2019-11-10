@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Microsoft.AppCenter.Crashes;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,7 +41,7 @@ namespace MovieArchive
             }
             catch(Exception ex)
             {
-                Console.Write(ex);
+                Crashes.TrackError(ex);
             }
         }
 
@@ -50,8 +51,9 @@ namespace MovieArchive
             try {
                 return await cnnDBAsync.Table<Movie>().ToListAsync();
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -61,8 +63,9 @@ namespace MovieArchive
             try { 
                 return await cnnDBAsync.Table<Movie>().Where(i => i.ID == id).FirstOrDefaultAsync();
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -72,8 +75,9 @@ namespace MovieArchive
             try { 
                 return await cnnDBAsync.InsertAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -83,8 +87,9 @@ namespace MovieArchive
             try { 
                 return await cnnDBAsync.InsertAllAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -95,8 +100,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.UpdateAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -106,8 +112,9 @@ namespace MovieArchive
             try { 
                 return await cnnDBAsync.UpdateAllAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -117,8 +124,9 @@ namespace MovieArchive
             try{
                 return await cnnDBAsync.DeleteAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex )
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -128,8 +136,9 @@ namespace MovieArchive
             try { 
                 return await cnnDBAsync.QueryAsync<Movie>(Query);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -142,8 +151,9 @@ namespace MovieArchive
                 if (ID == 0) { ID++; };
                 return ID;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 1;
             }
         }
@@ -157,8 +167,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.Table<TvShow>().ToListAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -169,8 +180,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.Table<TvShow>().Where(i => i.ID == id).FirstOrDefaultAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -182,9 +194,10 @@ namespace MovieArchive
                 return await cnnDBAsync.InsertAsync(item);
             }
 #pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-            catch (Exception e)
+            catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -195,8 +208,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.InsertAllAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -208,9 +222,10 @@ namespace MovieArchive
                 return await cnnDBAsync.UpdateAsync(item);
             }
 #pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-            catch (Exception e)
+            catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -223,8 +238,9 @@ namespace MovieArchive
                 if (ID == 0) { ID++; };
                 return ID;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 1;
             }
         }
@@ -235,8 +251,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.QueryAsync<TvShow>(Query);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -253,9 +270,10 @@ namespace MovieArchive
                 return c.Where(i => i.TmdbID == tmdbid && i.SeasonN == SeasonN).ToList();
             }
 #pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-            catch (Exception e)
+            catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -269,9 +287,10 @@ namespace MovieArchive
                 return c.Where(i => i.TmdbID == tmdbid).ToList();
             }
 #pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-            catch (Exception e)
+            catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -282,8 +301,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.InsertAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -294,8 +314,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.UpdateAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -306,8 +327,9 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.QueryAsync<Episode>(Query);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -320,8 +342,9 @@ namespace MovieArchive
                 if (ID == 0) { ID++; };
                 return ID;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 1;
             }
         }
@@ -339,6 +362,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -348,8 +372,9 @@ namespace MovieArchive
             try { 
                 return await cnnDBAsync.InsertAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -362,8 +387,9 @@ namespace MovieArchive
                 else
                     return await cnnDBAsync.UpdateAsync(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return 0;
             }
         }
@@ -389,6 +415,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 throw;
             }
         }
@@ -408,6 +435,7 @@ namespace MovieArchive
             catch(Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
+                Crashes.TrackError(ex);
                 return false;
             }
         }
@@ -431,8 +459,10 @@ namespace MovieArchive
                     await cnnDBAsync.InsertAsync(PR);
                     await cnnDBAsync.ExecuteAsync("DROP TABLE PropertyOld");
                 }
-                catch (Exception)
-                { }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                }
             }
             else if (DBVersion == 3) //New table TvShow and Season
             {
@@ -463,8 +493,9 @@ namespace MovieArchive
             
                 return TableExist;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return false;
             }
         }
@@ -486,8 +517,9 @@ namespace MovieArchive
                 var PR = new Property();
                 await InsertPropertyAsync(PR);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw;
             }
         }
@@ -503,8 +535,9 @@ namespace MovieArchive
                     await cnnDBAsync.CreateTableAsync<Movie>();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw;
             }
         }
@@ -523,8 +556,9 @@ namespace MovieArchive
                     await cnnDBAsync.CreateTableAsync<Episode>();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 throw;
             }
         }

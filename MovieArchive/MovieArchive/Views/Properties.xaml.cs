@@ -1,4 +1,5 @@
-﻿using MovieArchive.Resources;
+﻿using Microsoft.AppCenter.Crashes;
+using MovieArchive.Resources;
 using System;
 using System.IO;
 using System.Text;
@@ -170,7 +171,11 @@ namespace MovieArchive
 
                 }
             }
-            catch (Exception ex) { throw ex; };
+            catch (Exception ex) 
+            {
+                Crashes.TrackError(ex); 
+                throw ex; 
+            };
         }
 
         //private async void AutoBkp_OnChanged(object sender, ToggledEventArgs e)

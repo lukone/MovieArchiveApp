@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Crashes;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,8 +51,11 @@ namespace MovieArchive
                         OMDMovie OM = await WA.GetMovieOMDAPI(TvShowDet.ImdbID);
                         TvShowDet.Ratings.AddRange(OM.Ratings);
                         return 1;
-                    }catch(Exception)
-                    { return 0; }
+                    }catch(Exception ex)
+                    {
+                        Crashes.TrackError(ex);
+                        return 0; 
+                    }
       
             }
     }

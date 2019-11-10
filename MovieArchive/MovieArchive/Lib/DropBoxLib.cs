@@ -1,5 +1,6 @@
 ﻿using Dropbox.Api;
 using Dropbox.Api.Files;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -83,7 +84,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
-                //AppService.WriteDebug(ex);
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -103,7 +104,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
-                //AppService.WriteDebug(ex);
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -124,7 +125,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
-                //AppService.WriteDebug(ex);
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -143,7 +144,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
-
+                Crashes.TrackError(ex);
                 return null;
             }
         }
@@ -174,7 +175,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
-                //AppService.WriteDebug(ex);
+                Crashes.TrackError(ex);
                 IsAuthorized = false;
             }
         }
@@ -205,7 +206,7 @@ namespace MovieArchive
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
-                //AppService.WriteDebug(ex);
+                Crashes.TrackError(ex);
                 return false;
             }
         }
@@ -233,9 +234,10 @@ namespace MovieArchive
 
                 await SaveDropboxToken(AccessToken);
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
                 // There was an error in the URI passed to ParseTokenFragment
+                Crashes.TrackError(ex);
             }
             finally
             {

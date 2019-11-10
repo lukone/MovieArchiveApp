@@ -12,6 +12,7 @@ using TMDbLib.Objects.TvShows;
 using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 using Xamarin.Forms;
+using Microsoft.AppCenter.Crashes;
 
 namespace MovieArchive
 {
@@ -77,7 +78,7 @@ namespace MovieArchive
 #pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
-            { }
+            { Crashes.TrackError(ex); }
 
             //FileInfo FileRead = new FileInfo(FilePath);
             //string Row;
@@ -144,9 +145,12 @@ namespace MovieArchive
                     return r;
                 }
 #pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-                catch (Exception e)
+                catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
-                { return 0; }
+                {
+                    Crashes.TrackError(ex);
+                    return 0; 
+                }
             }
             else
                 throw new NotSupportedException("ERROR: WebApi address not valid");
@@ -191,8 +195,11 @@ namespace MovieArchive
                     }
 
                 }
-                catch (Exception e)
-                { throw e; }
+                catch (Exception ex)
+                { 
+                    Crashes.TrackError(ex); 
+                    throw ex; 
+                }
             }
         }
 
@@ -263,8 +270,11 @@ namespace MovieArchive
 
                 return MovieFound;
             }
-            catch(Exception e)
-            { throw e; }
+            catch(Exception ex)
+            {
+                Crashes.TrackError(ex);
+                throw ex; 
+            }
         }
 
         public async Task<List<Person>> GetCastAndCrew(int TMDbID)
@@ -405,8 +415,11 @@ namespace MovieArchive
 
                 return TvShowFound;
             }
-            catch (Exception e)
-            { throw e; }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                throw ex; 
+            }
         }
 
         //import tv show from file path 
@@ -479,7 +492,7 @@ namespace MovieArchive
 #pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch (Exception ex)
 #pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
-            { }
+            { Crashes.TrackError(ex); }
         }
 
         public async Task<TvShowDetails> GetTvShowDetail(TvShowDetails tvshow)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Crashes;
+using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -65,8 +66,11 @@ namespace MovieArchive
                     HorListTvLastSeen.ItemsSource = TvShows;
                 }
             }
-            catch(Exception e)
-            { throw e; }
+            catch(Exception ex)
+            {
+                Crashes.TrackError(ex);
+                throw ex; 
+            }
         }
 
         //private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)

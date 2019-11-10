@@ -1,4 +1,5 @@
 ﻿using LaavorRatingSwap;
+using Microsoft.AppCenter.Crashes;
 using MovieArchive;
 using MovieArchive.Resources;
 using System;
@@ -69,9 +70,10 @@ namespace MovieArchive
                 await MC.GetWebRating();
                 HorListRating.ItemsSource = MC.MovieDet.Ratings;
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                throw e;
+                Crashes.TrackError(ex);
+                throw ex;
             }
         }
 

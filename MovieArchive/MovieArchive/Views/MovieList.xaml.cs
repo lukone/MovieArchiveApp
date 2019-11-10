@@ -1,4 +1,5 @@
-﻿using MovieArchive.Resources;
+﻿using Microsoft.AppCenter.Crashes;
+using MovieArchive.Resources;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -66,8 +67,9 @@ namespace MovieArchive
                 DataExchange.WriteCSV(MoviesList.Movies, File);
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageCvsFileExported);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 DependencyService.Get<IMessage>().ShortAlert(AppResources.ErrorMessageCvsFileExported);
             }
         }

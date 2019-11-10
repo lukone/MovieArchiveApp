@@ -1,4 +1,5 @@
 ﻿using LaavorRatingSwap;
+using Microsoft.AppCenter.Crashes;
 using MovieArchive.Resources;
 using System;
 using Xamarin.Forms;
@@ -31,9 +32,10 @@ namespace MovieArchive
 
                 EpisodeList.ItemsSource = TS.SeasonDet.Episodes;    
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                throw e;
+                Crashes.TrackError(ex);
+                throw ex;
             }
         }
 
