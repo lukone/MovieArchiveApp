@@ -54,7 +54,8 @@ namespace MovieArchive
                         File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), AppResources.TitlePageTvShowList + ".csv");
                         break;
                     case Device.Android:
-                        File = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, AppResources.TitlePageTvShowList + ".csv");
+                        //File = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, AppResources.TitlePageTvShowList + ".csv");
+                        File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), AppResources.TitlePageTvShowList + ".csv");
                         break;
                     default:
                         File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), AppResources.TitlePageTvShowList + ".csv");
