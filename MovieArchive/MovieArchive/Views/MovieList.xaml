@@ -4,6 +4,7 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
              xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
+             xmlns:local="clr-namespace:MovieArchive.Models"
              x:Class="MovieArchive.MovieList">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="TypeOfSeen" Icon="unseen" Activated="TypeOfSeen_Activated" />
