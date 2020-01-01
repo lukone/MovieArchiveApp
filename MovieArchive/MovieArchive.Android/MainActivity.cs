@@ -32,6 +32,7 @@ namespace MovieArchive.Droid
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
+            //Remember to replace it with yours
             MobileAds.Initialize(ApplicationContext, "ca-app-pub-3165008211020391~8747442659");
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 

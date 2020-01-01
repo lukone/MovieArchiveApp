@@ -68,7 +68,6 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AdBanner_iOS.cs" />
     <Compile Include="IFile_IOS.cs" />
     <Compile Include="IMessage_IOS.cs" />
     <Compile Include="Main.cs" />
@@ -143,6 +142,9 @@
     </PackageReference>
     <PackageReference Include="Dropbox.Api">
       <Version>4.9.4</Version>
+    </PackageReference>
+    <PackageReference Include="MarcTron.Admob">
+      <Version>1.4.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>2.6.4</Version>

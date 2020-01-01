@@ -5,62 +5,62 @@
              xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
              xmlns:controls="clr-namespace:MovieArchive"
              xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
-             xmlns:local="clr-namespace:MovieArchive.Models"
+             xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              Title="{i18n:Translate TitlePageDashBoard}">
     <ContentPage.Content>
         <ScrollView>
-        <StackLayout>
-            <Label x:Name="WelcomeMessage1" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage1}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
+            <StackLayout>
+                <Label x:Name="WelcomeMessage1" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage1}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
                 <Label x:Name="WelcomeMessage2" IsVisible="False" Text="{i18n:Translate LabelWelcomeMessage2}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
-           
-            <Grid x:Name="LastAddedList" BackgroundColor="Transparent">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" x:Name="TitleLastAdd" Text="{i18n:Translate TitleDashBoardLast3MovieAdd}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+
+                <Grid x:Name="LastAddedList" BackgroundColor="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="TitleLastAdd" Text="{i18n:Translate TitleDashBoardLast3MovieAdd}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
                     <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListLastAdded" SelectedItemChanged="HorListLastAdded_SelectedItemChanged"
                     ItemsSource="{Binding Movies}" 
                     VerticalOptions="Start" BackgroundColor="Transparent">
-                    <controls:HorizontalList.ItemTemplate>
-                        <DataTemplate>
-                            <templates:PosterItemTemplate />
-                        </DataTemplate>
-                    </controls:HorizontalList.ItemTemplate>
-                </controls:HorizontalList>
-            </Grid> 
-            <Grid x:Name="LastSeenList" BackgroundColor="Transparent">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" x:Name="TitleLastSaw" Text="{i18n:Translate TitleDashBoardLast3MovieSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                        <controls:HorizontalList.ItemTemplate>
+                            <DataTemplate>
+                                <templates:PosterItemTemplate />
+                            </DataTemplate>
+                        </controls:HorizontalList.ItemTemplate>
+                    </controls:HorizontalList>
+                </Grid>
+                <Grid x:Name="LastSeenList" BackgroundColor="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="TitleLastSaw" Text="{i18n:Translate TitleDashBoardLast3MovieSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
                     <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListLastSeen" SelectedItemChanged="HorListLastSeen_SelectedItemChanged"
                     ItemsSource="{Binding Movies}" 
                     VerticalOptions="Start" BackgroundColor="Transparent">
-                    <controls:HorizontalList.ItemTemplate>
-                        <DataTemplate>
-                            <templates:PosterItemTemplate />
-                        </DataTemplate>
-                    </controls:HorizontalList.ItemTemplate>
-                </controls:HorizontalList>
-            </Grid> 
-            <Grid x:Name="BestRatingList" BackgroundColor="Transparent">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" x:Name="TitleBestRating" Text="{i18n:Translate TitleDashBoardBest3RatedMovie}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-                <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListBestRating" SelectedItemChanged="HorListBestRating_SelectedItemChanged"
+                        <controls:HorizontalList.ItemTemplate>
+                            <DataTemplate>
+                                <templates:PosterItemTemplate />
+                            </DataTemplate>
+                        </controls:HorizontalList.ItemTemplate>
+                    </controls:HorizontalList>
+                </Grid>
+                <Grid x:Name="BestRatingList" BackgroundColor="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="TitleBestRating" Text="{i18n:Translate TitleDashBoardBest3RatedMovie}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListBestRating" SelectedItemChanged="HorListBestRating_SelectedItemChanged"
                     ItemsSource="{Binding Movies}" 
                     VerticalOptions="Start" BackgroundColor="Transparent">
-                    <controls:HorizontalList.ItemTemplate>
-                        <DataTemplate>
-                            <templates:PosterItemTemplate />
-                        </DataTemplate>
-                    </controls:HorizontalList.ItemTemplate>
-                </controls:HorizontalList>
-            </Grid>
+                        <controls:HorizontalList.ItemTemplate>
+                            <DataTemplate>
+                                <templates:PosterItemTemplate />
+                            </DataTemplate>
+                        </controls:HorizontalList.ItemTemplate>
+                    </controls:HorizontalList>
+                </Grid>
                 <Grid x:Name="TvLastSeenList" BackgroundColor="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -77,13 +77,16 @@
                         </controls:HorizontalList.ItemTemplate>
                     </controls:HorizontalList>
                 </Grid>
-                <StackLayout x:Name="stackLayout" BackgroundColor="Yellow" VerticalOptions="FillAndExpand" Padding="0,0,0,0">
-                    <Label Text="Banner Advertisement" HorizontalOptions="CenterAndExpand" TextColor="Green" FontSize="25" />
-                    <local:AdBanner Size="Standardbanner" VerticalOptions="EndAndExpand"/>
-                </StackLayout>
-
+                <controls1:MTAdView x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/2920400904" VerticalOptions="EndAndExpand" >
+                    <controls1:MTAdView.HeightRequest>
+                        <x:OnIdiom>
+                            <x:OnIdiom.Phone>50</x:OnIdiom.Phone>
+                            <x:OnIdiom.Tablet>90</x:OnIdiom.Tablet>
+                            <x:OnIdiom.Desktop>90</x:OnIdiom.Desktop>
+                        </x:OnIdiom>
+                    </controls1:MTAdView.HeightRequest>
+                </controls1:MTAdView>
             </StackLayout>
-
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -30,6 +30,7 @@
   <ItemGroup>
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Dropbox.Api" Version="4.9.4" />
+    <PackageReference Include="MarcTron.Admob" Version="1.4.5" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.6.4" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.6.4" />
     <PackageReference Include="Microsoft.Toolkit.Parsers" Version="6.0.0" />

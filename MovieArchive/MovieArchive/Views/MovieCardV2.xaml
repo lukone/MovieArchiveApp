@@ -6,6 +6,7 @@
              xmlns:lv="clr-namespace:LaavorRatingSwap;assembly=RatingAndSwap"
              xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              x:Class="MovieArchive.MovieCardV2"
              Title="{i18n:Translate TitlePageMovieCard}" >
     <ContentPage.Content>
@@ -50,6 +51,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="70"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="320"/>
@@ -175,7 +177,17 @@
                         </StackLayout>
                     </Grid>
 
+                    <controls1:MTAdView Grid.Row="8"  Grid.ColumnSpan="2" x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/2920400904" VerticalOptions="EndAndExpand" >
+                        <controls1:MTAdView.HeightRequest>
+                            <x:OnIdiom>
+                                <x:OnIdiom.Phone>50</x:OnIdiom.Phone>
+                                <x:OnIdiom.Tablet>90</x:OnIdiom.Tablet>
+                                <x:OnIdiom.Desktop>90</x:OnIdiom.Desktop>
+                            </x:OnIdiom>
+                        </controls1:MTAdView.HeightRequest>
+                    </controls1:MTAdView>
                 </Grid>
+               
             </ScrollView>
         </Grid>
     </ContentPage.Content>

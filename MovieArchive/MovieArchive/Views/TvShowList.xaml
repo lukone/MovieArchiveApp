@@ -4,6 +4,7 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
              xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
+             xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              x:Class="MovieArchive.TvShowList">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="TypeOfSeen" Icon="unseen" Activated="TypeOfSeen_Activated" />
@@ -26,6 +27,15 @@
                 </flv:FlowListView.FlowColumnTemplate>
 
             </flv:FlowListView>
+            <controls1:MTAdView x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/2920400904" VerticalOptions="EndAndExpand" >
+                <controls1:MTAdView.HeightRequest>
+                    <x:OnIdiom>
+                        <x:OnIdiom.Phone>50</x:OnIdiom.Phone>
+                        <x:OnIdiom.Tablet>90</x:OnIdiom.Tablet>
+                        <x:OnIdiom.Desktop>90</x:OnIdiom.Desktop>
+                    </x:OnIdiom>
+                </controls1:MTAdView.HeightRequest>
+            </controls1:MTAdView>
         </StackLayout>
     </ContentPage.Content>
 
