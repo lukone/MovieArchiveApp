@@ -26,6 +26,10 @@
                 </flv:FlowListView.FlowColumnTemplate>
 
             </flv:FlowListView>
+            <StackLayout x:Name="stackLayout" BackgroundColor="Yellow" VerticalOptions="FillAndExpand" Padding="0,0,0,0">
+                <Label Text="Banner Advertisement" HorizontalOptions="CenterAndExpand" TextColor="Green" FontSize="25" />
+                <local:AdBanner Size="Standardbanner" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 
