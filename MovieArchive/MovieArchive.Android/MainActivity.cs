@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
+using Android.Gms.Ads;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -31,7 +32,7 @@ namespace MovieArchive.Droid
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
-
+            MobileAds.Initialize(ApplicationContext, "ca-app-pub-3165008211020391~8747442659");
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             DisplayCrashReport();

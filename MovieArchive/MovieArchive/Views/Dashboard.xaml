@@ -5,6 +5,7 @@
              xmlns:i18n="clr-namespace:MovieArchive.Helpers;assembly=MovieArchive"
              xmlns:controls="clr-namespace:MovieArchive"
              xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
+             xmlns:local="clr-namespace:MovieArchive.Models"
              Title="{i18n:Translate TitlePageDashBoard}">
     <ContentPage.Content>
         <ScrollView>
@@ -60,23 +61,29 @@
                     </controls:HorizontalList.ItemTemplate>
                 </controls:HorizontalList>
             </Grid>
-            <Grid x:Name="TvLastSeenList" BackgroundColor="Transparent">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" x:Name="TitleTvLastSeen" Text="{i18n:Translate TitleDashBoardLast3TvShowEpisodeSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-                <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListTvLastSeen" SelectedItemChanged="HorListTvLastSeen_SelectedItemChanged"
+                <Grid x:Name="TvLastSeenList" BackgroundColor="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" x:Name="TitleTvLastSeen" Text="{i18n:Translate TitleDashBoardLast3TvShowEpisodeSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListTvLastSeen" SelectedItemChanged="HorListTvLastSeen_SelectedItemChanged"
                 ItemsSource="{Binding TvShows}" 
                 VerticalOptions="Start" BackgroundColor="Transparent">
-                    <controls:HorizontalList.ItemTemplate>
-                        <DataTemplate>
-                            <templates:PosterItemTemplate />
-                        </DataTemplate>
-                    </controls:HorizontalList.ItemTemplate>
-                </controls:HorizontalList>
-            </Grid>
+                        <controls:HorizontalList.ItemTemplate>
+                            <DataTemplate>
+                                <templates:PosterItemTemplate />
+                            </DataTemplate>
+                        </controls:HorizontalList.ItemTemplate>
+                    </controls:HorizontalList>
+                </Grid>
+                <StackLayout x:Name="stackLayout" BackgroundColor="Yellow" VerticalOptions="FillAndExpand" Padding="0,0,0,0">
+                    <Label Text="Banner Advertisement" HorizontalOptions="CenterAndExpand" TextColor="Green" FontSize="25" />
+                    <local:AdBanner Size="Standardbanner" VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+
             </StackLayout>
+
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
