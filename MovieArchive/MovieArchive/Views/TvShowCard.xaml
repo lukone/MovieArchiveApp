@@ -182,7 +182,7 @@
                             </controls:HorizontalList.ItemTemplate>
                         </controls:HorizontalList>
                     </Grid>
-                    <controls1:MTAdView Grid.Row="8"  Grid.ColumnSpan="2" x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/2920400904" VerticalOptions="EndAndExpand" >
+                    <controls1:MTAdView Grid.Row="8"  Grid.ColumnSpan="2" x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/3754469412" VerticalOptions="EndAndExpand" >
                         <controls1:MTAdView.HeightRequest>
                             <x:OnIdiom>
                                 <x:OnIdiom.Phone>50</x:OnIdiom.Phone>
