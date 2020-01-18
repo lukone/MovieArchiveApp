@@ -180,7 +180,7 @@
       <Version>2.4.11.982</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.4.0.991265</Version>
+      <Version>4.4.0.991477</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Google.iOS.MobileAds">
       <Version>7.47.0</Version>
