@@ -151,7 +151,7 @@ namespace MovieArchive
         //Multiple information from imdb, rotten tomatoes ecc
         //    http://www.omdbapi.com/?apikey=[yourkey]&
 
-        private readonly string GetMovieData = "http://www.omdbapi.com/?apikey={0}&i={1}";
+        private readonly string GetMovieData = "https://www.omdbapi.com/?apikey={0}&i={1}";
 
         public async Task<OMDMovie> GetMovieOMDAPI(string IMDBID)
         {

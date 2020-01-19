@@ -31,6 +31,6 @@ namespace MovieArchive
                 return Site;
             }
         }
-        public string ImageSrc { get { return string.Format("http://logo.clearbit.com/{0}", WebSite); } }
+        public string ImageSrc { get { return string.Format("https://logo.clearbit.com/{0}", WebSite); } }
     }
 }
