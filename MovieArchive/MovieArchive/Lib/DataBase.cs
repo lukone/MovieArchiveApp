@@ -13,6 +13,7 @@ namespace MovieArchive
     public class DataBase
     {
         private SQLiteAsyncConnection cnnDBAsync;
+        private SQLiteConnection cnnDB;
 
         private readonly int DBVersion = 4;
 
@@ -398,18 +399,19 @@ namespace MovieArchive
 
         #region DB Generic
 
-        private async Task InitializeDB()
+        private void InitializeDB()
         {
             try
             {
-                var res = await cnnDBAsync.CreateTableAsync<Property>();
+                cnnDB = new SQLiteConnection(dbPath);
+                var res = cnnDB.CreateTable<Property>();
                 var PR = new Property();
                 PR.DBVersion = DBVersion;
                 PR.AutomaticBackup = false;
-                await InsertPropertyAsync(PR);
-                res = await cnnDBAsync.CreateTableAsync<Movie>();
-                res = await cnnDBAsync.CreateTableAsync<TvShow>();
-                res = await cnnDBAsync.CreateTableAsync<Episode>();
+                var ris = cnnDB.Insert(PR);          
+                res = cnnDB.CreateTable<Movie>();
+                res = cnnDB.CreateTable<TvShow>();
+                res = cnnDB.CreateTable<Episode>();
             }
 #pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch (Exception ex)
