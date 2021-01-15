@@ -31,9 +31,7 @@ namespace MovieArchive
                 return 1;
 
             }
-#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
                 Crashes.TrackError(ex);
                 return 0;
@@ -53,9 +51,7 @@ namespace MovieArchive
                     Movies = Movies.Where(n => n.Title.Contains(SearchText)).Where(n => n.Rating!=0).OrderByDescending(n => n.DateIns).ToList();
                 return Movies.Count;
             }
-#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
                 Crashes.TrackError(ex);
                 return 0;

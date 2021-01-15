@@ -34,6 +34,8 @@ namespace MovieArchive
 
         private readonly string GetData = "GetDataFromDB.php?{0}={1}";
         private readonly string SetRating = "SetRating.php?{0}={1}&{2}={3}";
+        private readonly string InsNewMovie = "InsMovie.php?{0}={1}&{2}={3}&{4}={5}&{6}={7}";
+        private readonly string InsMovieGenre = "InsMovieGenre.php?{0}={1}&{2}={3}";
         private readonly string UpdateBackdrop = "UpdateBackDrop.php";
         private readonly string GetRating = "GetLastRating.php?{0}={1}";
         static readonly string Active = "IsActive.php";
@@ -145,6 +147,39 @@ namespace MovieArchive
             if (!response.IsSuccessStatusCode)
                 throw new NotSupportedException(string.Format("ERROR: WebApi Post ", uri.ToString()));
         }
+
+        public async Task InsertNewMovie(int IDTMDB, string Title, string Picture,string Backdrop)
+        {
+            var uri = new Uri(String.Format(WebCall + InsNewMovie, "IDTMDB", IDTMDB.ToString(), "Title", Title, "Picture", Picture, "Backdrop", Backdrop));
+            try
+            {
+                var response = client.GetAsync(uri).Result;
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                    throw new NotSupportedException(string.Format("ERROR: WebApi Post ", uri.ToString()));
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        public async Task InsertMovieGenre(int IDmovie, string Genre)
+        {
+            var uri = new Uri(String.Format(WebCall + InsMovieGenre, "IDmovie", IDmovie.ToString(), "Genre", Genre));
+            try
+            {
+                var response = client.GetAsync(uri).Result;
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                    throw new NotSupportedException(string.Format("ERROR: WebApi Post ", uri.ToString()));
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+        
         #endregion
 
         #region omdbapi.com
