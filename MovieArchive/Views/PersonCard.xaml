@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MovieArchive"
+             xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
+             xmlns:resource="clr-namespace:MovieArchive.Resources"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="MovieArchive.PersonCard">
+    <ContentPage.Content>
+        <Grid x:Name="GridMovie" >
+            <ScrollView 
+                VerticalOptions="FillAndExpand" 
+                HorizontalOptions="FillAndExpand">
+                <!--RowSpacing="0"-->
+                <Grid VerticalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Poster and info -->
+                    <Grid Grid.Row="0" Padding="10"  Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ffimageloading:CachedImage x:Name="Photo" Grid.Column="0" Aspect="AspectFit" VerticalOptions="StartAndExpand" HorizontalOptions="Start"
+			                    DownsampleToViewSize="false"
+			                    Source = "{Binding PhotoW632}">
+                        </ffimageloading:CachedImage>
+                        <FlexLayout Grid.Column="1" Direction="Column" JustifyContent="Start">
+
+                            <Label Text="{x:Static resource:AppResources.LabelTitlePersonPlaceOfBirth}" Style="{StaticResource StorylineTitleStyle}"/>
+                            <Label Text="{Binding PlaceOfBirth}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
+
+                            <Label Text="{x:Static resource:AppResources.LabelTitlePersonBirthday}" Style="{StaticResource StorylineTitleStyle}"/>
+                            <Label Text="{Binding Birthday , StringFormat='{0:d}'}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
+
+                            <Label Text="{x:Static resource:AppResources.LabelTitlePersonDeathday}" Style="{StaticResource StorylineTitleStyle}"/>
+                            <Label Text="{Binding Deathday , StringFormat='{0:d}'}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
+
+                            <Label Text="{x:Static resource:AppResources.LabelTitlePersonGender}" Style="{StaticResource StorylineTitleStyle}"/>
+                            <Label Text="{Binding Gender}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
+
+                            <Label Text="{x:Static resource:AppResources.LabelTitlePersonHomepage}" Style="{StaticResource StorylineTitleStyle}"/>
+                            <Label Text="{Binding HomePage}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
+                        </FlexLayout>
+                    </Grid>
+
+                    <!-- Biography -->
+                    <Label x:Name="Biography" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Biography}" Style="{StaticResource StorylineStyle}" VerticalTextAlignment="Start"/>
+
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

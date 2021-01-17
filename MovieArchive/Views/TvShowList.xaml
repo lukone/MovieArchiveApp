@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:templates="clr-namespace:MovieArchive.Views.Templates"
+             xmlns:resource="clr-namespace:MovieArchive.Resources"
+             xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
+             x:Class="MovieArchive.TvShowList">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="TypeOfSeen" Icon="unseen" Activated="TypeOfSeen_Activated" />
+        <ToolbarItem x:Name="ShowSearch" Icon="search" Activated="ShowSearch_Activated" />
+        <ToolbarItem x:Name="SaveCSV" Icon="savecsv" Activated="SaveCSV_Activated" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar x:Name="SearchBar" IsVisible="False" Placeholder="{x:Static resource:AppResources.SearchBarPlaceHoler}" SearchButtonPressed="SearchBar_SearchButtonPressed"/>
+            <Label x:Name="NoTvShowFound" IsVisible="False" Text="{x:Static resource:AppResources.LabelNoMovieFound}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <ActivityIndicator x:Name="LoadingIndicator" Color="{StaticResource AccentColor}" IsRunning="False" IsVisible="False" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <flv:FlowListView SeparatorVisibility="None" HasUnevenRows="true" x:Name="TvShowListFl" FlowItemTapped="TvShowListFl_FlowItemTapped"
+			    FlowItemTappedCommand="{Binding ItemTappedCommand}" FlowLastTappedItem="{Binding LastTappedItem}" FlowTappedBackgroundColor="{StaticResource AccentColor}"
+			    FlowColumnMinWidth="110" FlowItemsSource="{Binding TvShows}">
+
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <templates:MovieListItemTemplate />
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+
+            </flv:FlowListView>
+            <controls1:MTAdView x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/3754469412" VerticalOptions="EndAndExpand" >
+                <controls1:MTAdView.HeightRequest>
+                    <x:OnIdiom>
+                        <x:OnIdiom.Phone>50</x:OnIdiom.Phone>
+                        <x:OnIdiom.Tablet>90</x:OnIdiom.Tablet>
+                        <x:OnIdiom.Desktop>90</x:OnIdiom.Desktop>
+                    </x:OnIdiom>
+                </controls1:MTAdView.HeightRequest>
+            </controls1:MTAdView>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
