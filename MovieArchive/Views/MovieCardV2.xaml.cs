@@ -40,7 +40,7 @@ namespace MovieArchive
                         {
                             //insert movie on db web
                             var WS = new WebApi(PY.WebApiAddress);
-                            await WS.InsertNewMovie(mi.TmdbID, mi.Title, mi.Poster, mi.PosterW780);
+                            await WS.InsertNewMovie(mi.TmdbID, mi.Title, mi.PosterW342, mi.PosterW780);
                             var genrelist= MC.MovieDet.Genres.Split('-');
                             foreach (var genre in genrelist)
                             {

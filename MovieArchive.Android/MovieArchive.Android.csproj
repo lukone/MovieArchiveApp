@@ -32,13 +32,13 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
-    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -123,17 +123,11 @@
     <AndroidResource Include="Resources\layout\Toolbar.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
-    <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon_round.xml" />
-    <AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-hdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-mdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
     <AndroidResource Include="Resources\drawable\icon_about.png" />
@@ -201,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\unseen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
