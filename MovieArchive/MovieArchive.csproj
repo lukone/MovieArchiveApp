@@ -23,7 +23,7 @@
     <PackageReference Include="RatingConception" Version="1.4.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="TMDbLib.Core2" Version="1.0.0" />
+    <PackageReference Include="TMDbLib" Version="1.7.5-alpha" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1905" />  
@@ -37,6 +37,12 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Templates\RatingItemTemplate - Copia.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Templates\ProvidersItemTemplate.xaml.cs">
+      <DependentUpon>ProvidersItemTemplate.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

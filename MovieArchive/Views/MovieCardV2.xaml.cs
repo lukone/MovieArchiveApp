@@ -80,6 +80,8 @@ namespace MovieArchive
 
                 await MC.GetWebRating();
                 HorListRating.ItemsSource = MC.MovieDet.Ratings;
+
+                HorListProvider.ItemsSource = MC.MovieDet.StreamingProviders;
             }
             catch(Exception ex)
             {

@@ -201,6 +201,9 @@
   <data name="LabelTitleProductionCountry" xml:space="preserve">
     <value>Country</value>
   </data>
+  <data name="LabelTitleProviders" xml:space="preserve">
+    <value>Providers</value>
+  </data>
   <data name="LabelTitleRating" xml:space="preserve">
     <value>Personal rating</value>
   </data>

@@ -2,7 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="MovieArchive.Views.Templates.CastingItemTemplate"
+             x:Class="MovieArchive.Views.Templates.ProvidersItemTemplate"
              BackgroundColor="Transparent">
     <ContentView.Content>
         <Grid
@@ -24,31 +24,23 @@
                 </ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Image 	
                 Grid.Column="0"
                 Grid.Row="0"
-                Source="{Binding PhotoW185}">
-                <Image.Style>
-                    <OnPlatform x:TypeArguments="Style">
-                        <On Platform="Android, iOS" Value="{StaticResource PhoneCastingImageStyle}"/>
-                        <On Platform="UWP" Value="{StaticResource CastingImageStyle}"/>
-                    </OnPlatform>
-                </Image.Style>
-            </Image>
+                Source="{Binding logo}" Style="{StaticResource CastingImageStyle}" />
             <!--Crashava in continuazione provare dopo aggiornamento ffimage-->
-            <!--<ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Person" Style="{StaticResource CastingImageStyle}"
-			                    DownsampleToViewSize="False"
-			                    Source = "{Binding PhotoW185}">
+            <!--<ffimageloading:CachedImage  Grid.Column="0" Grid.Row="0" x:Name="Rating" Style="{StaticResource CastingImageStyle}"
+			                    DownsampleToViewSize="false"
+			                    Source = "{Binding ImageSrc}">
             </ffimageloading:CachedImage>-->
             <Label 
                 Grid.Column="0"
                 Grid.Row="1"
-                Text="{Binding Name}" LineBreakMode="WordWrap"
+                Text="{Binding provider_name}" LineBreakMode="WordWrap"
                 Style="{StaticResource CastingNameStyle}"/>
-
         </Grid>
     </ContentView.Content>
 </ContentView>

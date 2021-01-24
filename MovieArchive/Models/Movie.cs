@@ -103,6 +103,7 @@ namespace MovieArchive
         public string ProductionCountry { get; set; }
         public string Genres { get; set; }
         public List<Rating> Ratings { get; set; }
+        public List<StreamingProvider> StreamingProviders { get; set; }
 
         [Ignore]
         public string BackdropW1280 { get { return string.Format(PathImage, "1280", Backdrop); } }
@@ -119,6 +120,19 @@ namespace MovieArchive
         { }
     }
 
+    public class StreamingProvider
+    {
+        public int MovieID { get; set; }
+        public int? display_priority { get; set; }
+        public string logo_path { get; set; }
+        public int? provider_id { get; set; }
+        public string provider_name { get; set; }
+
+        public string logo { get { return string.Format(PathLogo, "154", logo_path); } }
+
+        public const string PathLogo = "https://image.tmdb.org/t/p/w{0}/{1}";
+    }    
+        
     //public class MovieCarousel : Movie
     //{
     //    public double position { get; set; }

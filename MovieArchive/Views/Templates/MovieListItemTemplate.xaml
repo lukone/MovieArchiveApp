@@ -24,8 +24,8 @@
 			                    DownsampleToViewSize="false"
 			                    Source = "{Binding PosterW342}">
             </ffimageloading:CachedImage>
-            <Label x:Name="Label" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="End"
-							BackgroundColor="Black" Opacity="0.5" Text="{Binding Title}" TextColor="White"/>
+            <!--<Label x:Name="Label" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="End"
+							BackgroundColor="Black" Opacity="0.5" Text="{Binding Title}" TextColor="White"/>-->
         </Grid>
     </ContentView.Content>
 </ContentView>

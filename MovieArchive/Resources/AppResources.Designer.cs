@@ -313,6 +313,15 @@ namespace MovieArchive.Resources {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Providers.
+        /// </summary>
+        internal static string LabelTitleProviders {
+            get {
+                return ResourceManager.GetString("LabelTitleProviders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Personal rating.
         /// </summary>
         internal static string LabelTitleRating {

@@ -284,7 +284,7 @@ namespace MovieArchive
             //TMDbLib.Objects.People.ProfileImages CastImage;
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = await client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, MovieMethods.Credits);
+            var result = await client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Credits);
 
             foreach (TMDbLib.Objects.Movies.Cast actor in result.Credits.Cast)
             {
@@ -330,7 +330,7 @@ namespace MovieArchive
         {
             string Trailer="";
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, MovieMethods.Videos).Result;
+            var result = client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Videos).Result;
 
             if(result.Video)
                 Trailer = result.Videos.Results[0].Key;
@@ -342,7 +342,7 @@ namespace MovieArchive
         {
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, MovieMethods.Videos); //| MovieMethods.Credits
+            var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Videos); //| MovieMethods.Credits
 
             if (result.Id != 0)
             {
@@ -368,6 +368,29 @@ namespace MovieArchive
                 Movie.Genres = String.Join(" - ", result.Genres.Select(e => e.Name).ToList());
                 Movie.Ratings = new List<Rating>();
                 Movie.Ratings.Add(new Rating { Source = "TMDB", Value = result.VoteAverage.ToString() });
+
+                //Get providers list
+                Movie.StreamingProviders = new List<StreamingProvider>();
+                try
+                {
+                    var resultprov = await client.GetMovieWatchProvidersAsync(Movie.TmdbID);
+                    if (resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate != null)
+                    {
+                        foreach (var provider in resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate)
+                        {
+                            var Prov = new StreamingProvider();
+                            Prov.MovieID = Movie.ID;
+                            Prov.logo_path = provider.LogoPath;
+                            Prov.provider_name = provider.ProviderName;
+                            Prov.provider_id = provider.ProviderId;
+                            Prov.display_priority = provider.DisplayPriority;
+                            Movie.StreamingProviders.Add(Prov);
+                        }
+                    }
+                }
+                catch(Exception ex)
+                { }
+
             }
 
             return Movie;
