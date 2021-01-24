@@ -16,7 +16,7 @@
   <ItemGroup>
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Dropbox.Api" Version="6.0.1" />
-    <PackageReference Include="MarcTron.Admob" Version="1.6.0" />
+    <PackageReference Include="MarcTron.Admob" Version="1.6.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.1.0" />
     <PackageReference Include="Microsoft.Toolkit.Parsers" Version="6.1.1" />
@@ -26,7 +26,7 @@
     <PackageReference Include="TMDbLib.Core2" Version="1.0.0" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />  
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1905" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />  
     <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.66.0" />  
     <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.41" />
