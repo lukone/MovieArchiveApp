@@ -40,7 +40,6 @@
             <ScrollView 
                 VerticalOptions="FillAndExpand" 
                 HorizontalOptions="FillAndExpand">
-                <!--RowSpacing="0"-->
                 <Grid VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0"/>
@@ -91,15 +90,6 @@
                     </Grid>
                     
                     <!--Provider-->
-                    <!--<Grid x:Name="ProvidersList" Grid.Row="2"  Grid.ColumnSpan="2" BackgroundColor="Transparent">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>-->
-                        <!--<Label  
-                            Grid.Row="0"
-                            Text="{x:Static resource:AppResources.LabelTitleProviders}"
-                            Style="{StaticResource StorylineTitleStyle}"/>-->
                     <controls:HorizontalList Grid.Row="2" Grid.ColumnSpan="2" ListOrientation="Horizontal" x:Name="HorListProvider"
                             ItemsSource="{Binding MovieDet.StreamingProviders}" 
                             VerticalOptions="StartAndExpand" BackgroundColor="Transparent"
@@ -110,29 +100,18 @@
                             </DataTemplate>
                         </controls:HorizontalList.ItemTemplate>
                     </controls:HorizontalList>
-                    <!--</Grid>-->
-                    <!--General rating-->
-                    <!--<Grid x:Name="RatingList" Grid.Row="3"  Grid.ColumnSpan="2" BackgroundColor="Transparent">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>-->
-                        <!--<Label 
-                            Grid.Row="0"
-                            Text="{x:Static resource:AppResources.LabelTitleRatingList}"
-                            Style="{StaticResource StorylineTitleStyle}"/>-->
+
                     <controls:HorizontalList Grid.Row="3" ListOrientation="Horizontal" x:Name="HorListRating"
                         ItemsSource="{Binding MovieDet.Ratings}" 
                         VerticalOptions="StartAndExpand" BackgroundColor="Transparent"
-                        Padding="5"> 
+                        Padding="5">
                         <controls:HorizontalList.ItemTemplate>
                             <DataTemplate>
                                 <templates:RatingItemTemplate />
                             </DataTemplate>
                         </controls:HorizontalList.ItemTemplate>
                     </controls:HorizontalList>
-                    <!--</Grid>-->
-                                       
+
                     <!-- Synopsis -->
                     <Grid Grid.Row="4" Grid.ColumnSpan="2">
                         <Label x:Name="Synopsis"  Text="{Binding SynopsisShort}" Style="{StaticResource StorylineStyle}" >
@@ -144,18 +123,11 @@
                     <!-- Trailer -->
                     <WebView x:Name="Trailer" Grid.Row="5" Grid.Column="0"  Margin="10, 0, 5, 0"/>
 
-                    <!-- Directors -->
-                    <!--<Grid x:Name="DirectorList" Grid.Row="6"  Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>-->
                     <StackLayout Grid.Row="6"  Grid.ColumnSpan="2">
                         <Label 
                             Grid.Row="0"
                             Text="{x:Static resource:AppResources.LabelTitleDirector}"
                             Style="{StaticResource StorylineTitleStyle}"/>
-                        <!--SelectedCommand="{Binding PeopleDetailCommand}"-->
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListDirector"
                             ItemsSource="{Binding Directors}"  SelectedItemChanged="HorListDirector_SelectedItemChanged"
                             VerticalOptions="Start" BackgroundColor="Transparent"
@@ -167,20 +139,12 @@
                             </controls:HorizontalList.ItemTemplate>
                         </controls:HorizontalList>
                     </StackLayout>
-                    <!--</Grid>-->
 
-                    <!-- Actors -->
-                    <!--<Grid x:Name="ActorList" Grid.Row="7"  Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>-->
                     <StackLayout Grid.Row="7"  Grid.ColumnSpan="2">
                         <Label 
                             Grid.Row="0"
                             Text="{x:Static resource:AppResources.LabelTitleActors}"
                             Style="{StaticResource StorylineTitleStyle}"/>
-                        <!--SelectedCommand="{Binding PeopleDetailCommand}"-->
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListActor"
                             ItemsSource="{Binding MovieDet.Actors}" SelectedItemChanged="HorListActor_SelectedItemChanged"                             
                             VerticalOptions="StartAndExpand" BackgroundColor="Transparent"
@@ -192,16 +156,11 @@
                             </controls:HorizontalList.ItemTemplate>
                         </controls:HorizontalList>
                     </StackLayout>
-                    <!--</Grid>-->
 
-                    <!-- Rating -->
-                    <!--<Grid Grid.Row="8"  Grid.ColumnSpan="2">-->
                     <StackLayout Grid.Row="8"  Grid.ColumnSpan="2">
-                        <!--<Label Text="{x:Static resource:AppResources.LabelTitleRating}" Style="{StaticResource StorylineTitleStyle}"/>-->
-                        <lv:RatingConception DrawType="Star"  x:Name="Rating" ItemsNumber="10" InitialValue="{Binding Rating}"  SpaceBetween="3" ImageHeight="25" ImageWidth="25" Voted="Rating_OnSelect" />
-                        <Label Text="{Binding DateView, StringFormat='{0:d}'}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
+                        <lv:RatingConception DrawType="Star" ColorUI="Yellow" x:Name="Rating" ItemsNumber="10" InitialValue="{Binding Rating}" SpaceBetween="2" ImageHeight="30" ImageWidth="30" Voted="Rating_OnSelect" />
+                        <Label Text="{Binding DateView, StringFormat='{0:d}'}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Center"/>
                     </StackLayout>
-                    <!--</Grid>-->
 
                     <controls1:MTAdView Grid.Row="9"  Grid.ColumnSpan="2" x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/3754469412" VerticalOptions="EndAndExpand" >
                         <controls1:MTAdView.HeightRequest>

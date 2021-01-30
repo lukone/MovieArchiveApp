@@ -374,7 +374,7 @@ namespace MovieArchive
                 try
                 {
                     var resultprov = await client.GetMovieWatchProvidersAsync(Movie.TmdbID);
-                    if (resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate != null)
+                    if (resultprov.Results.Count()>0 && resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate != null)
                     {
                         foreach (var provider in resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate)
                         {
@@ -389,7 +389,10 @@ namespace MovieArchive
                     }
                 }
                 catch(Exception ex)
-                { }
+                {
+                    Crashes.TrackError(ex);
+                    throw ex;
+                }
 
             }
 
