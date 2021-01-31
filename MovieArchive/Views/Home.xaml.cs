@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace MovieArchive
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Home : MasterDetailPage
+    public partial class Home : FlyoutPage
     {
         public Home()
         {

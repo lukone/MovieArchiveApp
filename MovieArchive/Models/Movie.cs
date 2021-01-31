@@ -122,15 +122,21 @@ namespace MovieArchive
 
     public class StreamingProvider
     {
+        public string Type { get; set; } //Streaming / Local
         public int MovieID { get; set; }
         public int? display_priority { get; set; }
         public string logo_path { get; set; }
         public int? provider_id { get; set; }
         public string provider_name { get; set; }
 
-        public string logo { get { return string.Format(PathLogo, "154", logo_path); } }
+        public string logo { get {  if (Type=="Local")
+                                        return string.Format(PathLogoLoc, logo_path);
+                                    else
+                                        return string.Format(PathLogoStr, "154", logo_path); } }
 
-        public const string PathLogo = "https://image.tmdb.org/t/p/w{0}/{1}";
+        public const string PathLogoStr = "https://image.tmdb.org/t/p/w{0}/{1}";
+
+        public const string PathLogoLoc = "https://logo.clearbit.com/{0}";
     }    
         
     //public class MovieCarousel : Movie

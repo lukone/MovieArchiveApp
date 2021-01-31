@@ -75,54 +75,9 @@ namespace MovieArchive
 
                 }
             }
-#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             { Crashes.TrackError(ex); }
 
-            //FileInfo FileRead = new FileInfo(FilePath);
-            //string Row;
-            //string[] Field;
-
-            //if (File.Exists(FilePath))
-            //{
-            //    StreamReader rReader = FileRead.OpenText();
-
-            //    Row = rReader.ReadLine();
-
-            //    while ((Row = rReader.ReadLine()) != null)
-            //    {
-            //        if (Row != null)
-            //        {
-            //            Field = Row.Split(';');
-            //            var MovieImport = new Movie();
-
-            //            MovieImport.ID = int.Parse(Field[0]);
-            //            MovieImport.Title = Field[3];
-            //            //MovieImport.Poster = Field[4];
-            //            MovieImport.TmdbID = int.Parse(Field[2]);
-            //            if (Field[1] != "")
-            //                MovieImport.DateIns = DateTime.Parse(Field[1].Substring(0, Field[1].IndexOf(" ")), CultureInfo.CreateSpecificCulture("it-ITA"));
-            //            else
-            //                MovieImport.DateIns = DateTime.Now;
-            //            if (Field[5] != "")
-            //                MovieImport.DateView = DateTime.Parse(Field[5], CultureInfo.CreateSpecificCulture("it-ITA"));
-            //            if (Field[6] != "")
-            //                MovieImport.Rating = int.Parse(Field[6]);
-            //            else
-            //                MovieImport.Rating = 0;
-
-            //            //cerco il poster aggiornato 
-            //            var movie = SearchMovieInTMDBByID(MovieImport.TmdbID);
-            //            //MovieImport.Poster = Dim_SmallPoster+movie.Poster;
-            //            MovieImport.Poster = movie.Poster;
-
-            //            var Result = await DB.InsertMovieAsync(MovieImport);
-
-            //            MoviesFoundMulti.Add(MovieImport);
-            //        }
-            //    }
-            //}
         }
 
         // import data from web api 
@@ -144,9 +99,7 @@ namespace MovieArchive
                     int r = await DB.UpdatePropertyAsync(PR);
                     return r;
                 }
-#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
                 catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
                 {
                     Crashes.TrackError(ex);
                     return 0; 
@@ -379,6 +332,7 @@ namespace MovieArchive
                         foreach (var provider in resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate)
                         {
                             var Prov = new StreamingProvider();
+                            Prov.Type = "Streaming";
                             Prov.MovieID = Movie.ID;
                             Prov.logo_path = provider.LogoPath;
                             Prov.provider_name = provider.ProviderName;
@@ -386,6 +340,17 @@ namespace MovieArchive
                             Prov.display_priority = provider.DisplayPriority;
                             Movie.StreamingProviders.Add(Prov);
                         }
+                    }
+                    else
+                    {
+                        var Prov = new StreamingProvider();
+                        Prov.Type = "Local";
+                        Prov.MovieID = Movie.ID;
+                        Prov.logo_path = "plex.tv";
+                        Prov.provider_name = "Plex";
+                        Prov.provider_id = 0;
+                        Prov.display_priority = 1;
+                        Movie.StreamingProviders.Add(Prov);
                     }
                 }
                 catch(Exception ex)
