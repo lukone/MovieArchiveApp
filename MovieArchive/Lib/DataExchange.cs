@@ -327,9 +327,11 @@ namespace MovieArchive
                 try
                 {
                     var resultprov = await client.GetMovieWatchProvidersAsync(Movie.TmdbID);
-                    if (resultprov.Results.Count()>0 && resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate != null)
+                    var LanguageID = CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2);
+                    
+                    if (resultprov.Results.Where(s => s.Key == LanguageID).Count()>0 && resultprov.Results[LanguageID].FlatRate != null)
                     {
-                        foreach (var provider in resultprov.Results[CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2)].FlatRate)
+                        foreach (var provider in resultprov.Results[LanguageID].FlatRate)
                         {
                             var Prov = new StreamingProvider();
                             Prov.Type = "Streaming";
