@@ -36,9 +36,7 @@ namespace MovieArchive
                 Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieUploaded, N.ToString()));
                 return Movies.Count;
             }
-#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch(Exception ex)
-#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
                 Crashes.TrackError(ex);
                 return 0;
@@ -52,9 +50,7 @@ namespace MovieArchive
                 Movies = await DB.GetMovieByQueryAsync(string.Format(qryLastMovieSeen, N.ToString()));
                 return Movies.Count;
             }
-#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch(Exception ex)
-#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
                 Crashes.TrackError(ex);
                 return 0;
@@ -68,9 +64,7 @@ namespace MovieArchive
                 Movies = await DB.GetMovieByQueryAsync(string.Format(qryBestRatingMovie, N.ToString()));
                 return Movies.Count;
             }
-#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch(Exception ex)
-#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             {
                 Crashes.TrackError(ex);
                 return 0;

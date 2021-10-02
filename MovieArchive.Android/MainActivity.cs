@@ -14,7 +14,7 @@ using Android.Gms.Ads;
 
 namespace MovieArchive.Droid
 {
-    [Activity(Label = "MovieArchive", Icon = "@mipmap/icon", /*Theme = "@style/MainTheme"*/ Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "MovieArchive", /*Icon = "@mipmap/icon", Theme = "@style/MainTheme"*/ Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

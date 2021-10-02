@@ -92,7 +92,7 @@ namespace MovieArchive
         public List<Person> Actors { get; set; }
         public List<Person> Directors { get; set; }
         public string Synopsis { get; set; }
-        public string SynopsisShort { get { return Synopsis.Length<200 ? Synopsis : Synopsis.Substring(0,200)+" ..."; } }
+        public string SynopsisShort { get { return Synopsis==null || Synopsis.Length<200 ? Synopsis : Synopsis.Substring(0,200)+" ..."; } }
         public string OriginalTitle { get; set; }
         public DateTime? ReleaseDate { get; set; }
         //public double AVGRating { get; set; }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AppCenter.Crashes;
 using MovieArchive.Resources;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
+using Xamarin.Essentials;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -26,23 +25,21 @@ namespace MovieArchive
 
         }
 
-#pragma warning disable CS1998 // In questo metodo asincrono non sono presenti operatori 'await', pertanto verrà eseguito in modo sincrono. Provare a usare l'operatore 'await' per attendere chiamate ad API non di blocco oppure 'await Task.Run(...)' per effettuare elaborazioni basate sulla CPU in un thread in background.
         protected override async void OnAppearing()
-#pragma warning restore CS1998 // In questo metodo asincrono non sono presenti operatori 'await', pertanto verrà eseguito in modo sincrono. Provare a usare l'operatore 'await' per attendere chiamate ad API non di blocco oppure 'await Task.Run(...)' per effettuare elaborazioni basate sulla CPU in un thread in background.
         {
             Folder.OnClickCommand = new Command(async () =>
             {
-                FileData fileData = await CrossFilePicker.Current.PickFile();
+                var fileData = await FilePicker.PickAsync();
                 if (fileData != null)
                 {
                     switch (TypeOfMedia)
                     {
                         case 1:
-                            MediaToIns.SearchMovieFromFile(Path.GetDirectoryName(fileData.FilePath));
+                            MediaToIns.SearchMovieFromFile(Path.GetDirectoryName(fileData.FullPath));
                             MovieList.ItemsSource = MediaToIns.Movies;
                             break;
                         case 2:
-                            MediaToIns.SearchTvShowFromFolder(Path.GetDirectoryName(fileData.FilePath));
+                            MediaToIns.SearchTvShowFromFolder(Path.GetDirectoryName(fileData.FullPath));
                             MovieList.ItemsSource = MediaToIns.TvShows;
                             break;
                         default:
@@ -51,23 +48,25 @@ namespace MovieArchive
 
                 }
             });
+
             Csv.OnClickCommand = new Command(async () =>
             {
-                FileData fileData = await CrossFilePicker.Current.PickFile();
-                if (fileData != null)
-                {
-                    switch (TypeOfMedia)
-                    {
-                        case 1:
-                            await MediaToIns.ImportMovieFromFile(fileData.DataArray);
-                            break;
-                        case 2:
-                            await MediaToIns.ImportTvShowFromFile(fileData.DataArray);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                //FileResult fileData = await FilePicker.PickAsync();
+                //if (fileData != null)
+                //{
+                //    ;
+                //    switch (TypeOfMedia)
+                //    {
+                //        case 1:
+                //            await MediaToIns.ImportMovieFromFile(fileData.OpenReadAsync().Result);
+                //            break;
+                //        case 2:
+                //            await MediaToIns.ImportTvShowFromFile(fileData.DataArray);
+                //            break;
+                //        default:
+                //            break;
+                //    }
+                //}
             });
             WebApi.OnClickCommand = new Command(async () =>
             {

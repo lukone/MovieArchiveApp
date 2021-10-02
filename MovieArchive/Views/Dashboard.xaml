@@ -68,8 +68,8 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" x:Name="TitleTvLastSeen" Text="{x:Static resource:AppResources.TitleDashBoardLast3TvShowEpisodeSeen}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
                     <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListTvLastSeen" SelectedItemChanged="HorListTvLastSeen_SelectedItemChanged"
-                ItemsSource="{Binding TvShows}" 
-                VerticalOptions="Start" BackgroundColor="Transparent">
+                    ItemsSource="{Binding TvShows}" 
+                    VerticalOptions="Start" BackgroundColor="Transparent">
                         <controls:HorizontalList.ItemTemplate>
                             <DataTemplate>
                                 <templates:PosterItemTemplate />
@@ -77,7 +77,7 @@
                         </controls:HorizontalList.ItemTemplate>
                     </controls:HorizontalList>
                 </Grid>
-                <controls1:MTAdView x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3165008211020391/3754469412" VerticalOptions="EndAndExpand" >
+                <controls1:MTAdView x:Name="myAds" IsVisible="true" AdsId="ca-app-pub-3165008211020391/3754469412" VerticalOptions="EndAndExpand" >
                     <controls1:MTAdView.HeightRequest>
                         <x:OnIdiom>
                             <x:OnIdiom.Phone>50</x:OnIdiom.Phone>

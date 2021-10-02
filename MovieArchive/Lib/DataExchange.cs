@@ -239,43 +239,45 @@ namespace MovieArchive
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
             var result = await client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Credits);
 
-            foreach (TMDbLib.Objects.Movies.Cast actor in result.Credits.Cast)
+            if (result != null)
             {
-                Crew = new Person();
-                Crew.Name = actor.Name;
-                Crew.ProfilePath = "";
-                Crew.tmdbid = actor.Id;
-                Crew.Photo = (actor.ProfilePath ?? "").Replace("/", "");
-                //CastImage = client.GetPersonImagesAsync(actor.Id).Result;
-                //if (CastImage.Id != 0 && CastImage.Profiles.Count>0)
-                //{
-                //    Crew.Photo = Dim_CrewPhoto+CastImage.Profiles[0].FilePath;
-                //}
-                Crew.Type = "Actor";
-
-                Crews.Add(Crew);
-            }
-            
-            foreach (Crew Director in result.Credits.Crew)
-            {
-                if (Director.Job == "Director")
+                foreach (TMDbLib.Objects.Movies.Cast actor in result.Credits.Cast)
                 {
                     Crew = new Person();
-                    Crew.Name = Director.Name;
+                    Crew.Name = actor.Name;
                     Crew.ProfilePath = "";
-                    Crew.tmdbid = Director.Id;
-                    Crew.Photo = (Director.ProfilePath ?? "").Replace("/", "");
-                    //CastImage = client.GetPersonImagesAsync(Director.Id).Result;
-                    //if (CastImage.Id != 0 && CastImage.Profiles.Count > 0)
+                    Crew.tmdbid = actor.Id;
+                    Crew.Photo = (actor.ProfilePath ?? "").Replace("/", "");
+                    //CastImage = client.GetPersonImagesAsync(actor.Id).Result;
+                    //if (CastImage.Id != 0 && CastImage.Profiles.Count>0)
                     //{
                     //    Crew.Photo = Dim_CrewPhoto+CastImage.Profiles[0].FilePath;
                     //}
-                    Crew.Type = "Director";
+                    Crew.Type = "Actor";
 
                     Crews.Add(Crew);
                 }
-            }
 
+                foreach (Crew Director in result.Credits.Crew)
+                {
+                    if (Director.Job == "Director")
+                    {
+                        Crew = new Person();
+                        Crew.Name = Director.Name;
+                        Crew.ProfilePath = "";
+                        Crew.tmdbid = Director.Id;
+                        Crew.Photo = (Director.ProfilePath ?? "").Replace("/", "");
+                        //CastImage = client.GetPersonImagesAsync(Director.Id).Result;
+                        //if (CastImage.Id != 0 && CastImage.Profiles.Count > 0)
+                        //{
+                        //    Crew.Photo = Dim_CrewPhoto+CastImage.Profiles[0].FilePath;
+                        //}
+                        Crew.Type = "Director";
+
+                        Crews.Add(Crew);
+                    }
+                }
+            }
             return Crews;
         }
 
@@ -297,16 +299,16 @@ namespace MovieArchive
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
             var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Videos); //| MovieMethods.Credits
 
-            if (result.Id != 0)
+            if (result != null && result.Id != 0)
             {
-                Movie.ImdbID = result.ImdbId;
-                Movie.Synopsis = result.Overview;
-                Movie.OriginalTitle = result.OriginalTitle;
+                Movie.ImdbID = result.ImdbId ?? "";
+                Movie.Synopsis = result.Overview ?? "";
+                Movie.OriginalTitle = result.OriginalTitle ?? "";
                 Movie.ReleaseDate = result.ReleaseDate;
                 //Movie.AVGRating = result.VoteAverage;
-                Movie.HomePage = result.Homepage;
-                Movie.Backdrop = result.BackdropPath;
-                Movie.Runtime = result.Runtime;
+                Movie.HomePage = result.Homepage ?? "";
+                Movie.Backdrop = result.BackdropPath ?? "";
+                Movie.Runtime = result.Runtime ?? 0;
                 if (result.ProductionCountries.Count > 0)
                     Movie.ProductionCountry = result.ProductionCountries.First().Name;
                 else
