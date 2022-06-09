@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Syncfusion;
 
 namespace MovieArchive
 {
@@ -17,6 +18,9 @@ namespace MovieArchive
 
         public App()
         {
+            //Register Syncfusion license
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTY1ODM1QDMxMzkyZTM0MmUzMFZ2KzM5QXl6ZFBzZTVvdHpZZ1VKSUhjcXpVYWMxaEdhRTRheTd1TXBXcFk9");
+
             InitializeComponent();
 
 

@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:resource="clr-namespace:MovieArchive.Resources" 
+             xmlns:resource="clr-namespace:MovieArchive.Resources" xmlns:local="clr-namespace:MovieArchive.ViewModels"
              x:Class="MovieArchive.Properties"
+             BindingContext="{local:PropertiesModel}"
              Title="{x:Static resource:AppResources.TitlePageProperty}">
     <ContentPage.Content>
         <FlexLayout Direction="Column" JustifyContent="Start">
@@ -48,8 +49,8 @@
 
                 <Label Text="{x:Static resource:AppResources.LabelRestoreDB}" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
                 <Button x:Name="RestoreDB" Grid.Column="1" Grid.Row="1" Text="{x:Static resource:AppResources.ButtonRestoreDB}" VerticalOptions="CenterAndExpand"
-                HorizontalOptions="Center"
-                Clicked="RestoreDB_Clicked" />
+                HorizontalOptions="Center" Command="{Binding OnGoogleDrive}" />
+                <!--Clicked="RestoreDB_Clicked" />-->
 
                 <Label Text="{x:Static resource:AppResources.LabelWSAddress}" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
                 <Editor x:Name="WebApiAddress" Grid.Column="1" Grid.Row="2" Text="{Binding WebApiAddress}" Completed="WebApiAddress_Completed"/>

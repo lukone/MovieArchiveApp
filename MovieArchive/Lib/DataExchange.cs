@@ -82,7 +82,7 @@ namespace MovieArchive
 
         // import data from web api 
         public async Task<int> ImportDataFromWebApi()
-        {            
+        {
             Property PR = DB.GetPropertyAsync().Result;
             if (PR != null && PR.WebApiAddress != "" && PR.WebApiAddress != null)
             {
@@ -102,7 +102,7 @@ namespace MovieArchive
                 catch (Exception ex)
                 {
                     Crashes.TrackError(ex);
-                    return 0; 
+                    return 0;
                 }
             }
             else
@@ -149,9 +149,9 @@ namespace MovieArchive
 
                 }
                 catch (Exception ex)
-                { 
-                    Crashes.TrackError(ex); 
-                    throw ex; 
+                {
+                    Crashes.TrackError(ex);
+                    throw ex;
                 }
             }
         }
@@ -166,15 +166,15 @@ namespace MovieArchive
             {
                 var Dir = Directory.GetFiles(MoviePath);
 
-                foreach(string file in Dir)
+                foreach (string file in Dir)
                 {
-                    MovieToSearch=Path.GetFileNameWithoutExtension(file.Normalize());
+                    MovieToSearch = Path.GetFileNameWithoutExtension(file.Normalize());
 
                     foreach (string FE in FileNameExclusion)
-                        MovieToSearch = MovieToSearch.Substring(0, MovieToSearch.IndexOf(FE)<0 ? MovieToSearch.Length : MovieToSearch.IndexOf(FE));
+                        MovieToSearch = MovieToSearch.Substring(0, MovieToSearch.IndexOf(FE) < 0 ? MovieToSearch.Length : MovieToSearch.IndexOf(FE));
 
                     foreach (string FS in FileNameSubstitution)
-                        MovieToSearch = MovieToSearch.Replace(FS," ");
+                        MovieToSearch = MovieToSearch.Replace(FS, " ");
 
                     SearchMovieInTMDB(MovieToSearch);
 
@@ -185,7 +185,7 @@ namespace MovieArchive
 
         public void SearchMovieInTMDB(string SearchText)
         {
-            TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3,true);
+            TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
             //TMDbConfig conf = await client.GetConfigAsync();
             SearchContainer<SearchMovie> results = client.SearchMovieAsync(SearchText, CultureInfo.CurrentCulture.TwoLetterISOLanguageName).Result;
 
@@ -194,10 +194,10 @@ namespace MovieArchive
 
             foreach (SearchMovie result in results.Results)
             {
-                MovieFound = new Movie();        
+                MovieFound = new Movie();
                 MovieFound.TmdbID = result.Id;
                 MovieFound.Title = result.Title;
-                MovieFound.Poster = (result.PosterPath ?? "").Replace("/","");
+                MovieFound.Poster = (result.PosterPath ?? "").Replace("/", "");
 
                 MoviesFound.Add(MovieFound);
             }
@@ -218,15 +218,15 @@ namespace MovieArchive
                     MovieFound = new Movie();
                     MovieFound.TmdbID = result.Id;
                     MovieFound.Title = result.Title;
-                    MovieFound.Poster = (result.PosterPath ??"").Replace("/", "");
+                    MovieFound.Poster = (result.PosterPath ?? "").Replace("/", "");
                 }
 
                 return MovieFound;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Crashes.TrackError(ex);
-                throw ex; 
+                throw ex;
             }
         }
 
@@ -237,7 +237,7 @@ namespace MovieArchive
             //TMDbLib.Objects.People.ProfileImages CastImage;
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = await client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Credits);
+            var result = await client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, null, MovieMethods.Credits);
 
             if (result != null)
             {
@@ -283,11 +283,11 @@ namespace MovieArchive
 
         public string GetTrailer(int TMDbID)
         {
-            string Trailer="";
+            string Trailer = "";
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Videos).Result;
+            var result = client.GetMovieAsync(TMDbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, null, MovieMethods.Videos).Result;
 
-            if(result.Video)
+            if (result.Video)
                 Trailer = result.Videos.Results[0].Key;
 
             return Trailer;
@@ -297,7 +297,7 @@ namespace MovieArchive
         {
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName,null, MovieMethods.Videos); //| MovieMethods.Credits
+            var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, null, MovieMethods.Videos); //| MovieMethods.Credits
 
             if (result != null && result.Id != 0)
             {
@@ -325,43 +325,45 @@ namespace MovieArchive
                 Movie.Ratings.Add(new Rating { Source = "TMDB", Value = result.VoteAverage.ToString() });
 
                 //Get providers list
-                Movie.StreamingProviders = new List<StreamingProvider>();
-                try
-                {
-                    var resultprov = await client.GetMovieWatchProvidersAsync(Movie.TmdbID);
-                    var LanguageID = CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2);
-                    
-                    if (resultprov.Results.Where(s => s.Key == LanguageID).Count()>0 && resultprov.Results[LanguageID].FlatRate != null)
-                    {
-                        foreach (var provider in resultprov.Results[LanguageID].FlatRate)
-                        {
-                            var Prov = new StreamingProvider();
-                            Prov.Type = "Streaming";
-                            Prov.MovieID = Movie.ID;
-                            Prov.logo_path = provider.LogoPath;
-                            Prov.provider_name = provider.ProviderName;
-                            Prov.provider_id = provider.ProviderId;
-                            Prov.display_priority = provider.DisplayPriority;
-                            Movie.StreamingProviders.Add(Prov);
-                        }
-                    }
-                    else
-                    {
-                        var Prov = new StreamingProvider();
-                        Prov.Type = "Local";
-                        Prov.MovieID = Movie.ID;
-                        Prov.logo_path = "plex.tv";
-                        Prov.provider_name = "Plex";
-                        Prov.provider_id = 0;
-                        Prov.display_priority = 1;
-                        Movie.StreamingProviders.Add(Prov);
-                    }
-                }
-                catch(Exception ex)
-                {
-                    Crashes.TrackError(ex);
-                    throw ex;
-                }
+                Movie.StreamingProviders = await GetStreamingProviders(Movie.ID, Movie.TmdbID, client, 0);
+
+                //Movie.StreamingProviders = new List<StreamingProvider>();
+                //try
+                //{
+                //    var resultprov = await client.GetMovieWatchProvidersAsync(Movie.TmdbID);
+                //    var LanguageID = CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2);
+
+                //    if (resultprov.Results.Where(s => s.Key == LanguageID).Count()>0 && resultprov.Results[LanguageID].FlatRate != null)
+                //    {
+                //        foreach (var provider in resultprov.Results[LanguageID].FlatRate)
+                //        {
+                //            var Prov = new StreamingProvider();
+                //            Prov.Type = "Streaming";
+                //            Prov.MovieID = Movie.ID;
+                //            Prov.logo_path = provider.LogoPath;
+                //            Prov.provider_name = provider.ProviderName;
+                //            Prov.provider_id = provider.ProviderId;
+                //            Prov.display_priority = provider.DisplayPriority;
+                //            Movie.StreamingProviders.Add(Prov);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        var Prov = new StreamingProvider();
+                //        Prov.Type = "Local";
+                //        Prov.MovieID = Movie.ID;
+                //        Prov.logo_path = "plex.tv";
+                //        Prov.provider_name = "Plex";
+                //        Prov.provider_id = 0;
+                //        Prov.display_priority = 1;
+                //        Movie.StreamingProviders.Add(Prov);
+                //    }
+                //}
+                //catch(Exception ex)
+                //{
+                //    Crashes.TrackError(ex);
+                //    throw ex;
+                //}
 
             }
 
@@ -395,7 +397,7 @@ namespace MovieArchive
             {
                 TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
                 //TMDbConfig conf = await client.GetConfigAsync();
-                var result = client.GetTvShowAsync(TMDbID,language: CultureInfo.CurrentCulture.TwoLetterISOLanguageName).Result;
+                var result = client.GetTvShowAsync(TMDbID, language: CultureInfo.CurrentCulture.TwoLetterISOLanguageName).Result;
 
                 TvShow TvShowFound = new TvShow();
 
@@ -413,7 +415,7 @@ namespace MovieArchive
             catch (Exception ex)
             {
                 Crashes.TrackError(ex);
-                throw ex; 
+                throw ex;
             }
         }
 
@@ -484,9 +486,7 @@ namespace MovieArchive
                     Result = await DB.InsertTvShowsAsync(TvShowsFound);
                 }
             }
-#pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
             { Crashes.TrackError(ex); }
         }
 
@@ -494,8 +494,8 @@ namespace MovieArchive
         {
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            TMDbLib.Objects.TvShows.TvShow result = await client.GetTvShowAsync(tvshow.TmdbID,extraMethods:TvShowMethods.Videos| TvShowMethods.ExternalIds, language : CultureInfo.CurrentCulture.TwoLetterISOLanguageName); //| MovieMethods.Credits
-            
+            TMDbLib.Objects.TvShows.TvShow result = await client.GetTvShowAsync(tvshow.TmdbID, extraMethods: TvShowMethods.Videos | TvShowMethods.ExternalIds, language: CultureInfo.CurrentCulture.TwoLetterISOLanguageName); //| MovieMethods.Credits
+
             if (result.Id != 0)
             {
                 tvshow.ImdbID = result.ExternalIds.ImdbId;
@@ -515,9 +515,49 @@ namespace MovieArchive
 
                 if (result.Seasons.Count > 0)
                 {
-                    List<Episode> episodes = await DB.GetAllEpisodesAsync(tvshow.TmdbID);
-                    tvshow.Seasons = result.Seasons.Select(s => new Season { ID = s.Id, N = s.SeasonNumber, TmdbID = tvshow.TmdbID, PersonalRatigAVG= (int)episodes.Where(e => e.SeasonN == s.SeasonNumber).Select(a => a.Rating).Average(), Poster = (s.PosterPath ?? "").Replace("/", ""), EpisodeCount = s.EpisodeCount, EpisodeSeen = episodes.Where(e => e.SeasonN == s.SeasonNumber).Count() }).ToList();
-                    tvshow.SeasonCount = result.Seasons.Count;
+                    List<Season> seasons = await DB.GetSeasonsAsync(tvshow.TmdbID);                 
+                    if (seasons != null && seasons.Count>0)
+                    {
+
+                        for (int SeasonNumber = 1; SeasonNumber <= seasons.Count; SeasonNumber++)
+                        {
+                            var SelSeason = seasons[SeasonNumber - 1];
+                            SelSeason.Episodes= await DB.GetEpisodeAsync(tvshow.TmdbID, SeasonNumber);
+
+                            //Se non ci sono episodi nel db per questa stagione li cerco in rete
+                            if (SelSeason.Episodes == null || SelSeason.Episodes.Count==0)
+                                GetEpisodes(ref SelSeason, seasons[SeasonNumber - 1].Episodes.Count, tvshow.TmdbID);
+
+                            seasons[SeasonNumber - 1] = SelSeason; 
+                        }
+                        //tvshow.Seasons = result.Seasons.Select(s => new Season { ID = s.Id, N = s.SeasonNumber, TmdbID = tvshow.TmdbID, PersonalRatigAVG = (int)episodes.Where(e => e.SeasonN == s.SeasonNumber).Select(a => a.Rating).Average(), Poster = (s.PosterPath ?? "").Replace("/", ""), EpisodeCount = s.EpisodeCount, EpisodeSeen = episodes.Where(e => e.SeasonN == s.SeasonNumber).Count() }).ToList();
+                        tvshow.Seasons = seasons;
+                    }
+                    else //get season and episode from TMBD
+                    {
+                        TMDbLib.Objects.TvShows.TvSeason resultSeason;
+                        Season NewSeason;
+                        if (tvshow.Seasons == null)
+                            tvshow.Seasons = new List<Season>();
+
+                        for (int SeasonNumber = 1; SeasonNumber <= result.Seasons.Count; SeasonNumber++)
+                        {
+                            resultSeason = await client.GetTvSeasonAsync(tvshow.TmdbID, SeasonNumber, extraMethods: TvSeasonMethods.Videos | TvSeasonMethods.ExternalIds, language: CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
+                            if (resultSeason != null)
+                            {
+                                NewSeason = new Season();
+                                NewSeason.ID = (int)resultSeason.Id;
+                                NewSeason.N = resultSeason.SeasonNumber;
+                                NewSeason.TmdbID = tvshow.TmdbID;
+                                NewSeason.Poster = resultSeason.PosterPath;
+                                NewSeason.EpisodeCount = resultSeason.Episodes.Count;
+
+                                GetEpisodes(ref NewSeason, resultSeason.Episodes.Count, tvshow.TmdbID);
+
+                                tvshow.Seasons.Add(NewSeason);
+                            }
+                        }
+                    }
 
                 }
                 else
@@ -528,29 +568,62 @@ namespace MovieArchive
                 tvshow.Ratings = new List<Rating>();
                 tvshow.Ratings.Add(new Rating { Source = "TMDB", Value = result.VoteAverage.ToString() });
 
+                //Get providers list
+                tvshow.StreamingProviders = await GetStreamingProviders(tvshow.ID, tvshow.TmdbID, client, 1);
+
             }
 
             return tvshow;
         }
 
+        public void GetEpisodes(ref Season NewSeason,int EpisodeCount,  int TmdbID)
+        {
+            //Get Episode
+            TMDbLib.Objects.TvShows.TvEpisode resultEpisode;
+            Episode NewEpisode;
+            TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
+
+            if (NewSeason.Episodes == null)
+                NewSeason.Episodes = new List<Episode>();
+
+            for (int EpisodeNumber = 1; EpisodeNumber <= EpisodeCount; EpisodeNumber++)
+            {
+                resultEpisode = client.GetTvEpisodeAsync(TmdbID, NewSeason.N, EpisodeNumber, extraMethods: TvEpisodeMethods.Videos | TvEpisodeMethods.ExternalIds, language: CultureInfo.CurrentCulture.TwoLetterISOLanguageName).Result;
+                if (resultEpisode != null)
+                {
+                    NewEpisode = new Episode();
+                    NewEpisode.ID = (int)resultEpisode.Id;
+                    NewEpisode.TmdbID = TmdbID;
+                    NewEpisode.N = resultEpisode.EpisodeNumber;
+                    NewEpisode.SeasonN = resultEpisode.SeasonNumber;
+                    NewEpisode.Synopsis = resultEpisode.Overview;
+                    NewEpisode.Poster = resultEpisode.StillPath;
+                    NewEpisode.Title = resultEpisode.Name;
+                    NewSeason.Episodes.Add(NewEpisode);
+                }
+            }
+        }
+
         public async Task<int> CheckAndUpdateSeasonCounter(TvShowDetails tvshow)
         {
-            int n=0;
+            int n = 0;
             //if there is a new season update season number and so make tvshow unseen
-            if (tvshow.SeasonCount < tvshow.Seasons.Count)
+            if (tvshow.Seasons != null)
             {
-                tvshow.SeasonCount = tvshow.Seasons.Count;
-                n=await DB.UpdateTvShowAsync(new TvShow((TvShow)tvshow));
-            }
+                if (tvshow.SeasonCount < tvshow.Seasons.Count)
+                {
+                    tvshow.SeasonCount = tvshow.Seasons.Count;
+                    n = await DB.UpdateTvShowAsync(new TvShow((TvShow)tvshow));
+                }
 
-            //if all episode of season are seen update number in tvshow
-            int SeasonSeen = tvshow.Seasons.Where(s => s.EpisodeCount == s.EpisodeSeen).Count();
-            if (SeasonSeen > tvshow.SeasonSeen)
-            {
-                tvshow.SeasonSeen = SeasonSeen;
-                n = await DB.UpdateTvShowAsync(new TvShow((TvShow)tvshow));
+                //if all episode of season are seen update number in tvshow
+                int SeasonSeen = tvshow.Seasons.Where(s => s.EpisodeCount == s.EpisodeSeen).Count();
+                //if (SeasonSeen > tvshow.SeasonSeen)
+                //{
+                    tvshow.SeasonSeen = SeasonSeen;
+                    n = await DB.UpdateTvShowAsync(new TvShow((TvShow)tvshow));
+                //}
             }
-
             return n;
         }
 
@@ -561,7 +634,7 @@ namespace MovieArchive
             //TMDbLib.Objects.People.ProfileImages CastImage;
 
             TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = await client.GetTvShowCreditsAsync(TMDbID,language: CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
+            var result = await client.GetTvShowCreditsAsync(TMDbID, language: CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
 
             foreach (TMDbLib.Objects.TvShows.Cast actor in result.Cast)
             {
@@ -593,7 +666,7 @@ namespace MovieArchive
             return Crews;
         }
 
-        public async Task<List<Episode>> GetTvShowSeasonEpisode(int TMDbID,int NSeason)
+        public async Task<List<Episode>> GetTvShowSeasonEpisode(int TMDbID, int NSeason)
         {
             Episode EP;
             List<Episode> Episodes = new List<Episode>();
@@ -618,7 +691,7 @@ namespace MovieArchive
                     EP.Synopsis = TVEpisode.Overview;
                     EP.Poster = TVEpisode.StillPath;
 
-                    if (EpisodeDB.Count >0 && EpisodeDB.Exists(x => x.N == EP.N))
+                    if (EpisodeDB.Count > 0 && EpisodeDB.Exists(x => x.N == EP.N))
                     {
                         EP.Rating = EpisodeDB.Find(x => x.N == EP.N).Rating;
                         EP.DateView = EpisodeDB.Find(x => x.N == EP.N).DateView ?? null;
@@ -673,6 +746,56 @@ namespace MovieArchive
                     writer.WriteLine(string.Join(", ", props.Select(p => p.GetValue(item, null))));
                 }
             }
+        }
+
+        //ShowType 0 = movie 1 = TV Show
+        public async Task<List<StreamingProvider>> GetStreamingProviders(int Id, int TmdbID, TMDbClient client, int ShowType)
+        {
+            //Get providers list
+            var StreamingProviders = new List<StreamingProvider>();
+            SingleResultContainer<Dictionary<string, WatchProviders>> resultprov;
+            try
+            {
+                if (ShowType == 0)
+                    resultprov = await client.GetMovieWatchProvidersAsync(TmdbID);
+                else
+                    resultprov = await client.GetTvShowWatchProvidersAsync(TmdbID);
+
+                var LanguageID = CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2);
+
+                if (resultprov.Results.Where(s => s.Key == LanguageID).Count() > 0 && resultprov.Results[LanguageID].FlatRate != null)
+                {
+                    foreach (var provider in resultprov.Results[LanguageID].FlatRate)
+                    {
+                        var Prov = new StreamingProvider();
+                        Prov.Type = "Streaming";
+                        Prov.MovieID = Id;
+                        Prov.logo_path = provider.LogoPath;
+                        Prov.provider_name = provider.ProviderName;
+                        Prov.provider_id = provider.ProviderId;
+                        Prov.display_priority = provider.DisplayPriority;
+                        StreamingProviders.Add(Prov);
+                    }
+                }
+                else
+                {
+                    var Prov = new StreamingProvider();
+                    Prov.Type = "Local";
+                    Prov.MovieID = Id;
+                    Prov.logo_path = "plex.tv";
+                    Prov.provider_name = "Plex";
+                    Prov.provider_id = 0;
+                    Prov.display_priority = 1;
+                    StreamingProviders.Add(Prov);
+                }
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                throw ex;
+            }
+
+            return StreamingProviders;
         }
     }
 }

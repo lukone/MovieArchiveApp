@@ -6,6 +6,9 @@
              xmlns:lv="clr-namespace:LaavorRatingConception;assembly=RatingConception"
              xmlns:resource="clr-namespace:MovieArchive.Resources"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:TreeView="clr-namespace:Syncfusion.XForms.TreeView;assembly=Syncfusion.SfTreeView.XForms"
+             xmlns:TreeViewEngine="clr-namespace:Syncfusion.TreeView.Engine;assembly=Syncfusion.SfTreeView.XForms"       
+             xmlns:SfButtons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              x:Class="MovieArchive.TvShowCard">
     <ContentPage.Content>
@@ -13,7 +16,8 @@
             <ContentView
                 x:Name="HeaderPanel"
                 HorizontalOptions="FillAndExpand" 
-                VerticalOptions="FillAndExpand">
+                VerticalOptions="FillAndExpand"
+                Margin="0,-75,0,0">
                 <ContentView.Margin>
                     <OnPlatform x:TypeArguments="Thickness">
                         <On Platform="Android" Value="0,0,0,0" />
@@ -25,22 +29,31 @@
                     Aspect="AspectFill"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="Start"
-					Opacity="0.1"
-                    HeightRequest="1000"/>
+					Opacity="0.1">
+                    <ffimageloading:CachedImage.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android" Value="1000" />
+                            <On Platform="iOS" Value="1000" />
+                        </OnPlatform>
+                    </ffimageloading:CachedImage.HeightRequest>
+                </ffimageloading:CachedImage>
             </ContentView>
 
-            <ScrollView>
-                <!--RowSpacing="0"-->
+            <ScrollView 
+                VerticalOptions="FillAndExpand" 
+                HorizontalOptions="FillAndExpand">
                 <Grid VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0"/>
+                        <RowDefinition Height="250"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="180"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="70"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -58,7 +71,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <ffimageloading:CachedImage x:Name="Poster" Grid.Column="0" Aspect="AspectFit" VerticalOptions="StartAndExpand" HorizontalOptions="Start"
-			                    DownsampleToViewSize="false"
+			                    DownsampleToViewSize="false" 
 			                    Source = "{Binding PosterW500}">
                         </ffimageloading:CachedImage>
                         <FlexLayout Grid.Column="1" Direction="Column" JustifyContent="Start">
@@ -71,35 +84,35 @@
                             <Label Text="{x:Static resource:AppResources.LabelTitleProductionCountry}" Style="{StaticResource StorylineTitleStyle}"/>
                             <Label Text="{Binding ProductionCountry}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
 
-                            <Label Text="{x:Static resource:AppResources.LabelTitleRuntime}" Style="{StaticResource StorylineTitleStyle}"/>
-                            <Label Text="{Binding Runtime}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start"/>
                         </FlexLayout>
                     </Grid>
+                    
+                    <!--Provider-->
+                    <controls:HorizontalList Grid.Row="2" Grid.ColumnSpan="2" ListOrientation="Horizontal" x:Name="HorListProvider"
+                            ItemsSource="{Binding StreamingProviders}" 
+                            VerticalOptions="StartAndExpand" BackgroundColor="Transparent"
+                            Padding="5">
+                        <controls:HorizontalList.ItemTemplate>
+                            <DataTemplate>
+                                <templates:ProvidersItemTemplate />
+                            </DataTemplate>
+                        </controls:HorizontalList.ItemTemplate>
+                    </controls:HorizontalList>
 
                     <!--General rating-->
-                    <Grid x:Name="RatingList" Grid.Row="2"  Grid.ColumnSpan="2" BackgroundColor="Transparent">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Label 
-                            Grid.Row="0"
-                            Text="{x:Static resource:AppResources.LabelTitleRatingList}"
-                            Style="{StaticResource StorylineTitleStyle}"/>
-                        <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListRating"
-                            ItemsSource="{Binding TvShowDet.Ratings}" 
-                            VerticalOptions="Start" BackgroundColor="Transparent"
-                            Padding="10">
-                            <controls:HorizontalList.ItemTemplate>
-                                <DataTemplate>
-                                    <templates:RatingItemTemplate />
-                                </DataTemplate>
-                            </controls:HorizontalList.ItemTemplate>
-                        </controls:HorizontalList>
-                    </Grid>
+                    <controls:HorizontalList Grid.Row="3" ListOrientation="Horizontal" x:Name="HorListRating"
+                        ItemsSource="{Binding Ratings}" 
+                        VerticalOptions="StartAndExpand" BackgroundColor="Transparent"
+                        Padding="5">
+                        <controls:HorizontalList.ItemTemplate>
+                            <DataTemplate>
+                                <templates:RatingItemTemplate />
+                            </DataTemplate>
+                        </controls:HorizontalList.ItemTemplate>
+                    </controls:HorizontalList>
 
                     <!-- Synopsis -->
-                    <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                    <Grid Grid.Row="4" Grid.ColumnSpan="2">
                         <Label x:Name="Synopsis"  Text="{Binding SynopsisShort}" Style="{StaticResource StorylineStyle}" >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Synopsis_Tapped" NumberOfTapsRequired="1" />
@@ -107,82 +120,70 @@
                         </Label>
                     </Grid>
                     <!-- Trailer -->
-                    <WebView x:Name="Trailer" Grid.Row="4" Grid.Column="0"  Margin="10, 0, 5, 0"/>
-                    <!-- Season -->
-                    <CollectionView x:Name="SeasonList" Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding Seasons}" SelectionMode="Single"
-                                    SelectionChanged="SeasonList_SelectionChanged">
-                        <CollectionView.ItemTemplate>
+                    <WebView x:Name="Trailer" Grid.Row="5" Grid.Column="0"  Margin="10, 0, 5, 0"/>
+                    
+                    <!-- Seasons -->
+                    <TreeView:SfTreeView Grid.Row="6"  Grid.ColumnSpan="2" x:Name="SeasonList" ItemsSource="{Binding Seasons}" AutoExpandMode="None" ItemTemplateContextType="Node" CheckBoxMode="Recursive"
+                                         ChildPropertyName="Episodes" FullRowSelect="true" SelectionMode="SingleDeselect" SelectionForegroundColor="Transparent" SelectionBackgroundColor="Transparent">
+
+                        <TreeView:SfTreeView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="50"/>
-                                    </Grid.RowDefinitions>
-                                    <ffimageloading:CachedImage Grid.Column="0" x:Name="Poster" Aspect="AspectFit" VerticalOptions="StartAndExpand" HorizontalOptions="Start"
-			                                                        DownsampleToViewSize="false"
-			                                                        Source = "{Binding PosterW342}">
-                                    </ffimageloading:CachedImage>
-                                    <Label Grid.Row="1" Grid.Column="1" Text="Season" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding N}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid Padding="5">
+                                            <SfButtons:SfCheckBox 
+                                                    x:Name="CheckBox"
+                                                    TabIndex="{Binding Content.ID}"
+                                                    Text="{Binding Content.Title}"
+                                                    TextColor="White"                                 
+                                                    IsChecked="{Binding Content.IsChecked, Mode=TwoWay}" 
+                                                    StateChanged="CheckBox_StateChanged"
+                                                />
 
-                                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding EpisodeCount}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="2" Text="/" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="2" Text="{Binding EpisodeSeen}" Style="{StaticResource StorylineStyle}" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
-                                    <lv:RatingConception Grid.Row="2" Grid.ColumnSpan="3" x:Name="Rating" DrawType="Star" AutomationId="{Binding N}" ItemsNumber="10" InitialValue="{Binding PersonalRatigAVG}" SpaceBetween="3" ImageHeight="25" ImageWidth="25" Voted="Rating_OnSelect" />
-                                </Grid>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
                             </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
+                        </TreeView:SfTreeView.ItemTemplate>
+                    </TreeView:SfTreeView>
+ 
                     <!-- Directors -->
-                    <Grid x:Name="DirectorList" Grid.Row="6" Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="7"  Grid.ColumnSpan="2">
                         <Label 
                             Grid.Row="0"
                             Text="{x:Static resource:AppResources.LabelTitleDirector}"
                             Style="{StaticResource StorylineTitleStyle}"/>
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListDirector"
-                            ItemsSource="{Binding Directors}" SelectedItemChanged="HorListDirector_SelectedItemChanged"
+                            ItemsSource="{Binding Directors}"  SelectedItemChanged="HorListDirector_SelectedItemChanged"
                             VerticalOptions="Start" BackgroundColor="Transparent"
-                            Padding="10">
+                            Padding="5">
                             <controls:HorizontalList.ItemTemplate>
                                 <DataTemplate>
                                     <templates:CastingItemTemplate />
                                 </DataTemplate>
                             </controls:HorizontalList.ItemTemplate>
                         </controls:HorizontalList>
-                    </Grid>
+                    </StackLayout>
 
                     <!-- Actors -->
-                    <Grid x:Name="ActorList" Grid.Row="7"  Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="8"  Grid.ColumnSpan="2">
                         <Label 
                             Grid.Row="0"
                             Text="{x:Static resource:AppResources.LabelTitleActors}"
                             Style="{StaticResource StorylineTitleStyle}"/>
                         <controls:HorizontalList Grid.Row="1" ListOrientation="Horizontal" x:Name="HorListActor"
-                            ItemsSource="{Binding MovieDet.Actors}" SelectedItemChanged="HorListActor_SelectedItemChanged"                              
-                            VerticalOptions="Start" BackgroundColor="Transparent"
-                            Padding="10">
+                            ItemsSource="{Binding MovieDet.Actors}" SelectedItemChanged="HorListActor_SelectedItemChanged"                             
+                            VerticalOptions="StartAndExpand" BackgroundColor="Transparent"
+                            Padding="5">
                             <controls:HorizontalList.ItemTemplate>
                                 <DataTemplate>
                                     <templates:CastingItemTemplate />
                                 </DataTemplate>
                             </controls:HorizontalList.ItemTemplate>
                         </controls:HorizontalList>
-                    </Grid>
-                    <controls1:MTAdView Grid.Row="8"  Grid.ColumnSpan="2" x:Name="myAds" IsVisible="true" AdsId="ca-app-pub-3165008211020391/3754469412" VerticalOptions="EndAndExpand" >
+                    </StackLayout>
+                    
+                    <controls1:MTAdView Grid.Row="9"  Grid.ColumnSpan="2" x:Name="myAds" IsVisible="true" AdsId="ca-app-pub-3165008211020391/3754469412" VerticalOptions="EndAndExpand" >
                         <controls1:MTAdView.HeightRequest>
                             <x:OnIdiom>
                                 <x:OnIdiom.Phone>50</x:OnIdiom.Phone>

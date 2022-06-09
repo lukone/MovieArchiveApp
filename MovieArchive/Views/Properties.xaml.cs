@@ -1,8 +1,10 @@
 ﻿using Microsoft.AppCenter.Crashes;
+using MovieArchive.GoogleDrive;
 using MovieArchive.Resources;
 using System;
 using System.IO;
 using System.Text;
+using Xamarin.Auth.Presenters;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -153,23 +155,24 @@ namespace MovieArchive
         {
             try
             {
-                if (await DisplayAlert(AppResources.MessageConfirmRestoreDB, AppResources.TitleConfirmRestoreDB, AppResources.ButtonConfirmRestore, AppResources.ButtonConfirmCancelRestore))
-                {
-                    
-                        var DBS = new DropBoxLib();
-                        await DBS.Authorize();
-                        if (DBS.IsAuthorized)
-                        {
-                            var db = await DBS.ReadFile("/" + Path.GetFileName(DB.dbPath));//"/Database.db3"
+                //if (await DisplayAlert(AppResources.MessageConfirmRestoreDB, AppResources.TitleConfirmRestoreDB, AppResources.ButtonConfirmRestore, AppResources.ButtonConfirmCancelRestore))
+                //{
 
-                            if (db != null)
-                            {
-                                File.WriteAllBytes(DB.dbPath, db);
-                                DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageDataBaseRestored);
-                            }
-                        }
+                //        var DBS = new DropBoxLib();
+                //        await DBS.Authorize();
+                //        if (DBS.IsAuthorized)
+                //        {
+                //            var db = await DBS.ReadFile("/" + Path.GetFileName(DB.dbPath));//"/Database.db3"
 
-                }
+                //            if (db != null)
+                //            {
+                //                File.WriteAllBytes(DB.dbPath, db);
+                //                DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageDataBaseRestored);
+                //            }
+                //        }
+
+                //}
+
             }
             catch (Exception ex) 
             {

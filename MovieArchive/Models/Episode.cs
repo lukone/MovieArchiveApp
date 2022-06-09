@@ -31,6 +31,9 @@ namespace MovieArchive
         public int Rating { get; set; }
         public DateTime? DateView { get; set; }
 
+        [Ignore]
+        public bool IsChecked { get { return Rating > 0; } }
+
         public Episode()
         { }
     }

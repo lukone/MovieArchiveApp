@@ -7,6 +7,7 @@ namespace MovieArchive
 {
     public class Season
     {
+        [PrimaryKey]
         public int ID { get; set; }
         public int N { get; set; }
         public int TmdbID { get; set; }
@@ -26,6 +27,14 @@ namespace MovieArchive
         public string PosterW780 { get { return string.Format(PathImage, "780", Poster); } }
 
         public const string PathImage = "https://image.tmdb.org/t/p/w{0}/{1}";
+
+        [Ignore]
+        public string Title { get { return "S-" + N.ToString(); } }
+
+        [Ignore]
         public List<Episode> Episodes { get; set; }
+
+        [Ignore]
+        public bool IsChecked { get { return EpisodeCount == EpisodeSeen; } }
     }
 }

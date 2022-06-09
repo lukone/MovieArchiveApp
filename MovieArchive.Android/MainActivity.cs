@@ -1,16 +1,13 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
+using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
-using Android.OS;
 using FFImageLoading.Forms.Platform;
-using System.Threading.Tasks;
-using System.IO;
+using System;
 using System.Diagnostics;
-using Android.Gms.Ads;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace MovieArchive.Droid
 {
@@ -32,12 +29,19 @@ namespace MovieArchive.Droid
             Xamarin.Forms.Forms.SetFlags(new string[] { "FastRenderers_Experimental", "CollectionView_Experimental" });
             CachedImageRenderer.Init(true);
 
+            ////Auth
+            global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
+
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
             //Remember to replace it with yours
            // MobileAds.Initialize(ApplicationContext, "ca-app-pub-3165008211020391~8747442659");
   
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
+            global::Xamarin.Auth.CustomTabsConfiguration.CustomTabsClosingMessage = null;
+
 
             DisplayCrashReport();
 

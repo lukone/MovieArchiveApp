@@ -23,15 +23,14 @@ namespace MovieArchive
             try
             {
                 TvShows = await DB.GetTvShowAsync();
-                if (Seen == 0)
+                if (Seen == 0) 
+                    //Unseen
                     TvShows = TvShows.Where(n => n.SeasonCount > n.SeasonSeen).OrderByDescending(n => n.DateIns).ToList();
                 else
                     TvShows = TvShows.Where(n => n.SeasonCount == n.SeasonSeen).OrderByDescending(n => n.DateIns).ToList();
                 return 1;
             }
-#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
                 Crashes.TrackError(ex);
                 return 0;

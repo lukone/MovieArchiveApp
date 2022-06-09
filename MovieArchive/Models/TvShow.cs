@@ -65,6 +65,7 @@ namespace MovieArchive
         public List<Season> Seasons { get; set; }
         public List<Person> Actors { get; set; }
         public List<Person> Directors { get; set; }
+        public List<StreamingProvider> StreamingProviders { get; set; }
 
         [Ignore]
         public string BackdropW1280 { get { return string.Format(PathImage, "1280", Backdrop); } }

@@ -1,9 +1,10 @@
-﻿using LaavorRatingConception;
-using Microsoft.AppCenter.Crashes;
+﻿using Microsoft.AppCenter.Crashes;
 using MovieArchive.Resources;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Syncfusion.XForms.TreeView;
+using Syncfusion.XForms.Buttons;
 
 namespace MovieArchive
 {
@@ -32,9 +33,22 @@ namespace MovieArchive
 
                     if (await DB.InsertTvShowAsync(mi) > 0)
                     {
-                        DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageTitleTvShowImported, mi.Title));
                         //disabled for multiple tap
                         ((ToolbarItem)this.ToolbarItems[0]).IsEnabled = false;
+
+                        if(await DB.InsertSeasonsAsync(TC.TvShowDet.Seasons) > 0)
+                        {
+                            foreach (Season season in TC.TvShowDet.Seasons)
+                            {
+                                if (await DB.InsertEpisodesAsync(season.Episodes) > 0)
+                                    DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageTitleTvShowImported, mi.Title));
+                                else
+                                    ((ToolbarItem)this.ToolbarItems[0]).IsEnabled = true;
+                            }
+                        }
+                        else
+                            ((ToolbarItem)this.ToolbarItems[0]).IsEnabled = true;
+
                     }
                 }));
             }
@@ -114,6 +128,66 @@ namespace MovieArchive
             }
         }
 
+        private async void CheckBox_StateChanged(object sender, Syncfusion.XForms.Buttons.StateChangedEventArgs e)
+        {
+            var SeenEpisode = await DB.GetEpisodeAsyncByID(((SfCheckBox)sender).TabIndex);
+
+            if (SeenEpisode != null)
+            {
+                if ((bool)e.IsChecked)
+                    SeenEpisode.Rating = 5;
+                else
+                    SeenEpisode.Rating = 0;
+
+                var NUpdRec = await DB.UpdateEpisodeAsync(SeenEpisode);
+
+                //Aggiorno gli episodi visti nella serie
+                if (NUpdRec > 0)
+                {
+                    var seasons = await DB.GetSeasonsAsync(SeenEpisode.TmdbID);
+                    if (seasons != null && seasons.Count > 0)
+                    {
+                        if ((bool)e.IsChecked)
+                            seasons[SeenEpisode.SeasonN - 1].EpisodeSeen += 1;
+                        else
+                            seasons[SeenEpisode.SeasonN - 1].EpisodeSeen -= 1;
+                        NUpdRec = await DB.UpdateSeasonAsync(seasons[SeenEpisode.SeasonN - 1]);
+                    }
+
+                }
+            }
+            else //verifico se è stata selezionata una stagione intera
+            {
+                int NUpdRec;
+                var SeenSeason = await DB.GetSeasonAsync(((SfCheckBox)sender).TabIndex);
+                if (SeenSeason != null)
+                {
+                    var SeenEpisodes = await DB.GetEpisodeAsync(SeenSeason.TmdbID, SeenSeason.N);
+                    if (SeenEpisodes != null)
+                    {
+                        foreach (var SeenEp in SeenEpisodes)
+                        {
+                            if ((bool)e.IsChecked)
+                                SeenEp.Rating = 5;
+                            else
+                                SeenEp.Rating = 0;
+
+                            NUpdRec = await DB.UpdateEpisodeAsync(SeenEp);
+ 
+                        }
+                        //Aggiorno gli episodi visti nella serie
+                        if ((bool)e.IsChecked)
+                            SeenSeason.EpisodeSeen = SeenSeason.EpisodeCount;
+                        else
+                            SeenSeason.EpisodeSeen = 0;
+                        
+                        NUpdRec = await DB.UpdateSeasonAsync(SeenSeason);
+                    }
+                }
+            }
+            
+        }
+
         //private async void SeasonList_ItemTapped(object sender, ItemTappedEventArgs e)
         //{
         //    var ca = (ListView)sender;
@@ -130,38 +204,38 @@ namespace MovieArchive
         //    }
         //}
 
-        private async void SeasonList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var ca = (CollectionView)sender;
+        //private async void SeasonList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    var ca = (CollectionView)sender;
 
-            if (ca.SelectedItem != null)
-            {
-                var pe = (Season)(ca.SelectedItem);
-                await Navigation.PushAsync(new TvShowSeason(TC.TvShowDet.TmdbID, pe));
-            }
-        }
+        //    if (ca.SelectedItem != null)
+        //    {
+        //        var pe = (Season)(ca.SelectedItem);
+        //        await Navigation.PushAsync(new TvShowSeason(TC.TvShowDet.TmdbID, pe));
+        //    }
+        //}
 
-        private async void Rating_OnSelect(object sender, EventArgs e)
-        {
-            //Rate all season
-            var ratingImage = (RatingConception)sender;
-            int NUpdRec=0;
-            if (TC.TvShowDet.Seasons[int.Parse(ratingImage.AutomationId) - 1].PersonalRatigAVG==0)
-            {
-                foreach (Episode EP in TC.TvShowDet.Seasons[int.Parse(ratingImage.AutomationId) - 1].Episodes)
-                {
-                    EP.Rating = (int)ratingImage.Value;
-                    EP.DateView = DateTime.Now;
+        //private async void Rating_OnSelect(object sender, EventArgs e)
+        //{
+        //    //Rate all season
+        //    var ratingImage = (RatingConception)sender;
+        //    int NUpdRec=0;
+        //    if (TC.TvShowDet.Seasons[int.Parse(ratingImage.AutomationId) - 1].PersonalRatigAVG==0)
+        //    {
+        //        foreach (Episode EP in TC.TvShowDet.Seasons[int.Parse(ratingImage.AutomationId) - 1].Episodes)
+        //        {
+        //            EP.Rating = (int)ratingImage.Value;
+        //            EP.DateView = DateTime.Now;
 
-                    NUpdRec = await DB.InsertEpisodeAsync(EP);
+        //            NUpdRec = await DB.InsertEpisodeAsync(EP);
 
-                }
+        //        }
 
-                if (NUpdRec > 0)
-                    DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageRatingSaved);
-        
-            }
-        }
+        //        if (NUpdRec > 0)
+        //            DependencyService.Get<IMessage>().ShortAlert(AppResources.MessageRatingSaved);
+
+        //    }
+        //}
 
     }
 

@@ -194,9 +194,7 @@ namespace MovieArchive
             {
                 return await cnnDBAsync.InsertAsync(item);
             }
-#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             {
                 Crashes.TrackError(ex);
                 return 0;
@@ -261,18 +259,97 @@ namespace MovieArchive
 
         #endregion
 
+        #region Season
+        public async Task<List<Season>> GetSeasonsAsync(int tmdbid)
+        {
+            try
+            {
+                return await cnnDBAsync.Table<Season>().Where(i => i.TmdbID == tmdbid).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return null;
+            }
+        }
+
+        public async Task<Season> GetSeasonAsync(int id)
+        {
+            try
+            {
+                return await cnnDBAsync.Table<Season>().Where(i => i.ID == id).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return null;
+            }
+        }
+
+        public async Task<int> InsertSeasonAsync(Season item)
+        {
+            try
+            {
+                return await cnnDBAsync.InsertAsync(item);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertSeasonsAsync(List<Season> item)
+        {
+            try
+            {
+                return await cnnDBAsync.InsertAllAsync(item);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return 0;
+            }
+        }
+
+        public async Task<int> UpdateSeasonAsync(Season item)
+        {
+            try
+            {
+                return await cnnDBAsync.UpdateAsync(item);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return 0;
+            }
+        }
+        #endregion
+
         #region Espisode
         public async Task<List<Episode>> GetEpisodeAsync(int tmdbid,int SeasonN)
         {
             try
             {
-                List<Episode> c = new List<Episode>();
-                c=await cnnDBAsync.Table<Episode>().ToListAsync();
-                return c.Where(i => i.TmdbID == tmdbid && i.SeasonN == SeasonN).ToList();
+                //List<Episode> c = new List<Episode>();
+                //c=await cnnDBAsync.Table<Episode>().ToListAsync();
+                //return c.Where(i => i.TmdbID == tmdbid && i.SeasonN == SeasonN).ToList();
+
+                return await cnnDBAsync.Table<Episode>().Where(i => i.TmdbID == tmdbid).Where(x=> x.SeasonN == SeasonN).OrderBy(o=> o.N).ToListAsync();
             }
-#pragma warning disable CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
             catch (Exception ex)
-#pragma warning restore CS0168 // La variabile 'e' è dichiarata, ma non viene mai usata
+            {
+                Crashes.TrackError(ex);
+                return null;
+            }
+        }
+        public async Task<Episode> GetEpisodeAsyncByID(int id)
+        {
+            try
+            {
+                return await cnnDBAsync.Table<Episode>().Where(i => i.ID == id).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
             {
                 Crashes.TrackError(ex);
                 return null;
@@ -301,6 +378,18 @@ namespace MovieArchive
             try
             {
                 return await cnnDBAsync.InsertAsync(item);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return 0;
+            }
+        }
+        public async Task<int> InsertEpisodesAsync(List<Episode> item)
+        {
+            try
+            {
+                return await cnnDBAsync.InsertAllAsync(item);
             }
             catch (Exception ex)
             {
@@ -411,6 +500,7 @@ namespace MovieArchive
                 var ris = cnnDB.Insert(PR);          
                 res = cnnDB.CreateTable<Movie>();
                 res = cnnDB.CreateTable<TvShow>();
+                res = cnnDB.CreateTable<Season>();
                 res = cnnDB.CreateTable<Episode>();
             }
 #pragma warning disable CS0168 // La variabile 'ex' è dichiarata, ma non viene mai usata
@@ -477,7 +567,10 @@ namespace MovieArchive
             {
                 if(!TableExists("TvShow"))
                     await cnnDBAsync.CreateTableAsync<TvShow>();
-                await cnnDBAsync.CreateTableAsync<Episode>();
+                if (!TableExists("Season"))
+                    await cnnDBAsync.CreateTableAsync<Season>();
+                if (!TableExists("Episode"))
+                    await cnnDBAsync.CreateTableAsync<Episode>();
                 var PR = GetPropertyAsync().Result;
                 PR.DBVersion = DBVersion;
                 await UpdatePropertyAsync(PR);
@@ -549,11 +642,25 @@ namespace MovieArchive
             try
             {
                 if (!TableExists("TvShow"))
-                    await cnnDBAsync.CreateTableAsync<TvShow>();
+                    await cnnDBAsync.CreateTableAsync<TvShow>();                    
                 else
                 {
                     await cnnDBAsync.DropTableAsync<TvShow>();
                     await cnnDBAsync.CreateTableAsync<TvShow>();
+                }
+
+                if (!TableExists("Season"))
+                    await cnnDBAsync.CreateTableAsync<Season>();
+                else
+                {
+                    await cnnDBAsync.DropTableAsync<Season>();
+                    await cnnDBAsync.CreateTableAsync<Season>();
+                }
+
+                if (!TableExists("Episode"))
+                    await cnnDBAsync.CreateTableAsync<Episode>();
+                else
+                {                 
                     await cnnDBAsync.DropTableAsync<Episode>();
                     await cnnDBAsync.CreateTableAsync<Episode>();
                 }
