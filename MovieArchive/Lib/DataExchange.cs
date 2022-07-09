@@ -295,79 +295,86 @@ namespace MovieArchive
 
         public async Task<MovieDetails> GetMovieDetail(MovieDetails Movie)
         {
+            try 
+            { 
+                    TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
+                    var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, null, MovieMethods.Videos); //| MovieMethods.Credits
 
-            TMDbClient client = new TMDbClient(ApiKey.tmdbkeyV3, true);
-            var result = await client.GetMovieAsync(Movie.TmdbID, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, null, MovieMethods.Videos); //| MovieMethods.Credits
+                    if (result != null && result.Id != 0)
+                    {
+                        Movie.ImdbID = result.ImdbId ?? "";
+                        Movie.Synopsis = result.Overview ?? "";
+                        Movie.OriginalTitle = result.OriginalTitle ?? "";
+                        Movie.ReleaseDate = result.ReleaseDate;
+                        //Movie.AVGRating = result.VoteAverage;
+                        Movie.HomePage = result.Homepage ?? "";
+                        Movie.Backdrop = result.BackdropPath ?? "";
+                        Movie.Runtime = result.Runtime ?? 0;
+                        if (result.ProductionCountries.Count > 0)
+                            Movie.ProductionCountry = result.ProductionCountries.First().Name;
+                        else
+                            Movie.ProductionCountry = "";
+                        if (result.Videos.Results.Count > 0)
+                            Movie.Trailer = result.Videos.Results.Where(m => m.Type == "Trailer").Select(t => t.Site == "YouTube" ? "https://www.youtube.com/embed/" + t.Key : t.Key).FirstOrDefault();
+                        else
+                            Movie.Trailer = "";
+                        //Movie.Actors = (from d in result.Credits.Cast select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
+                        //Movie.Directors = (from d in result.Credits.Crew where d.Job == "Director" select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
 
-            if (result != null && result.Id != 0)
-            {
-                Movie.ImdbID = result.ImdbId ?? "";
-                Movie.Synopsis = result.Overview ?? "";
-                Movie.OriginalTitle = result.OriginalTitle ?? "";
-                Movie.ReleaseDate = result.ReleaseDate;
-                //Movie.AVGRating = result.VoteAverage;
-                Movie.HomePage = result.Homepage ?? "";
-                Movie.Backdrop = result.BackdropPath ?? "";
-                Movie.Runtime = result.Runtime ?? 0;
-                if (result.ProductionCountries.Count > 0)
-                    Movie.ProductionCountry = result.ProductionCountries.First().Name;
-                else
-                    Movie.ProductionCountry = "";
-                if (result.Videos.Results.Count > 0)
-                    Movie.Trailer = result.Videos.Results.Where(m => m.Type == "Trailer").Select(t => t.Site == "YouTube" ? "https://www.youtube.com/embed/" + t.Key : t.Key).FirstOrDefault();
-                else
-                    Movie.Trailer = "";
-                //Movie.Actors = (from d in result.Credits.Cast select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
-                //Movie.Directors = (from d in result.Credits.Crew where d.Job == "Director" select new Person() { Name = d.Name, tmdbid = d.Id, Photo = (d.ProfilePath ?? "").Replace("/", ""), Type = "Director" }).ToList();
+                        Movie.Genres = String.Join(" - ", result.Genres.Select(e => e.Name).ToList());
+                        Movie.Ratings = new List<Rating>();
+                        Movie.Ratings.Add(new Rating { Source = "TMDB", Value = result.VoteAverage.ToString() });
 
-                Movie.Genres = String.Join(" - ", result.Genres.Select(e => e.Name).ToList());
-                Movie.Ratings = new List<Rating>();
-                Movie.Ratings.Add(new Rating { Source = "TMDB", Value = result.VoteAverage.ToString() });
+                        //Get providers list
+                        Movie.StreamingProviders = await GetStreamingProviders(Movie.ID, Movie.TmdbID, client, 0);
 
-                //Get providers list
-                Movie.StreamingProviders = await GetStreamingProviders(Movie.ID, Movie.TmdbID, client, 0);
+                        //Movie.StreamingProviders = new List<StreamingProvider>();
+                        //try
+                        //{
+                        //    var resultprov = await client.GetMovieWatchProvidersAsync(Movie.TmdbID);
+                        //    var LanguageID = CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2);
 
-                //Movie.StreamingProviders = new List<StreamingProvider>();
-                //try
-                //{
-                //    var resultprov = await client.GetMovieWatchProvidersAsync(Movie.TmdbID);
-                //    var LanguageID = CultureInfo.CurrentCulture.Name.Substring(CultureInfo.CurrentCulture.Name.Length - 2);
+                        //    if (resultprov.Results.Where(s => s.Key == LanguageID).Count()>0 && resultprov.Results[LanguageID].FlatRate != null)
+                        //    {
+                        //        foreach (var provider in resultprov.Results[LanguageID].FlatRate)
+                        //        {
+                        //            var Prov = new StreamingProvider();
+                        //            Prov.Type = "Streaming";
+                        //            Prov.MovieID = Movie.ID;
+                        //            Prov.logo_path = provider.LogoPath;
+                        //            Prov.provider_name = provider.ProviderName;
+                        //            Prov.provider_id = provider.ProviderId;
+                        //            Prov.display_priority = provider.DisplayPriority;
+                        //            Movie.StreamingProviders.Add(Prov);
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        var Prov = new StreamingProvider();
+                        //        Prov.Type = "Local";
+                        //        Prov.MovieID = Movie.ID;
+                        //        Prov.logo_path = "plex.tv";
+                        //        Prov.provider_name = "Plex";
+                        //        Prov.provider_id = 0;
+                        //        Prov.display_priority = 1;
+                        //        Movie.StreamingProviders.Add(Prov);
+                        //    }
+                        //}
+                        //catch(Exception ex)
+                        //{
+                        //    Crashes.TrackError(ex);
+                        //    throw ex;
+                        //}
 
-                //    if (resultprov.Results.Where(s => s.Key == LanguageID).Count()>0 && resultprov.Results[LanguageID].FlatRate != null)
-                //    {
-                //        foreach (var provider in resultprov.Results[LanguageID].FlatRate)
-                //        {
-                //            var Prov = new StreamingProvider();
-                //            Prov.Type = "Streaming";
-                //            Prov.MovieID = Movie.ID;
-                //            Prov.logo_path = provider.LogoPath;
-                //            Prov.provider_name = provider.ProviderName;
-                //            Prov.provider_id = provider.ProviderId;
-                //            Prov.display_priority = provider.DisplayPriority;
-                //            Movie.StreamingProviders.Add(Prov);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        var Prov = new StreamingProvider();
-                //        Prov.Type = "Local";
-                //        Prov.MovieID = Movie.ID;
-                //        Prov.logo_path = "plex.tv";
-                //        Prov.provider_name = "Plex";
-                //        Prov.provider_id = 0;
-                //        Prov.display_priority = 1;
-                //        Movie.StreamingProviders.Add(Prov);
-                //    }
-                //}
-                //catch(Exception ex)
-                //{
-                //    Crashes.TrackError(ex);
-                //    throw ex;
-                //}
+                    }
 
+                    return Movie;
             }
-
-            return Movie;
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                throw ex;
+            }
         }
         #endregion
 

@@ -153,6 +153,9 @@
   <data name="ErrorMessageCvsFileExported" xml:space="preserve">
     <value>Errore durante il salvataggio del file</value>
   </data>
+  <data name="ErrorMessageMovieDetailsNotFound" xml:space="preserve">
+    <value>Dettagli film non trovati</value>
+  </data>
   <data name="LabelAutomaticBackup" xml:space="preserve">
     <value>Backup automatico</value>
   </data>

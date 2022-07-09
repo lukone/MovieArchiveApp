@@ -21,35 +21,42 @@ namespace MovieArchive
             DB = new DataBase();
             PY = DB.GetPropertyAsync().Result;
             MC = new MovieCardModel(movie);
-            if(movie.ID==0)
+            if (MC.MovieDet.ImdbID != null)
             {
-                this.ToolbarItems.Add(new ToolbarItem("AddMovie", "addmedia.png", async () =>
+                if (movie.ID == 0)
                 {
-                    Movie mi = new Movie((Movie)MC.MovieDet);
-                   
-                    mi.ID = await DB.GetNextMovieIDAsync();
-                    mi.DateIns = DateTime.Now;
-
-                    if (await DB.InsertMovieAsync(mi) > 0)
+                    this.ToolbarItems.Add(new ToolbarItem("AddMovie", "addmedia.png", async () =>
                     {
-                        DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageTitleMovieImported, mi.Title));
+                        Movie mi = new Movie((Movie)MC.MovieDet);
+
+                        mi.ID = await DB.GetNextMovieIDAsync();
+                        mi.DateIns = DateTime.Now;
+
+                        if (await DB.InsertMovieAsync(mi) > 0)
+                        {
+                            DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageTitleMovieImported, mi.Title));
                         //disabled for multiple tap
                         ((ToolbarItem)this.ToolbarItems[0]).IsEnabled = false;
 
-                        if (PY.WebApiAddress != "" && PY.WebApiAddress != null)
-                        {
+                            if (PY.WebApiAddress != "" && PY.WebApiAddress != null)
+                            {
                             //insert movie on db web
                             var WS = new WebApi(PY.WebApiAddress);
-                            await WS.InsertNewMovie(mi.TmdbID, mi.Title, mi.PosterW342, mi.PosterW780);
-                            var genrelist= MC.MovieDet.Genres.Split('-');
-                            foreach (var genre in genrelist)
-                            {
-                                await WS.InsertMovieGenre(mi.ID, genre);
+                                await WS.InsertNewMovie(mi.TmdbID, mi.Title, mi.PosterW342, mi.PosterW780);
+                                var genrelist = MC.MovieDet.Genres.Split('-');
+                                foreach (var genre in genrelist)
+                                {
+                                    await WS.InsertMovieGenre(mi.ID, genre);
+                                }
                             }
                         }
-                    }
 
-                }));
+                    }));
+                }
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert(AppResources.ErrorMessageMovieDetailsNotFound);
             }
         }
 

@@ -18,28 +18,37 @@ namespace MovieArchive
     
             public async Task<int> GetDetail()
             {
-                var DE = new DataExchange();
-
-                MovieDet=await DE.GetMovieDetail(MovieDet);
-
-                //var Crews=DE.GetCastAndCrew(MovieDet.TmdbID);
-
-                //MovieDet.Actors = Crews.Where(m => m.Type == "Actor").ToList();
-                //MovieDet.Directors = Crews.Where(m => m.Type == "Director").ToList();
-
-                return 1;
+                try
+                {
+                    var DE = new DataExchange();
+                    MovieDet=await DE.GetMovieDetail(MovieDet);
+                    //var Crews=DE.GetCastAndCrew(MovieDet.TmdbID);
+                    //MovieDet.Actors = Crews.Where(m => m.Type == "Actor").ToList();
+                    //MovieDet.Directors = Crews.Where(m => m.Type == "Director").ToList();
+                    return 1;
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                    return 0;
+                }
             }
 
             public async Task<int> GetCrew()
             {
-                var DE = new DataExchange();
-
-                var Crews = await DE.GetCastAndCrew(MovieDet.TmdbID);
-
-                MovieDet.Actors = Crews.Where(m => m.Type == "Actor").ToList();
-                MovieDet.Directors = Crews.Where(m => m.Type == "Director").ToList();
-
-                return 1;
+                try
+                {
+                    var DE = new DataExchange();
+                    var Crews = await DE.GetCastAndCrew(MovieDet.TmdbID);
+                    MovieDet.Actors = Crews.Where(m => m.Type == "Actor").ToList();
+                    MovieDet.Directors = Crews.Where(m => m.Type == "Director").ToList();
+                    return 1;
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                    return 0;
+                }
             }
 
             public async Task<int> GetWebRating()
