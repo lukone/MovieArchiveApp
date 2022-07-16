@@ -21,8 +21,8 @@ namespace MovieArchive
             DB = new DataBase();
             PY = DB.GetPropertyAsync().Result;
             MC = new MovieCardModel(movie);
-            if (MC.MovieDet.ImdbID != null)
-            {
+            //if (MC.MovieDet.ImdbID != null)
+            //{
                 if (movie.ID == 0)
                 {
                     this.ToolbarItems.Add(new ToolbarItem("AddMovie", "addmedia.png", async () =>
@@ -53,11 +53,11 @@ namespace MovieArchive
 
                     }));
                 }
-            }
-            else
-            {
-                DependencyService.Get<IMessage>().ShortAlert(AppResources.ErrorMessageMovieDetailsNotFound);
-            }
+            //}
+            //else
+            //{
+            //    DependencyService.Get<IMessage>().ShortAlert(AppResources.ErrorMessageMovieDetailsNotFound);
+            //}
         }
 
         protected async override void OnAppearing()

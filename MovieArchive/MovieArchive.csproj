@@ -20,19 +20,19 @@
     <PackageReference Include="Google.Apis.Core" Version="1.55.0" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.55.0.2566" />
     <PackageReference Include="MarcTron.Admob" Version="1.6.9" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.1" />
     <PackageReference Include="RatingConception" Version="5.0.0.2012" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.SfTreeView" Version="19.4.0.47" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="TMDbLib" Version="1.9.1" />
+    <PackageReference Include="TMDbLib" Version="1.9.2" />
     <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />  
     <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.66.0" />
   </ItemGroup>
 
