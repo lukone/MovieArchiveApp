@@ -19,7 +19,7 @@ namespace MovieArchive
         public App()
         {
             //Register Syncfusion license
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTY1ODM1QDMxMzkyZTM0MmUzMFZ2KzM5QXl6ZFBzZTVvdHpZZ1VKSUhjcXpVYWMxaEdhRTRheTd1TXBXcFk9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE5MDcwOUAzMjM1MmUzMDJlMzBvd0xEeGRaMml5NkxHQVFEZEJ4WEVCcStTOEI1N1RvYlVOaHBCb3ZGeUZjPQ==");
 
             InitializeComponent();
 

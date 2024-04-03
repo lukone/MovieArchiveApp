@@ -13,6 +13,8 @@ using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 using Xamarin.Forms;
 using Microsoft.AppCenter.Crashes;
+using static Xamarin.Essentials.Permissions;
+using TMDbLib.Objects.People;
 
 namespace MovieArchive
 {
@@ -497,6 +499,59 @@ namespace MovieArchive
             { Crashes.TrackError(ex); }
         }
 
+        
+        // import data from web api 
+        public async Task<int> ImportTVShowDataFromWebApi()
+        {
+            List<Season> SeasonsFound= new List<Season>();
+            List<Episode> Episodes = new List<Episode>();
+            Property PR = DB.GetPropertyAsync().Result;
+            if (PR != null && PR.WebApiAddress != "" && PR.WebApiAddress != null)
+            {
+                try
+                {
+                    var MS = new WebApi(PR.WebApiAddress);
+                    TvShowsFound = await MS.GetDataTvShowWS(PR.GetTvShowLastUpdate);
+
+                    if (TvShowsFound.Count > 0)
+                    {
+                        await DB.InsertTvShowsAsync(TvShowsFound);
+
+                        foreach (TvShow TvShowF in TvShowsFound)
+                        {
+                            Episodes.Clear();
+                            Episodes.Clear();
+                            SeasonsFound = await MS.GetDataSeasonWS(TvShowF.TmdbID);
+                            if (SeasonsFound.Count > 0)
+                            {
+                                if (await DB.InsertSeasonsAsync(SeasonsFound) > 0)
+                                {
+                                    foreach (Season SelSeason in SeasonsFound)
+                                    {
+                                        Episodes = await MS.GetDataEpisodeWS(SelSeason.TmdbID, SelSeason.N);
+
+                                        await DB.InsertEpisodesAsync(Episodes);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //Update date
+                    PR.GetTvShowLastUpdate = PR.GetTVShowRatingLastUpdate = DateTime.Now;
+                    int r = await DB.UpdatePropertyAsync(PR);
+                    return r;
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                    return 0;
+                }
+            }
+            else
+                throw new NotSupportedException("ERROR: WebApi address not valid");
+
+        }
+
         public async Task<TvShowDetails> GetTvShowDetail(TvShowDetails tvshow)
         {
 
@@ -532,8 +587,8 @@ namespace MovieArchive
                             SelSeason.Episodes= await DB.GetEpisodeAsync(tvshow.TmdbID, SeasonNumber);
 
                             //Se non ci sono episodi nel db per questa stagione li cerco in rete
-                            if (SelSeason.Episodes == null || SelSeason.Episodes.Count==0)
-                                GetEpisodes(ref SelSeason, seasons[SeasonNumber - 1].Episodes.Count, tvshow.TmdbID);
+                            //if (SelSeason.Episodes == null || SelSeason.Episodes.Count==0)
+                            //    GetEpisodes(ref SelSeason, seasons[SeasonNumber - 1].Episodes.Count, tvshow.TmdbID);
 
                             seasons[SeasonNumber - 1] = SelSeason; 
                         }
@@ -570,7 +625,7 @@ namespace MovieArchive
                 else
                     tvshow.SeasonCount = 0;
 
-                tvshow.SeasonSeen = 0;
+                //tvshow.SeasonSeen = 0;
                 tvshow.Genres = String.Join(" - ", result.Genres.Select(e => e.Name).ToList());
                 tvshow.Ratings = new List<Rating>();
                 tvshow.Ratings.Add(new Rating { Source = "TMDB", Value = result.VoteAverage.ToString() });
@@ -753,6 +808,12 @@ namespace MovieArchive
                     writer.WriteLine(string.Join(", ", props.Select(p => p.GetValue(item, null))));
                 }
             }
+
+            //Copio il DB in download
+            var bas = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MovieArchive.db3");
+            //non funziona con note 8 ma con A52 con sblocco oem si
+            var des = "/storage/emulated/0/Download/MoveDB.db3";
+            File.Copy(bas, des);
         }
 
         //ShowType 0 = movie 1 = TV Show

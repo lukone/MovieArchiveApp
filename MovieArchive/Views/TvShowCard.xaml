@@ -49,8 +49,8 @@
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="120"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="180"/>
                         <RowDefinition Height="200"/>
                         <RowDefinition Height="200"/>
                         <RowDefinition Height="70"/>
@@ -137,7 +137,7 @@
                                                     Text="{Binding Content.Title}"
                                                     TextColor="White"                                 
                                                     IsChecked="{Binding Content.IsChecked, Mode=TwoWay}" 
-                                                    StateChanged="CheckBox_StateChanged"
+                                                     StateChanged="CheckBox_StateChanged"
                                                 />
 
                                         </Grid>

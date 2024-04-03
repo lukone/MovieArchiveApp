@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace MovieArchive
@@ -30,7 +31,7 @@ namespace MovieArchive
             client = new HttpClient();
         }
         
-        #region MovieArchive
+        #region Movie
 
         private readonly string GetData = "GetDataFromDB.php?{0}={1}";
         private readonly string SetRating = "SetRating.php?{0}={1}&{2}={3}";
@@ -179,7 +180,134 @@ namespace MovieArchive
                 Crashes.TrackError(ex);
             }
         }
+
+        #endregion
+
+        #region TVShow
+        private readonly string InsNewTvShow = "InsTvShow.php?{0}={1}&{2}={3}&{4}={5}";
+        private readonly string SetRatingEpisode = "SetRatingTvShow.php?{0}={1}&{2}={3}&{4}={5}&{6}={7}";
+        private readonly string GetTvShowData = "GetTvShowDataFromDB.php?{0}={1}";
+        private readonly string GetSeasonData = "GetSeasonDataFromDB.php?{0}={1}";
+        private readonly string GetEpisodeData = "GetEpisodeDataFromDB.php?{0}={1}&{2}={3}";
+
+        public async Task<List<TvShow>> GetDataTvShowWS(DateTime LastUpdate)
+        {
+            Uri uri;
+            try
+            {
+
+                uri = new Uri(String.Format(WebCall + GetTvShowData, "LastUpdateDate", LastUpdate.ToString("yyyy.MM.dd HH:mm:ss")));
+
+                var response = await client.GetAsync(uri, HttpCompletionOption.ResponseContentRead);
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var content = response.Content.ReadAsStringAsync().Result;
+
+                    return JsonConvert.DeserializeObject<List<TvShow>>(content, new CustomDateTimeConverter());
+
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return null;
+            }
+
+        }
+
+        public async Task<List<Season>> GetDataSeasonWS(int ID)
+        {
+            Uri uri;
+            try
+            {
+
+                uri = new Uri(String.Format(WebCall + GetSeasonData, "ID", ID));
+
+                var response = await client.GetAsync(uri, HttpCompletionOption.ResponseContentRead);
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var content = response.Content.ReadAsStringAsync().Result;
+
+                    return JsonConvert.DeserializeObject<List<Season>>(content, new CustomDateTimeConverter());
+
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return null;
+            }
+
+        }
         
+        public async Task<List<Episode>> GetDataEpisodeWS(int ID,int N)
+        {
+            Uri uri;
+            try
+            {
+
+                uri = new Uri(String.Format(WebCall + GetEpisodeData, "ID", ID,"N",N));
+
+                var response = await client.GetAsync(uri, HttpCompletionOption.ResponseContentRead);
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var content = response.Content.ReadAsStringAsync().Result;
+
+                    return JsonConvert.DeserializeObject<List<Episode>>(content, new CustomDateTimeConverter());
+
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                return null;
+            }
+
+        }
+
+        public async Task InsertNewTvShow(int IDTMDB, string Title, string Picture)
+        {
+            var uri = new Uri(String.Format(WebCall + InsNewTvShow, "IDTMDB", IDTMDB.ToString(), "Title", Title, "Picture", Picture));
+            try
+            {
+                var response = client.GetAsync(uri).Result;
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                    throw new NotSupportedException(string.Format("ERROR: WebApi Post ", uri.ToString()));
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        public async Task SetRatingTVShowWS(Episode EpisodeSeen,Season SeasonSel,BigInteger TMDBID)
+        {
+            var uri = new Uri(String.Format(WebCall + SetRatingEpisode, "tmdbid", TMDBID.ToString(), "seasonN", SeasonSel.N.ToString(), "episodeN", EpisodeSeen.N.ToString(), "rate", EpisodeSeen.Rating.ToString()));
+            try
+            {
+                var response = client.GetAsync(uri).Result;
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                    throw new NotSupportedException(string.Format("ERROR: WebApi Post ", uri.ToString()));
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
         #endregion
 
         #region omdbapi.com

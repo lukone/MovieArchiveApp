@@ -273,6 +273,9 @@
   <data name="MessageNMovieImported" xml:space="preserve">
     <value>{0} film aggiunti</value>
   </data>
+  <data name="MessageNTvShowsImported" xml:space="preserve">
+    <value>{0} serie TV aggiunte</value>
+  </data>
   <data name="MessageRatingSaved" xml:space="preserve">
     <value>Voto registrato</value>
   </data>

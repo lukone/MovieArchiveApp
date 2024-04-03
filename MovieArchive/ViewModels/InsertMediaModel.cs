@@ -93,6 +93,14 @@ namespace MovieArchive
             TvShows = DE.TvShowsFound;
         }
 
+        public async Task ImportTvShowFromWebService()
+        {
+            var DE = new DataExchange();
+
+            await DE.ImportTVShowDataFromWebApi();
+            TvShows = DE.TvShowsFound;
+        }
+
         #endregion
     }
 } 

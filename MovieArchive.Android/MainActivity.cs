@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MovieArchive.Droid
 {
-    [Activity(Label = "MovieArchive", /*Icon = "@mipmap/icon", Theme = "@style/MainTheme"*/ Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "MovieArchive", /*Icon = "@mipmap/icon", Theme = "@style/MainTheme"*/ Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop, Exported = true)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -22,7 +22,7 @@ namespace MovieArchive.Droid
             base.Window.RequestFeature(WindowFeatures.ActionBar);
             // Name of the MainActivity theme you had there before.
             // Or you can use global::Android.Resource.Style.ThemeHoloLight
-            base.SetTheme(Resource.Style.MainTheme);
+            base.SetTheme(Android.Resource.Style.ThemeOverlayMaterialDark);
 
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -102,19 +102,19 @@ namespace MovieArchive.Droid
                 return;
             }
 
-            var errorText = File.ReadAllText(errorFilePath);
-            new AlertDialog.Builder(this)
-                .SetPositiveButton("Clear", (sender, args) =>
-                {
-                    File.Delete(errorFilePath);
-                })
-                .SetNegativeButton("Close", (sender, args) =>
-                {
-                    // User pressed Close.
-                })
-                        .SetMessage(errorText)
-                        .SetTitle("Crash Report")
-                        .Show();
+            //var errorText = File.ReadAllText(errorFilePath);
+            //new AlertDialog.Builder(this)
+            //    .SetPositiveButton("Clear", (sender, args) =>
+            //    {
+            //        File.Delete(errorFilePath);
+            //    })
+            //    .SetNegativeButton("Close", (sender, args) =>
+            //    {
+            //        // User pressed Close.
+            //    })
+            //            .SetMessage(errorText)
+            //            .SetTitle("Crash Report")
+            //            .Show();
         }
 
     }

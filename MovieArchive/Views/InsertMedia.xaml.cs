@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using MovieArchive.GoogleDrive;
 
 namespace MovieArchive
 {
@@ -72,16 +73,24 @@ namespace MovieArchive
             {
                 try
                 {
-                    if (TypeOfMedia == 1)
+                    switch (TypeOfMedia)
                     {
-                        await MediaToIns.ImportMovieFromWebService();
-                        DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageNMovieImported, MediaToIns.Movies.Count.ToString()));
+                        case 1:
+                            await MediaToIns.ImportMovieFromWebService();
+                            DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageNMovieImported, MediaToIns.Movies.Count.ToString()));
+                            break;
+                        case 2:
+                            await MediaToIns.ImportTvShowFromWebService();
+                            DependencyService.Get<IMessage>().ShortAlert(String.Format(AppResources.MessageNTvShowsImported, MediaToIns.TvShows.Count.ToString()));
+                            break;
+                        default:
+                            break;
                     }
                 }
                 catch (Exception ex) { Crashes.TrackError(ex); }
             });
 
-            if (PY.WebApiAddress!=null && PY.WebApiAddress != "" && TypeOfMedia == 1)
+            if (PY.WebApiAddress!=null && PY.WebApiAddress != "")
                 WebApi.IsEnabled = true;
             else
                 WebApi.IsEnabled = false;
@@ -162,7 +171,7 @@ namespace MovieArchive
         {
             TypeOfMedia = TypeOfMedia == 1 ? 2 : 1;
             SelTypeOfMedia.IconImageSource = TypeOfMedia == 1 ? "movie" : "tv";
-            WebApi.IsEnabled = TypeOfMedia == 1 ? WebApi.IsEnabled : false;
+            //WebApi.IsEnabled = TypeOfMedia == 1 ? WebApi.IsEnabled : false;
 
         }
     }

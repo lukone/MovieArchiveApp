@@ -27,7 +27,7 @@ namespace MovieArchive
                     //Unseen
                     TvShows = TvShows.Where(n => n.SeasonCount > n.SeasonSeen).OrderByDescending(n => n.DateIns).ToList();
                 else
-                    TvShows = TvShows.Where(n => n.SeasonCount == n.SeasonSeen).OrderByDescending(n => n.DateIns).ToList();
+                    TvShows = TvShows.Where(n => n.SeasonCount == n.SeasonSeen).OrderByDescending(s => s.DateLastEpSeen).OrderByDescending(n => n.DateIns).ToList();
                 return 1;
             }
             catch (Exception ex)

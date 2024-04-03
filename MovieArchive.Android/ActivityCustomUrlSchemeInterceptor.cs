@@ -8,7 +8,7 @@ using Xamarin.Auth;
 
 namespace MovieArchive.Droid
 {
-    [Activity(Label = "ActivityCustomUrlSchemeInterceptor", NoHistory = true, LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "ActivityCustomUrlSchemeInterceptor", NoHistory = true, LaunchMode = LaunchMode.SingleTop, Exported = true)]
     [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataSchemes = new[] { "com.lk.MovieArchive1" }, DataPath = "/oauth2redirect")]
     public class ActivityCustomUrlSchemeInterceptor : Activity
     {

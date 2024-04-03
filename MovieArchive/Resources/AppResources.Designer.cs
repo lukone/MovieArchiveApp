@@ -529,6 +529,15 @@ namespace MovieArchive.Resources {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a {0} added TV Shows.
+        /// </summary>
+        internal static string MessageNTvShowsImported {
+            get {
+                return ResourceManager.GetString("MessageNTvShowsImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Rating saved.
         /// </summary>
         internal static string MessageRatingSaved {
