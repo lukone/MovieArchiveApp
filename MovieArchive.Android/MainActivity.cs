@@ -10,7 +10,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 namespace MovieArchive.Droid
-{
+{ 
     [Activity(Label = "MovieArchive", /*Icon = "@mipmap/icon", Theme = "@style/MainTheme"*/ Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop, Exported = true)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {

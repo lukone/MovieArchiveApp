@@ -11,7 +11,7 @@ namespace MovieArchive
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]   
     public partial class InsertMedia : ContentPage
-	{
+	{ 
         public InsertMediaModel MediaToIns;
         private DataBase DB;
         private Property PY;

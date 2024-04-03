@@ -13,7 +13,7 @@ namespace MovieArchive
         TvShowListModel TvShowListM = new TvShowListModel();
         int Seen = 0;  //Seen = 0 Not seen 1 Seen 
 
-        public TvShowList()
+        public TvShowList() 
 	    {
             InitializeComponent();
         }

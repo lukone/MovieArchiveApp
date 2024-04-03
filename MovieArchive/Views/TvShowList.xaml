@@ -10,7 +10,7 @@
         <ToolbarItem x:Name="TypeOfSeen" Icon="unseen" Activated="TypeOfSeen_Activated" />
         <ToolbarItem x:Name="ShowSearch" Icon="search" Activated="ShowSearch_Activated" />
         <ToolbarItem x:Name="SaveCSV" Icon="savecsv" Activated="SaveCSV_Activated" />
-    </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems> 
     <ContentPage.Content>
         <StackLayout>
             <SearchBar x:Name="SearchBar" IsVisible="False" Placeholder="{x:Static resource:AppResources.SearchBarPlaceHoler}" SearchButtonPressed="SearchBar_SearchButtonPressed"/>

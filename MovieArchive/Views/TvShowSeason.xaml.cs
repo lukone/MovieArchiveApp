@@ -10,7 +10,7 @@ namespace MovieArchive
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class TvShowSeason : ContentPage
 	{
-        private TvShowSeasonModel TS;
+        private TvShowSeasonModel TS; 
         private Property PY;
         private DataBase DB;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MovieArchive
-{
+{ 
     public class TvShowCardModel
     {
             public TvShowDetails TvShowDet;

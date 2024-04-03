@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieArchive
 {
-    class TvShowListModel
+    class TvShowListModel 
     {
         public List<TvShow> TvShows = new List<TvShow>();
         private DataBase DB;

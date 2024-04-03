@@ -15,7 +15,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/> 
                     </Grid.ColumnDefinitions>
 
                     <CollectionView x:Name="EpisodeList" Grid.Row="0" ItemsSource="{Binding Episodes}">

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MovieArchive
-{
+{ 
 
     public class HomeMenuItem
     {

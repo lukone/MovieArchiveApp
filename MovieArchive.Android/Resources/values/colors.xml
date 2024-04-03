@@ -5,5 +5,5 @@
     <color name="colorPrimary">#343e42</color>
     <color name="colorPrimaryDark">#343e42</color>
     <color name="colorAccent">#F5C210</color>
-    <color name="navigationBarColor">#44545C</color>
+    <color name="navigationBarColor">#44545C</color> 
 </resources>

@@ -211,7 +211,7 @@ namespace MovieArchive
                                         if (PY.WebApiAddress != "" && PY.WebApiAddress != null)
                                         { 
                                             var WS = new WebApi(PY.WebApiAddress);
-                                            await WS.SetRatingTVShowWS(SeenEp, SeenSeason, TC.TvShowDet.TmdbID);
+                                            await WS.SetRatingTVShowWS(SeenEp, SeenSeason, TC.TvShowDet.TmdbID); 
                                         }
                                     }
                                 }

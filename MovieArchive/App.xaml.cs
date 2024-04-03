@@ -12,7 +12,7 @@ using Xamarin.Forms.Xaml;
 using Syncfusion;
 
 namespace MovieArchive
-{
+{ 
     public partial class App : Application
     {
 

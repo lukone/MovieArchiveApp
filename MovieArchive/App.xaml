@@ -14,7 +14,7 @@
             <Color x:Key="ToolbarColor">#343e42</Color>
             <Color x:Key="BackgroundColor">#343e42</Color>
             <Color x:Key="DarkBackgroundColor">#343e42</Color>
-            <Color x:Key="MenuBackgroundColor">#44545C</Color>
+            <Color x:Key="MenuBackgroundColor">#44545C</Color> 
             <Color x:Key="TitleColor">#5D6576</Color>
             <Color x:Key="MenuTextColor">#B9B8B9</Color>
 
