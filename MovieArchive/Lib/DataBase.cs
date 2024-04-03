@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
 //--------------------------------------------
 // https://www.litedb.org/  no sql per xamarin
 //--------------------------------------------
@@ -15,7 +15,7 @@ namespace MovieArchive
         private SQLiteAsyncConnection cnnDBAsync;
         private SQLiteConnection cnnDB;
 
-        private readonly int DBVersion = 4;
+        private readonly int DBVersion = 5;
 
         public string dbPath= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MovieArchive.db3");
         //public string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "MovieArchive.db3");

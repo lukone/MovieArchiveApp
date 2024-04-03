@@ -8,7 +8,7 @@
              xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              Title="{x:Static resource:AppResources.TitlePageDashBoard}">
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView> 
             <StackLayout>
                 <Label x:Name="WelcomeMessage1" IsVisible="False" Text="{x:Static resource:AppResources.LabelWelcomeMessage1}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
                 <Label x:Name="WelcomeMessage2" IsVisible="False" Text="{x:Static resource:AppResources.LabelWelcomeMessage2}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />

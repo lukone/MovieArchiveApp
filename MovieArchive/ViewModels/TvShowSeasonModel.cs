@@ -6,7 +6,7 @@ namespace MovieArchive
 {
     public class TvShowSeasonModel
     {
-            public Season SeasonDet;
+            public Season SeasonDet; 
             public int TmdbID;
 
             public TvShowSeasonModel(int tmdbid,Season season)

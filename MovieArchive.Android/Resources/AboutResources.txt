@@ -12,7 +12,7 @@ Resources/
         logo.png
 
     drawable-ldpi/
-        logo.png
+        logo.png 
 
     drawable-mdpi/
         logo.png

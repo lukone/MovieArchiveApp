@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MovieArchive
-{
+{ 
     public class Property
     {
         [PrimaryKey, AutoIncrement]
@@ -14,6 +14,8 @@ namespace MovieArchive
         public string WebApiAddress { get; set; }
         public DateTime GetMovieLastUpdate { get; set; }
         public DateTime GetRatingLastUpdate { get; set; }
+        public DateTime GetTvShowLastUpdate { get; set; }
+        public DateTime GetTVShowRatingLastUpdate { get; set; }
     }
 
 }

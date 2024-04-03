@@ -15,7 +15,7 @@ using Android.App;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-
+ 
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version

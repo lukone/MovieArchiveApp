@@ -5,12 +5,21 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Syncfusion.XForms.TreeView;
 using Syncfusion.XForms.Buttons;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.IO;
+using Xamarin.Forms.PlatformConfiguration;
+using Syncfusion.XForms.TreeView.PlatformConfiguration.WindowsSpecific;
 
 namespace MovieArchive
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+
+
 	public partial class TvShowCard : ContentPage
 	{
+        bool ActivateTreelistUpdate=false;
+
         private TvShowCardModel TC;
         private Property PY;
         private DataBase DB;
@@ -45,6 +54,14 @@ namespace MovieArchive
                                 else
                                     ((ToolbarItem)this.ToolbarItems[0]).IsEnabled = true;
                             }
+
+                            if (PY.WebApiAddress != "" && PY.WebApiAddress != null)
+                            {
+                                //insert Tv Show on db web
+                                var WS = new WebApi(PY.WebApiAddress);
+                                await WS.InsertNewTvShow(mi.TmdbID, mi.Title, mi.PosterW342);
+                                
+                            }
                         }
                         else
                             ((ToolbarItem)this.ToolbarItems[0]).IsEnabled = true;
@@ -57,7 +74,8 @@ namespace MovieArchive
         protected async override void OnAppearing()
         {
             try
-            { 
+            {
+
                 await TC.GetDetail();
                 Title = TC.TvShowDet.Title;
 
@@ -83,6 +101,8 @@ namespace MovieArchive
                 SeasonList.ItemsSource = TC.TvShowDet.Seasons;
 
                 await TC.UpdateSeasonCounter();
+
+                ActivateTreelistUpdate = true;
             }
             catch(Exception ex)
             {
@@ -128,65 +148,93 @@ namespace MovieArchive
             }
         }
 
+
         private async void CheckBox_StateChanged(object sender, Syncfusion.XForms.Buttons.StateChangedEventArgs e)
         {
-            var SeenEpisode = await DB.GetEpisodeAsyncByID(((SfCheckBox)sender).TabIndex);
-
-            if (SeenEpisode != null)
+            if (ActivateTreelistUpdate)
             {
-                if ((bool)e.IsChecked)
-                    SeenEpisode.Rating = 5;
-                else
-                    SeenEpisode.Rating = 0;
-
-                var NUpdRec = await DB.UpdateEpisodeAsync(SeenEpisode);
-
-                //Aggiorno gli episodi visti nella serie
-                if (NUpdRec > 0)
+                if (e.IsChecked.HasValue && e.IsChecked.Value)
                 {
-                    var seasons = await DB.GetSeasonsAsync(SeenEpisode.TmdbID);
-                    if (seasons != null && seasons.Count > 0)
+                    if (!((SfCheckBox)sender).Text.StartsWith("S-"))
                     {
-                        if ((bool)e.IsChecked)
-                            seasons[SeenEpisode.SeasonN - 1].EpisodeSeen += 1;
-                        else
-                            seasons[SeenEpisode.SeasonN - 1].EpisodeSeen -= 1;
-                        NUpdRec = await DB.UpdateSeasonAsync(seasons[SeenEpisode.SeasonN - 1]);
-                    }
+                        var SeenEpisode = await DB.GetEpisodeAsyncByID(((SfCheckBox)sender).TabIndex);
+                        SeenEpisode.Rating = 5;
 
-                }
-            }
-            else //verifico se è stata selezionata una stagione intera
-            {
-                int NUpdRec;
-                var SeenSeason = await DB.GetSeasonAsync(((SfCheckBox)sender).TabIndex);
-                if (SeenSeason != null)
-                {
-                    var SeenEpisodes = await DB.GetEpisodeAsync(SeenSeason.TmdbID, SeenSeason.N);
-                    if (SeenEpisodes != null)
-                    {
-                        foreach (var SeenEp in SeenEpisodes)
-                        {
-                            if ((bool)e.IsChecked)
-                                SeenEp.Rating = 5;
-                            else
-                                SeenEp.Rating = 0;
+                        var NUpdRec = await DB.UpdateEpisodeAsync(SeenEpisode);
 
-                            NUpdRec = await DB.UpdateEpisodeAsync(SeenEp);
- 
-                        }
                         //Aggiorno gli episodi visti nella serie
-                        if ((bool)e.IsChecked)
-                            SeenSeason.EpisodeSeen = SeenSeason.EpisodeCount;
-                        else
-                            SeenSeason.EpisodeSeen = 0;
-                        
-                        NUpdRec = await DB.UpdateSeasonAsync(SeenSeason);
+                        if (NUpdRec > 0)
+                        {
+                            var seasons = await DB.GetSeasonsAsync(SeenEpisode.TmdbID);
+                            if (seasons != null && seasons.Count > 0)
+                            {
+                                if ((bool)e.IsChecked)
+                                {
+                                    seasons[SeenEpisode.SeasonN - 1].EpisodeSeen += 1;
+                                    if (PY.WebApiAddress != "" && PY.WebApiAddress != null)
+                                    {
+                                        var WS = new WebApi(PY.WebApiAddress);
+                                        await WS.SetRatingTVShowWS(SeenEpisode, seasons[SeenEpisode.SeasonN - 1], TC.TvShowDet.TmdbID);
+                                    }
+                                    NUpdRec = await DB.UpdateSeasonAsync(seasons[SeenEpisode.SeasonN - 1]);
+                                }
+                                  
+                            }
+                            //Aggiorno ultima data episodio visto in TvShow
+                            var TVShow = await DB.GetTvShowAsync(TC.TvShowDet.ID);
+                            if (TVShow != null)
+                            {
+                                TVShow.DateLastEpSeen = DateTime.Now;
+                                NUpdRec = await DB.UpdateTvShowAsync(TVShow);
+                            }
+                        }
+                    }
+                    else //verifico se è stata selezionata una stagione intera
+                    {
+                        int NUpdRec;
+
+                        bool answer = await DisplayAlert("Rating", "Mettere visto su tutti gli episodi?", "Si", "No");
+                        if (answer)
+                        {
+                            var SeenSeason = await DB.GetSeasonAsync(((SfCheckBox)sender).TabIndex);
+                            var SeenEpisodes = await DB.GetEpisodeAsync(SeenSeason.TmdbID, SeenSeason.N);
+                            if (SeenEpisodes != null)
+                            {
+                                foreach (var SeenEp in SeenEpisodes)
+                                {
+                                    SeenEp.Rating = 5;
+
+                                    NUpdRec = await DB.UpdateEpisodeAsync(SeenEp);
+
+                                    if (SeenEp.Rating > 0)
+                                    {
+                                        if (PY.WebApiAddress != "" && PY.WebApiAddress != null)
+                                        { 
+                                            var WS = new WebApi(PY.WebApiAddress);
+                                            await WS.SetRatingTVShowWS(SeenEp, SeenSeason, TC.TvShowDet.TmdbID); 
+                                        }
+                                    }
+                                }
+                                //Aggiorno gli episodi visti nella serie
+                                SeenSeason.EpisodeSeen = SeenSeason.EpisodeCount;
+                              
+                                NUpdRec = await DB.UpdateSeasonAsync(SeenSeason);
+
+                                //Aggiorno ultima data episodio visto in TvShow
+                                var TVShow = await DB.GetTvShowAsync(TC.TvShowDet.ID);
+                                if (TVShow != null)
+                                {
+                                    TVShow.DateLastEpSeen = DateTime.Now;
+                                    NUpdRec = await DB.UpdateTvShowAsync(TVShow);
+                                }
+                            }
+                        }
+
                     }
                 }
             }
-            
         }
+
 
         //private async void SeasonList_ItemTapped(object sender, ItemTappedEventArgs e)
         //{

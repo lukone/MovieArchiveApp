@@ -15,7 +15,7 @@
             <Label x:Name="GConnected"  Text="Not Connected" HorizontalTextAlignment="Center"/>-->
 
             <!-- trovare come inserire un button
-            <TableView Intent="Settings">
+            <TableView Intent="Settings"> 
                 <TableRoot>
                     <TableSection Title="Ring">
                         <SwitchCell x:Name="AutoBkp" BindingContext="Prop" Text="{x:Static resource:AppResources.LabelAutomaticBackup}" On="false" OnChanged="AutoBkp_OnChanged"/>

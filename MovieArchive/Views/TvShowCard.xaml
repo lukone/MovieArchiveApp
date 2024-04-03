@@ -49,8 +49,8 @@
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="120"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="180"/>
                         <RowDefinition Height="200"/>
                         <RowDefinition Height="200"/>
                         <RowDefinition Height="70"/>
@@ -122,7 +122,7 @@
                     <!-- Trailer -->
                     <WebView x:Name="Trailer" Grid.Row="5" Grid.Column="0"  Margin="10, 0, 5, 0"/>
                     
-                    <!-- Seasons -->
+                    <!-- Seasons --> 
                     <TreeView:SfTreeView Grid.Row="6"  Grid.ColumnSpan="2" x:Name="SeasonList" ItemsSource="{Binding Seasons}" AutoExpandMode="None" ItemTemplateContextType="Node" CheckBoxMode="Recursive"
                                          ChildPropertyName="Episodes" FullRowSelect="true" SelectionMode="SingleDeselect" SelectionForegroundColor="Transparent" SelectionBackgroundColor="Transparent">
 
@@ -137,7 +137,7 @@
                                                     Text="{Binding Content.Title}"
                                                     TextColor="White"                                 
                                                     IsChecked="{Binding Content.IsChecked, Mode=TwoWay}" 
-                                                    StateChanged="CheckBox_StateChanged"
+                                                     StateChanged="CheckBox_StateChanged"
                                                 />
 
                                         </Grid>

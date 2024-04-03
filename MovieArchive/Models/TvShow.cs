@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace MovieArchive
+namespace MovieArchive 
 {
     public class TvShow
     {
@@ -16,6 +16,7 @@ namespace MovieArchive
         public DateTime? DateIns { get; set; }
         public int SeasonCount { get; set; }
         public int SeasonSeen { get; set; }
+        public DateTime? DateLastEpSeen { get; set; }
 
         [Ignore]
         public string PosterW92 { get { return string.Format(PathImage, "92", Poster); } }
@@ -41,6 +42,7 @@ namespace MovieArchive
             this.DateIns = toCopy.DateIns;
             this.SeasonCount = toCopy.SeasonCount;
             this.SeasonSeen = toCopy.SeasonSeen;
+            this.DateLastEpSeen = toCopy.DateLastEpSeen;
         }
 
         public static explicit operator TvShow(Element v)

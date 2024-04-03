@@ -13,7 +13,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
-        <Grid.RowDefinitions>
+        <Grid.RowDefinitions> 
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>

@@ -6,7 +6,7 @@ using System.Text;
 namespace MovieArchive
 {
     public class Season
-    {
+    { 
         [PrimaryKey]
         public int ID { get; set; }
         public int N { get; set; }
